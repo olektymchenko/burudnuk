@@ -1,0 +1,21 @@
+@import "~bootstrap/scss/bootstrap";
+.container-fluid{
+    .Background{
+        background-image: url("../../images/home-background.jpg");
+        background-size: cover;
+        background-position: top;
+        height: 90vh;
+        .second-header-colum{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            button{
+                height: 80px;
+                width: 160px;
+                font-size: 22px;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
