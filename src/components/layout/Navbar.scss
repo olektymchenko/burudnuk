@@ -1,0 +1,32 @@
+@import "~bootstrap/scss/bootstrap";
+
+.container-fluid{
+    .row{
+        .col{
+            padding-left: 0;
+            padding-right: 0;
+            .navbar-light{
+                .navbar-nav{
+                    .nav-link{
+                        color:white;
+                    }
+                }
+                .navbar-brand{
+                    color:white;
+                    font-size: 25px;
+                    font-weight: 500;
+                }
+                .navbar-collapse{
+                    .navbar-nav{
+                        .nav-item{
+                            margin-right: 10px;
+                            svg{
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
