@@ -11,7 +11,9 @@ export const LOADING_DATA = 'LOADING_DATA';
 
 //Users reducer
 export const LOADING_USER = 'LOADING_USER';
+export const STOP_LOADING_USER = 'STOP_LOADING_USER'
 export const SET_USER = 'SET_USER';
+export const BECOME_FACEBOOK_SELLER = 'BECOME_FACEBOOK_SELLER';
 
 //Client reducer types
 export const SET_CLIENT = 'SET_CLIENT';

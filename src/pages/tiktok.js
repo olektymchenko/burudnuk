@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-class client extends Component {
+class tiktok extends Component {
     render() {
         return (
             <div>
-                <h1>Client profile</h1>
+
             </div>
         )
     }
 }
 
-export default client
+export default tiktok

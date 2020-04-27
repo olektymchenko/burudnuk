@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-class seller extends Component {
+class telegram extends Component {
     render() {
         return (
             <div>
-                <h1>Seller profile</h1>
+
             </div>
         )
     }
 }
 
-export default seller
+export default telegram

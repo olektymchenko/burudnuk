@@ -4,9 +4,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown'
 import Logo from '../../images/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faStickyNote, faPlayCircle, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faStickyNote, faPlayCircle, faUser, faSignOutAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 //Redux stuff
 import { connect } from 'react-redux';
@@ -44,6 +45,12 @@ class Navigationbar extends Component {
                                             <Nav.Link className="d-flex align-items-center" href="/user"><FontAwesomeIcon icon={faUser} size='2x' />My Account</Nav.Link>
                                         </Nav.Item>
                                     )}
+                                {!authenticated ? (null) : (<NavDropdown title={< FontAwesomeIcon icon={faShoppingCart} size='2x' />} id="basic-nav-dropdown">
+                                    <NavDropdown.Item href="/instagram">Instagram</NavDropdown.Item>
+                                    <NavDropdown.Item href="/facebook">Facebook</NavDropdown.Item>
+                                    <NavDropdown.Item href="/tiktok">TikTok</NavDropdown.Item>
+                                    <NavDropdown.Item href="/telegram">Telegram</NavDropdown.Item>
+                                </NavDropdown>)}
                                 {!authenticated ? (<Nav.Item>
                                     <Nav.Link className="d-flex align-items-center" href="/login"><FontAwesomeIcon icon={faPlayCircle} size='2x' />Login</Nav.Link>
                                 </Nav.Item>) : (<Nav.Item>
@@ -58,12 +65,13 @@ class Navigationbar extends Component {
                         </Navbar.Collapse>
                     </Navbar>
                 </Col>
-            </Row>
+            </Row >
         )
     }
 }
 
 const mapStateToProps = state => ({
-    authenticated: state.user.authenticated
+    authenticated: state.user.authenticated,
+    userrdata: state.user.userdata
 })
 export default connect(mapStateToProps, { logoutUser })(Navigationbar)
