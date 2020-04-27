@@ -40,7 +40,7 @@ class login extends Component {
         this.props.loginUser(newUser, this.props.history);
     }
     render() {
-        const { loading } = this.props.UI;
+        const { loading } = this.props.user;
         const { errors } = this.state;
         return (
             <Container>
