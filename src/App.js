@@ -42,6 +42,9 @@ if (token) {
     axios.defaults.headers.common['Authorization'] = token;
   }
 }
+if (!token) {
+  store.dispatch(logoutUser());
+}
 
 class App extends Component {
   render() {

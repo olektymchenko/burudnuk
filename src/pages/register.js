@@ -50,8 +50,8 @@ class register extends Component {
 
         return (
             <Container>
-                <Row>
-                    <Col className="text-center">
+                <Row className="justify-content-center">
+                    <Col className="text-center" xs={8} md={6} lg={4} xl={4}>
                         <img src={Logo} alt="App logo" />
                         <h1>Registration</h1>
                         <form noValidate onSubmit={this.handleSubmit}>
