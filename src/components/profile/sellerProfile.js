@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt, faFrown } from '@fortawesome/free-solid-svg-icons';
 import Comments from './comments';
+import Likes from './likes';
+import Dislikes from './dislikes'
 
 
 
@@ -61,36 +63,27 @@ const FacebookProfile = (props) => {
                     <Button variant="secondary" onClick={handleCloseComments}>
                         Close
           </Button>
-                    <Button variant="primary" onClick={handleCloseComments}>
-                        Save Changes
-          </Button>
                 </Modal.Footer>
             </Modal>
             <Modal show={showLikes} onHide={handleCloseLikes}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Heading</Modal.Title>
+                    <Modal.Title>Likes</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Likes</Modal.Body>
+                <Likes likes={props.data} />
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseLikes}>
                         Close
-          </Button>
-                    <Button variant="primary" onClick={handleCloseLikes}>
-                        Save Changes
           </Button>
                 </Modal.Footer>
             </Modal>
             <Modal show={showDislikes} onHide={handleCloseDislikes}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Heading</Modal.Title>
+                    <Modal.Title>Dislikes</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Dislikes</Modal.Body>
+                <Dislikes dislikes={props.data} />
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseDislikes}>
                         Close
-          </Button>
-                    <Button variant="primary" onClick={handleCloseDislikes}>
-                        Save Changes
           </Button>
                 </Modal.Footer>
             </Modal>
