@@ -66,7 +66,7 @@ class login extends Component {
                                     </Form.Text>}
                                 </Form.Group>
                                 {errors.general && <p>{errors.general}</p>}
-                                {!loading && <Button variant="primary" type="submit">
+                                {!loading && <Button variant="primary" type="submit" style={{ marginBottom: '50px' }}>
                                     Submit</Button>}
                                 {loading && <Spinner animation="border" variant="primary" />}
                             </Form>

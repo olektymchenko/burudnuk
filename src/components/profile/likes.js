@@ -8,14 +8,14 @@ import './comments.scss';
 const likes = (props) => {
     dayjs.extend(relativeTime)
     let LikesArray;
-    if (props.likes.sellerdata.likes.length === 0)
+    if (props.likes.likes.length === 0)
         return (<Modal.Body> No Likes yet</Modal.Body>)
     else
         (
-            LikesArray = props.likes.sellerdata.likes.map((like, index) => {
+            LikesArray = props.likes.likes.map((like, index) => {
                 return <Modal.Body key={index}>
                     <div className="d-flex justify-content-between align-items-center">
-                        <h6>{<Nav.Link href={`/${like.likeSenderNickname}`} >{like.likeSenderNickname}</Nav.Link>}</h6>
+                        <h6>{<Nav.Link href={`/users/${like.likeSender}`} >{like.likeSenderNickname}</Nav.Link>}</h6>
                         <p>{dayjs(like.createdAt).fromNow()}</p>
                     </div>
                     <hr />

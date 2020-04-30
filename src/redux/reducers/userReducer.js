@@ -1,11 +1,27 @@
-import { SET_AUTHENTICATED, SET_UNAUTHENTICATED, SET_USER, LOADING_USER, SET_SELLER, BECOME_FACEBOOK_SELLER, STOP_LOADING_USER } from '../types';
+import {
+    SET_AUTHENTICATED, SET_UNAUTHENTICATED,
+    SET_USER, LOADING_USER, SET_SELLER, BECOME_FACEBOOK_SELLER,
+    STOP_LOADING_USER, SET_ANOTHER_USER, SET_ANOTHER_FACEBOOK,
+    SET_ANOTHER_INSTAGRAM, SET_ANOTHER_TIKTOK, SET_ANOTHER_TELEGRAM,
+    SET_LOADING_FACEBOOK, SET_LOADING_INSTAGRAM, SET_LOADING_TIKOK, SET_LOADING_TELEGRAM,
+    STOP_LOADING_FACEBOOK, STOP_LOADING_INSTAGRAM, STOP_LOADING_TIKOK, STOP_LOADING_TELEGRAM
+} from '../types';
 
 const initialState = {
     authenticated: false,
     userdata: {},
+    anotheruser: {},
+    anotherfacebook: {},
+    anotherinstagram: {},
+    anothertiktok: {},
+    anothertelegram: {},
     sellerdata: {},
     notifications: [],
-    loading: false
+    loading: false,
+    loadingfacebook: false,
+    loadinginstagram: false,
+    loadingtiktok: false,
+    loadingtelegram: false
 ***REMOVED***
 
 export default function (state = initialState, action) {
@@ -38,6 +54,80 @@ export default function (state = initialState, action) {
                 ...state,
                 sellerdata: action.payload,
                 loading: false
+            }
+        case SET_ANOTHER_USER:
+            return {
+                ...state,
+                anotheruser: action.payload,
+                loading: false
+            }
+
+        case SET_ANOTHER_FACEBOOK:
+            return {
+                ...state,
+                anotherfacebook: action.payload,
+                loadingfacebook: false
+            }
+        case SET_ANOTHER_INSTAGRAM:
+            return {
+                ...state,
+                anotherinstagram: action.payload,
+                loadinginstagram: false
+            }
+        case SET_ANOTHER_TIKTOK:
+            return {
+                ...state,
+                anothertiktok: action.payload,
+                loadingtiktok: false
+            }
+        case SET_ANOTHER_TELEGRAM:
+            return {
+                ...state,
+                anothertelegram: action.payload,
+                loadingtelegram: false
+            }
+        case SET_LOADING_FACEBOOK:
+            return {
+                ...state,
+                loadingfacebook: true
+            }
+        case SET_LOADING_INSTAGRAM:
+            return {
+                ...state,
+                loadinginstagram: true
+            }
+        case SET_LOADING_TIKOK:
+            return {
+                ...state,
+                loadingtiktok: true
+            }
+
+        case SET_LOADING_TELEGRAM:
+            return {
+                ...state,
+                loadingtelegram: true
+            }
+
+        case STOP_LOADING_FACEBOOK:
+            return {
+                ...state,
+                loadingfacebook: false
+            }
+        case STOP_LOADING_INSTAGRAM:
+            return {
+                ...state,
+                loadinginstagram: false
+            }
+        case STOP_LOADING_TIKOK:
+            return {
+                ...state,
+                loadingtiktok: false
+            }
+
+        case STOP_LOADING_TELEGRAM:
+            return {
+                ...state,
+                loadingtelegram: false
             }
         case BECOME_FACEBOOK_SELLER:
             return {
