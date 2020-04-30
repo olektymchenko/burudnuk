@@ -77,7 +77,7 @@ const FacebookProfile = (props) => {
     })
     return (
         <Fragment>
-            <Card style={{ width: '22rem' }}>
+            <Card style={{ marginTop: '3%' }} bg="light" border="primary">
                 <Card.Body>
                     <Card.Title>Your {props.seller} seller account</Card.Title>
                     <Card.Text>
@@ -86,12 +86,12 @@ const FacebookProfile = (props) => {
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                     <ListGroupItem><Nav.Link target="_blank" href={accountLink}>{accountLink}</Nav.Link></ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Followers:</div><div>{followers}</div></ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Visitors per day:</div><div> {dayVisitors}</div></ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Deals Done:</div><div>{dealsCount}</div></ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Comments:</div><div> {commentCount}</div></ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Likes:</div><div>{likeCount}</div></ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Dislikes:</div><div>{dislikeCount}</div></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Followers:</div><div><h6>{followers}</h6></div></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Visitors per day:</div><div><h6>{dayVisitors}</h6></div></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Deals Done:</div><div><h6>{dealsCount}</h6></div></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Comments:</div><div><h6>{commentCount}</h6></div></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Likes:</div><div><h6>{likeCount}</h6></div></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Dislikes:</div><div><h6>{dislikeCount}</h6></div></ListGroupItem>
                     {barter === true ? (<ListGroupItem className="d-flex justify-content-between align-items-center">Barter: <FontAwesomeIcon icon={faExchangeAlt} size="2x" style={{ color: 'green' }} /></ListGroupItem>) : (<ListGroupItem className="d-flex justify-content-between align-items-center">Barter: <FontAwesomeIcon icon={faFrown} size="2x" style={{ color: 'red' }} /></ListGroupItem>)}
                 </ListGroup>
                 <Card.Body>
@@ -106,7 +106,7 @@ const FacebookProfile = (props) => {
                 <Modal.Header closeButton>
                     <Modal.Title>Comments</Modal.Title>
                 </Modal.Header>
-                <Comments comments={props.data} />
+                <Comments comments={props.data.sellerdata} />
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseComments}>
                         Close
@@ -118,7 +118,7 @@ const FacebookProfile = (props) => {
                 <Modal.Header closeButton>
                     <Modal.Title>Likes</Modal.Title>
                 </Modal.Header>
-                <Likes likes={props.data} />
+                <Likes likes={props.data.sellerdata} />
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseLikes}>
                         Close
@@ -130,7 +130,7 @@ const FacebookProfile = (props) => {
                 <Modal.Header closeButton>
                     <Modal.Title>Dislikes</Modal.Title>
                 </Modal.Header>
-                <Dislikes dislikes={props.data} />
+                <Dislikes dislikes={props.data.sellerdata} />
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseDislikes}>
                         Close

@@ -17,13 +17,11 @@ class user extends Component {
         return (
             <Container>
                 <Row>
-                    <Col>
-
-                    </Col>
-                    <Col>
-                    </Col>
                     <Col className="d-flex justify-content-center">
                         <UserProfile userdata={this.props} />
+                    </Col>
+                    <Col>
+
                     </Col>
                 </Row>
             </Container >

@@ -19,6 +19,7 @@ import UserRoute from './utill/UserRoute'
 import home from './pages/home';
 import user from './pages/user';
 import login from './pages/login';
+import anotherUser from './pages/anotherUser';
 import register from './pages/register';
 import facebook from './pages/facebook';
 import instagram from './pages/instagram';
@@ -57,6 +58,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={home} />
                 <Route exact path="/home" component={home} />
+                <Route exact path='/users/:userId' component={anotherUser} />
                 <AuthRoute exact path="/login" component={login} />
                 <AuthRoute exact path="/register" component={register} />
                 <UserRoute exact path="/user" component={user} />
