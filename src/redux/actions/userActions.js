@@ -5,9 +5,10 @@ import {
     SET_ANOTHER_FACEBOOK, SET_ANOTHER_INSTAGRAM, SET_ANOTHER_TIKTOK, SET_ANOTHER_TELEGRAM,
     SET_LOADING_FACEBOOK, SET_LOADING_INSTAGRAM, SET_LOADING_TIKOK, SET_LOADING_TELEGRAM,
     STOP_LOADING_FACEBOOK, STOP_LOADING_INSTAGRAM, STOP_LOADING_TIKOK, STOP_LOADING_TELEGRAM,
-    LIKE_SELLER, DISLIKE_SELLER, STOP_LIKE_SELLER, STOP_DISLIKE_SELLER,
+    LIKE_SELLER, DISLIKE_SELLER, STOP_LIKE_SELLER, STOP_DISLIKE_SELLER, DEAL_SUCCESS
 } from '../types';
 import axios from 'axios';
+import { persistor } from '../store';
 
 
 /* Register user /////////////////////////////////////////////////////////////////////////// */
@@ -49,8 +50,8 @@ export const loginUser = (userData, history) => (dispatch) => {
 /* Logout user ///////////////////////////////////////////////// */
 export const logoutUser = () => (dispatch) => {
     localStorage.removeItem('FBIdToken');
+    persistor.purge();
     dispatch({ type: CLEAR_ERRORS });
-    localStorage.setItem('persist:root', null);
     delete axios.defaults.headers.common['Authorization'];
     dispatch({ type: SET_UNAUTHENTICATED });
 }
@@ -503,6 +504,81 @@ export const addTelegramSellerComment = (userId, comment) => (dispatch) => {
         })
         dispatch({ type: STOP_LOADING_UI })
     })
+}
+/* Sent deal to another user */
+export const sentFacebookDeal = (userId, deal) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post(`/deals/${userId}/facebook`, deal).then(res => {
+        dispatch({
+            type: DEAL_SUCCESS,
+            payload: res.data
+        });
+    }).then(res => {
+        dispatch({ type: STOP_LOADING_UI });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_UI });
+    })
+
+}
+
+export const sentInstagramDeal = (userId, deal) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post(`/deals/${userId}/instagram`, deal).then(res => {
+        dispatch({
+            type: DEAL_SUCCESS,
+            payload: res.data
+        });
+    }).then(res => {
+        dispatch({ type: STOP_LOADING_UI });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_UI });
+    })
+
+}
+
+export const sentTikTokDeal = (userId, deal) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post(`/deals/${userId}/tiktok`, deal).then(res => {
+        dispatch({
+            type: DEAL_SUCCESS,
+            payload: res.data
+        });
+    }).then(res => {
+        dispatch({ type: STOP_LOADING_UI });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_UI });
+    })
+
+}
+export const sentTelegramDeal = (userId, deal) => (dispatch) => {
+    dispatch({ type: LOADING_UI });
+    axios.post(`/deals/${userId}/telegram`, deal).then(res => {
+        dispatch({
+            type: DEAL_SUCCESS,
+            payload: res.data
+        });
+    }).then(res => {
+        dispatch({ type: STOP_LOADING_UI });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_UI });
+    })
+
 }
 
 /* Set authorization header */
