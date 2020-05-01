@@ -1,8 +1,10 @@
-import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI, STOP_LOADING_UI } from '../types';
+import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI, STOP_LOADING_UI, DEAL_SUCCESS } from '../types';
 
 const initialState = {
     loading: false,
-    errors: null
+    errors: null,
+    success: false,
+    general: null
 ***REMOVED***
 
 export default function (state = initialState, action) {
@@ -17,7 +19,14 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 loading: false,
-                errors: null
+                errors: null,
+                general: null
+            }
+        case DEAL_SUCCESS:
+            return {
+                ...state,
+                success: true,
+                general: action.payload
             }
         case LOADING_UI:
             return {
@@ -27,7 +36,8 @@ export default function (state = initialState, action) {
         case STOP_LOADING_UI:
             return {
                 ...state,
-                loading: false
+                loading: false,
+                success: false
             }
         default:
             return state;

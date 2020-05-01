@@ -81,9 +81,9 @@ class anotherUser extends Component {
         return (
             <Container>
                 <Row className="d-flex justify-content-center">
-                    <Col xs={10} md={10} lg={4} xl={4} >
+                    <Col xs={12} md={12} lg={5} xl={5} >
                         {loading === false ? (mainuserdata === true ? (
-                            <Card style={{ marginTop: '21%', width: '100%', marginBottom: '50px', padding: '1%' }} bg="light" border="primary">
+                            <Card style={{ marginTop: '15%', width: '100%', marginBottom: '50px', padding: '1%' }} bg="light" border="primary">
                                 <img src={userImage} alt="Seller" style={{ width: '150px', height: '150px', borderRadius: '50%', margin: '0 auto', marginTop: '5%' }} />
                                 <Card.Body>
                                     {confirmed ? <Card.Title className="d-flex justify-content-between align-items-center">{nickname} user profile<FontAwesomeIcon icon={faCheckCircle} style={{ color: 'blue' }} /></Card.Title> : <Card.Title className="d-flex justify-content-center align-items-center">{nickname} user profile</Card.Title>}
@@ -100,7 +100,7 @@ class anotherUser extends Component {
                             </Card>
                         ) : (<Spinner animation="border" />)) : <Spinner animation="border" />}
                     </Col>
-                    <Col xs={12} md={12} lg={6} xl={6}>
+                    <Col xs={12} md={12} lg={5} xl={5}>
                         <Tabs defaultActiveKey="facebook" id="uncontrolled-tab-example" style={{ marginTop: '1%' }}>
                             <Tab eventKey="facebook" title="Facebook">
                                 {loadingfacebook === false ? (facebookdata === true ? < AnotherSeller data={this.props.user.anotherfacebook} seller="Facebook" /> : <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have an Facebook seller account</p></div><div><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>) : <Spinner animation="border" />}

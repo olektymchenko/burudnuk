@@ -8,7 +8,7 @@ import Nav from 'react-bootstrap/Nav'
 import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExchangeAlt, faFrown, faComment, faThumbsUp, faThumbsDown } from '@fortawesome/free-solid-svg-icons';
+import { faExchangeAlt, faFrown, faComment, faThumbsUp, faThumbsDown, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import Comments from './comments';
 import Likes from './likes';
 import Dislikes from './dislikes';
@@ -18,32 +18,45 @@ import {
     addInstagramSellerLike, addInstagramSellerDislike, addInstagramSellerComment,
     addTikTokSellerLike, addTikTokSellerDislike, addTikTokSellerComment,
     addTelegramSellerLike, addTelegramSellerDislike, addTelegramSellerComment,
+    sentFacebookDeal, sentInstagramDeal, sentTikTokDeal, sentTelegramDeal
 } from '../../redux/actions/userActions'
 
 const AnotherSeller = (props) => {
-    const [showComments, setShowComments] = useState(false);
+    const [showComments, setShowComments] = useState(false);  /* State for window with comments */
     const handleCloseComments = () => setShowComments(false);
     const handleShowComments = () => setShowComments(true);
 
-    const [showLikes, setShowLikes] = useState(false);
+    const [showLikes, setShowLikes] = useState(false); /* State for window with likes */
     const handleCloseLikes = () => setShowLikes(false);
     const handleShowLikes = () => setShowLikes(true);
 
-    const [showDislikes, setShowDislikes] = useState(false);
+    const [showDislikes, setShowDislikes] = useState(false); /* State for window with dislikes */
     const handleCloseDislikes = () => setShowDislikes(false);
     const handleShowDisLikes = () => setShowDislikes(true);
 
-    const [showAddComment, setAddComment] = useState(false);
+    const [showAddComment, setAddComment] = useState(false); /* State for window for comment adding */
     const handleCloseAddComment = () => setAddComment(false);
     const handleShowAddComment = () => setAddComment(true);
+
+    const [showAddDeal, setAddDeal] = useState(false); /* State for window for deal sending */
+    const handleCloseAddDeal = () => setAddDeal(false);
+    const handleShowAddDeal = () => setAddDeal(true);
 
     /* State for comment body */
     const [bodyData, setBody] = useState('');
     const handleUpdateBody = (event) => setBody(event.target.value)
 
+    /* State for deal */
+    const [priceData, setPrice] = useState('');
+    const handleUpdatePrice = (event) => setPrice(event.target.value)
+
+    const [messageData, setMessage] = useState('');
+    const handleUpdateMessage = (event) => setMessage(event.target.value)
+
     let handleAddLike;
     let handleAddDislike;
     let handleAddComment;
+    let handleAddDeal;
     if (props.seller === 'Facebook') {
         handleAddLike = () => {
             props.addFacebookSellerLike(props.data.mainInfo.userId);
@@ -58,6 +71,14 @@ const AnotherSeller = (props) => {
                 body: bodyData
             }
             props.addFacebookSellerComment(props.data.mainInfo.userId, newComment);
+        }
+
+        handleAddDeal = () => {
+            let newDeal = {
+                price: priceData,
+                message: messageData
+            }
+            props.sentFacebookDeal(props.data.mainInfo.userId, newDeal);
         }
     }
     if (props.seller === 'Instagram') {
@@ -75,6 +96,14 @@ const AnotherSeller = (props) => {
             }
             props.addInstagramSellerComment(props.data.mainInfo.userId, newComment);
         }
+
+        handleAddDeal = () => {
+            let newDeal = {
+                price: priceData,
+                message: messageData
+            }
+            props.sentInstagramDeal(props.data.mainInfo.userId, newDeal);
+        }
     }
     if (props.seller === 'TikTok') {
         handleAddLike = () => {
@@ -90,6 +119,13 @@ const AnotherSeller = (props) => {
                 body: bodyData
             }
             props.addTikTokSellerComment(props.data.mainInfo.userId, newComment);
+        }
+        handleAddDeal = () => {
+            let newDeal = {
+                price: priceData,
+                message: messageData
+            }
+            props.sentTikTokDeal(props.data.mainInfo.userId, newDeal);
         }
     }
     if (props.seller === 'Telegram') {
@@ -107,19 +143,35 @@ const AnotherSeller = (props) => {
             }
             props.addTelegramSellerComment(props.data.mainInfo.userId, newComment);
         }
+        handleAddDeal = () => {
+            let newDeal = {
+                price: priceData,
+                message: messageData
+            }
+            props.sentTelegramDeal(props.data.mainInfo.userId, newDeal);
+
+        }
     }
 
     const { mainInfo: { commentCount, accountLink, barter, dealsCount, dayVisitors, dislikeCount, likeCount, body, followers } } = props.data;
     const errors = useRef(false);
+    const generals = useRef(false);
     useEffect(() => {
         const error = props.UI.errors;
         errors.current = error
+        const general = props.UI.general;
+        generals.current = general;
     })
     return (
         < Fragment >
-            <Card style={{ margin: '5%' }} bg="light" border="primary">
+            <Card style={{ margin: '5%', width: '100%', padding: '1%' }} bg="light" border="primary">
                 <Card.Body>
-                    <Card.Title>{props.seller} seller account</Card.Title>
+                    <Card.Title>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div>{props.seller} seller account</div>
+                            <div style={{ paddingRight: '5%' }}><Nav.Link href="#" onClick={handleShowAddDeal}><FontAwesomeIcon icon={faPaperPlane} /></Nav.Link></div>
+                        </div>
+                    </Card.Title>
                     <Card.Text>
                         {body}
                     </Card.Text>
@@ -185,6 +237,8 @@ const AnotherSeller = (props) => {
               </Button>
                 </Modal.Footer>
             </Modal>
+
+            {/* Add comment dialog */}
             <Modal show={showAddComment} onHide={handleCloseAddComment}>
                 <Modal.Header closeButton>
                     <Modal.Title>Comment</Modal.Title>
@@ -200,6 +254,31 @@ const AnotherSeller = (props) => {
                     {props.UI.loading === false ? <Button variant="primary" onClick={handleAddComment}>Save</Button> : <Spinner animation="border" />}
                 </Modal.Footer>
             </Modal>
+
+            {/* Sent deal dialog */}
+
+            <Modal show={showAddDeal} onHide={handleCloseAddDeal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Sent deal</Modal.Title>
+                </Modal.Header>
+                <Form>
+                    <Form.Group controlId="formUserFollowers" style={{ padding: '2%' }}>
+                        <Form.Label>Price:</Form.Label>
+                        <Form.Control type="text" name="price" value={priceData} onChange={handleUpdatePrice} placeholder=" Enter your price" />
+                        {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.price}</Form.Text>) : ""}
+                    </Form.Group>
+                    <Form.Group controlId="exampleForm.ControlTextarea1" style={{ padding: '2%' }}>
+                        <Form.Label>Message:</Form.Label>
+                        <Form.Control as="textarea" rows="3" name="message" value={messageData} onChange={handleUpdateMessage} placeholder="Your message..." />
+                        {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.message}</Form.Text>) : ""}
+                    </Form.Group>
+                    {generals.current !== null ? (<Form.Text className="text-muted">{generals.current.general}</Form.Text>) : ""}
+                </Form>
+                <Modal.Footer>
+                    {props.UI.loading === false ? <Button variant="secondary" onClick={handleCloseAddDeal}>Close</Button> : null}
+                    {props.UI.loading === false ? <Button variant="primary" onClick={handleAddDeal}>Sent</Button> : <Spinner animation="border" />}
+                </Modal.Footer>
+            </Modal>
         </Fragment >
     )
 }
@@ -212,5 +291,6 @@ export default connect(mapStateToProps, {
     addFacebookSellerLike, addFacebookSellerDislike, addFacebookSellerComment,
     addInstagramSellerLike, addInstagramSellerDislike, addInstagramSellerComment,
     addTikTokSellerLike, addTikTokSellerDislike, addTikTokSellerComment,
-    addTelegramSellerLike, addTelegramSellerDislike, addTelegramSellerComment
+    addTelegramSellerLike, addTelegramSellerDislike, addTelegramSellerComment,
+    sentFacebookDeal, sentInstagramDeal, sentTikTokDeal, sentTelegramDeal
 })(AnotherSeller);
