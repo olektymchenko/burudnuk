@@ -10,7 +10,14 @@ import { getFacebookData, becomeFacebokSeller } from '../redux/actions/userActio
 import FacebookProfile from '../components/profile/sellerProfile';
 
 let userId;
-let sellerArray = [];
+function notEmpty(obj) {
+    for (var key in obj) {
+        if (obj.hasOwnProperty(key))
+            return true;
+    }
+    return false;
+}
+
 class facebook extends Component {
     constructor() {
         super();
@@ -32,8 +39,9 @@ class facebook extends Component {
     render() {
         const loadingdata = this.props.userloading.loading;
         const sellerdata = this.props.sellerdata.mainInfo;
-        const facebookvalue = this.props.userdata.facebook;
-        sellerArray.push(sellerdata);
+        let facebookvalue = false;
+        if (sellerdata !== null && notEmpty(sellerdata))
+            facebookvalue = true;
 
 
         return (
@@ -49,7 +57,7 @@ class facebook extends Component {
                                      </Card.Text>
                                 {loadingdata === true ? <Spinner animation="border" /> : <Button variant="primary" onClick={this.handleClick}>Start</Button>}
                             </Card.Body>
-                        </Card>) : (loadingdata === false ? (sellerArray.length > 1 ? <FacebookProfile data={this.props} seller="Facebook" /> : <Spinner animation="border" />) : <Spinner animation="border" />)}
+                        </Card>) : (loadingdata === false ? (facebookvalue === true ? <FacebookProfile data={this.props} seller="Facebook" /> : <Spinner animation="border" />) : <Spinner animation="border" />)}
                     </Col>
                     <Col></Col>
                 </Row>

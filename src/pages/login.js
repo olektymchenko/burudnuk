@@ -48,29 +48,27 @@ class login extends Component {
                     <Col className="text-center" xs={8} md={6} lg={4} xl={4} >
                         <img src={Logo} alt="App logo" />
                         <h1>Login</h1>
-                        <form noValidate onSubmit={this.handleSubmit}>
-                            <Form>
-                                <Form.Group controlId="formBasicEmail">
-                                    <Form.Label>Email address</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" name="email" value={this.state.email} onChange={this.handleChange} />
-                                    {errors.email && <Form.Text className="text-muted">
-                                        {errors.email}
-                                    </Form.Text>}
-                                </Form.Group>
+                        <Form noValidate onSubmit={this.handleSubmit}>
+                            <Form.Group controlId="formBasicEmail">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control type="email" placeholder="Enter email" name="email" value={this.state.email} onChange={this.handleChange} />
+                                {errors.email && <Form.Text className="text-muted">
+                                    {errors.email}
+                                </Form.Text>}
+                            </Form.Group>
 
-                                <Form.Group controlId="formBasicPassword">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} />
-                                    {errors.password && <Form.Text className="text-muted">
-                                        {errors.password}
-                                    </Form.Text>}
-                                </Form.Group>
-                                {errors.general && <p>{errors.general}</p>}
-                                {!loading && <Button variant="primary" type="submit" style={{ marginBottom: '50px' }}>
-                                    Submit</Button>}
-                                {loading && <Spinner animation="border" variant="primary" />}
-                            </Form>
-                        </form>
+                            <Form.Group controlId="formBasicPassword">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} />
+                                {errors.password && <Form.Text className="text-muted">
+                                    {errors.password}
+                                </Form.Text>}
+                            </Form.Group>
+                            {errors.general && <p>{errors.general}</p>}
+                            {!loading && <Button variant="primary" type="submit" style={{ marginBottom: '50px' }}>
+                                Submit</Button>}
+                            {loading && <Spinner animation="border" variant="primary" />}
+                        </Form>
                     </Col>
                 </Row>
 

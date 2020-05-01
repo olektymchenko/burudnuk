@@ -4,7 +4,8 @@ import {
     STOP_LOADING_USER, SET_ANOTHER_USER, SET_ANOTHER_FACEBOOK,
     SET_ANOTHER_INSTAGRAM, SET_ANOTHER_TIKTOK, SET_ANOTHER_TELEGRAM,
     SET_LOADING_FACEBOOK, SET_LOADING_INSTAGRAM, SET_LOADING_TIKOK, SET_LOADING_TELEGRAM,
-    STOP_LOADING_FACEBOOK, STOP_LOADING_INSTAGRAM, STOP_LOADING_TIKOK, STOP_LOADING_TELEGRAM
+    STOP_LOADING_FACEBOOK, STOP_LOADING_INSTAGRAM, STOP_LOADING_TIKOK, STOP_LOADING_TELEGRAM,
+    LIKE_SELLER, DISLIKE_SELLER, COMMENT_SELLER, STOP_LIKE_SELLER, STOP_DISLIKE_SELLER, STOP_COMMENT_SELLER
 } from '../types';
 
 const initialState = {
@@ -55,13 +56,67 @@ export default function (state = initialState, action) {
                 sellerdata: action.payload,
                 loading: false
             }
+        /* Working with like/dislik/comment action/////////////////////////// */
+        case LIKE_SELLER:
+            return {
+                ...state,
+                loadingfacebook: true,
+                loadinginstagram: true,
+                loadingtiktok: true,
+                loadingtelegram: true
+            }
+
+        case DISLIKE_SELLER:
+            return {
+                ...state,
+                loadingfacebook: true,
+                loadinginstagram: true,
+                loadingtiktok: true,
+                loadingtelegram: true
+            }
+
+        case COMMENT_SELLER:
+            return {
+                ...state,
+                loadingfacebook: true,
+                loadinginstagram: true,
+                loadingtiktok: true,
+                loadingtelegram: true
+            }
+
+        case STOP_LIKE_SELLER:
+            return {
+                ...state,
+                loadingfacebook: false,
+                loadinginstagram: false,
+                loadingtiktok: false,
+                loadingtelegram: false
+            }
+
+        case STOP_DISLIKE_SELLER:
+            return {
+                ...state,
+                loadingfacebook: false,
+                loadinginstagram: false,
+                loadingtiktok: false,
+                loadingtelegram: false
+            }
+        case STOP_COMMENT_SELLER:
+            return {
+                ...state,
+                loadingfacebook: false,
+                loadinginstagram: false,
+                loadingtiktok: false,
+                loadingtelegram: false
+            }
+        /* Action to get another user data ///////////////////////////////////////////// */
         case SET_ANOTHER_USER:
             return {
                 ...state,
                 anotheruser: action.payload,
                 loading: false
             }
-
+        /* Actions to get another user seller data */
         case SET_ANOTHER_FACEBOOK:
             return {
                 ...state,
@@ -129,6 +184,8 @@ export default function (state = initialState, action) {
                 ...state,
                 loadingtelegram: false
             }
+
+        /* Action to start selling on facebook */
         case BECOME_FACEBOOK_SELLER:
             return {
                 ...state,
