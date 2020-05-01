@@ -28,7 +28,7 @@ const userProfile = (props) => {
         <Fragment>
             {loading ? <Spinner animation="border" /> : (<Card style={{ marginTop: '5%' }} bg="light" border="primary">
                 <Card.Header>Welcome to Burunduk, see your profile</Card.Header>
-                <img src={userImage} alt="User image" style={{ width: '150px', height: '150px', borderRadius: '50%', margin: '0 auto', marginTop: '5%' }} />
+                <img src={userImage} alt="Seller" style={{ width: '150px', height: '150px', borderRadius: '50%', margin: '0 auto', marginTop: '5%' }} />
                 <Card.Body>
                     {confirmed ? <Card.Title className="d-flex justify-content-between align-items-center">Hello, {nickname} <FontAwesomeIcon icon={faCheckCircle} style={{ color: 'blue' }} /></Card.Title> : <Card.Title className="d-flex justify-content-center align-items-center">Hello, {nickname}</Card.Title>}
                 </Card.Body>

@@ -17,10 +17,10 @@ class user extends Component {
         return (
             <Container>
                 <Row>
-                    <Col className="d-flex justify-content-center">
+                    <Col className="d-flex justify-content-center" xs={12} md={6} lg={4} xl={4}>
                         <UserProfile userdata={this.props} />
                     </Col>
-                    <Col>
+                    <Col xs={10} md={10} lg={4} xl={4}>
 
                     </Col>
                 </Row>

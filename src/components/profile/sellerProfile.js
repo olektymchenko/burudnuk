@@ -77,7 +77,7 @@ const FacebookProfile = (props) => {
     })
     return (
         <Fragment>
-            <Card style={{ marginTop: '3%' }} bg="light" border="primary">
+            <Card style={{ marginTop: '3%', marginBottom: '50px', padding: '1%' }} bg="light" border="primary">
                 <Card.Body>
                     <Card.Title>Your {props.seller} seller account</Card.Title>
                     <Card.Text>
@@ -143,42 +143,40 @@ const FacebookProfile = (props) => {
                     <Modal.Title>Update profile data</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <form>
-                        <Form>
-                            <label htmlFor="basic-url">Your page url</label>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Prepend>
-                                    <InputGroup.Text id="basic-addon3">
-                                        https://
+                    <Form>
+                        <label htmlFor="basic-url">Your page url</label>
+                        <InputGroup className="mb-3">
+                            <InputGroup.Prepend>
+                                <InputGroup.Text id="basic-addon3">
+                                    https://
       </InputGroup.Text>
-                                </InputGroup.Prepend>
-                                <FormControl id="basic-url" aria-describedby="basic-addon3" value={accountLinkData} onChange={handleAccountLink} />
-                                {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.accountLink}</Form.Text>) : ""}
-                            </InputGroup>
-                            <Form.Group controlId="formUserFollowers">
-                                <Form.Label>Followers amount</Form.Label>
-                                <Form.Control type="text" name="followers" value={followersData} onChange={handleFollowers} placeholder=" Enter amount of your page followers, e.g. 685" />
-                                {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.followers}</Form.Text>) : ""}
-                            </Form.Group>
-                            <Form.Group controlId="formUserVisitors">
-                                <Form.Label>Daily visitors amount</Form.Label>
-                                <Form.Control type="text" name="dayVisitors" value={dayVisitorsData} onChange={handleDayVisitors} placeholder="Enter amount of your page daily visitors, e.g. 70" />
-                                {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.dayVisitors}</Form.Text>) : ""}
-                            </Form.Group>
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Profile description</Form.Label>
-                                <Form.Control as="textarea" rows="3" name="body" value={bodyData} onChange={handleUpdateBody} placeholder="Describe your profile benefits for another users" />
-                                {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.body}</Form.Text>) : ""}
-                            </Form.Group>
-                            <Form.Group controlId="exampleForm.ControlSelect1">
-                                <Form.Label>Barter</Form.Label>
-                                <Form.Control as="select" onChange={handleBarter}>
-                                    <option value={false} name="barter">No</option>
-                                    <option value={true} name="barter">Yes</option>
-                                </Form.Control>
-                            </Form.Group>
-                        </Form>
-                    </form>
+                            </InputGroup.Prepend>
+                            <FormControl id="basic-url" aria-describedby="basic-addon3" value={accountLinkData} onChange={handleAccountLink} />
+                            {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.accountLink}</Form.Text>) : ""}
+                        </InputGroup>
+                        <Form.Group controlId="formUserFollowers">
+                            <Form.Label>Followers amount</Form.Label>
+                            <Form.Control type="text" name="followers" value={followersData} onChange={handleFollowers} placeholder=" Enter amount of your page followers, e.g. 685" />
+                            {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.followers}</Form.Text>) : ""}
+                        </Form.Group>
+                        <Form.Group controlId="formUserVisitors">
+                            <Form.Label>Daily visitors amount</Form.Label>
+                            <Form.Control type="text" name="dayVisitors" value={dayVisitorsData} onChange={handleDayVisitors} placeholder="Enter amount of your page daily visitors, e.g. 70" />
+                            {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.dayVisitors}</Form.Text>) : ""}
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlTextarea1">
+                            <Form.Label>Profile description</Form.Label>
+                            <Form.Control as="textarea" rows="3" name="body" value={bodyData} onChange={handleUpdateBody} placeholder="Describe your profile benefits for another users" />
+                            {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.body}</Form.Text>) : ""}
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect1">
+                            <Form.Label>Barter</Form.Label>
+                            <Form.Control as="select" onChange={handleBarter}>
+                                <option value={false} name="barter">No</option>
+                                <option value={true} name="barter">Yes</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     {props.loading.loading === false ? <Button variant="secondary" onClick={handleCloseUpdatedata}>Close</Button> : null}
