@@ -7,7 +7,9 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
 import { connect } from 'react-redux';
 import { getFacebookData, becomeFacebokSeller } from '../redux/actions/userActions';
+import { loadingFacebookDeals } from '../redux/actions/dataActions';
 import FacebookProfile from '../components/profile/sellerProfile';
+import Deals from '../components/deals/userDeals'
 
 let userId;
 function notEmpty(obj) {
@@ -29,7 +31,7 @@ class facebook extends Component {
         userId = this.props.userdata.userId;
         if (this.props.userdata.facebook === true)
             this.props.getFacebookData(userId);
-
+        this.props.loadingFacebookDeals(userId);
     }
 
     handleClick = () => {
@@ -42,6 +44,12 @@ class facebook extends Component {
         let facebookvalue = false;
         if (sellerdata !== null && notEmpty(sellerdata))
             facebookvalue = true;
+
+        let deals = this.props.data.deals;
+        let dealsvalue = false;
+        if (deals !== null)
+            dealsvalue = true;
+
 
 
         return (
@@ -59,7 +67,9 @@ class facebook extends Component {
                             </Card.Body>
                         </Card>) : (loadingdata === false ? (facebookvalue === true ? <FacebookProfile data={this.props} seller="Facebook" /> : <Spinner animation="border" />) : <Spinner animation="border" />)}
                     </Col>
-                    <Col></Col>
+                    <Col>
+                        {facebookvalue === false ? "Nothing to show" : (dealsvalue === true ? <Deals deals={this.props.data} app="Facebook" /> : <Spinner animation="border" />)}
+                    </Col>
                 </Row>
             </Container>
         )
@@ -71,6 +81,7 @@ const mapStateToProps = state => ({
     userloading: state.user,
     userdata: state.user.userdata,
     sellerdata: state.user.sellerdata,
-    UI: state.UI
+    UI: state.UI,
+    data: state.data
 })
-export default connect(mapStateToProps, { getFacebookData, becomeFacebokSeller })(facebook)
+export default connect(mapStateToProps, { getFacebookData, becomeFacebokSeller, loadingFacebookDeals })(facebook)

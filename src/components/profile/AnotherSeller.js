@@ -39,7 +39,12 @@ const AnotherSeller = (props) => {
     const handleShowAddComment = () => setAddComment(true);
 
     const [showAddDeal, setAddDeal] = useState(false); /* State for window for deal sending */
-    const handleCloseAddDeal = () => setAddDeal(false);
+    const handleCloseAddDeal = () => {
+        setAddDeal(false);
+        generals.current = null;
+        setPrice('');
+        setMessage('');
+    }
     const handleShowAddDeal = () => setAddDeal(true);
 
     /* State for comment body */
@@ -154,6 +159,7 @@ const AnotherSeller = (props) => {
     }
 
     const { mainInfo: { commentCount, accountLink, barter, dealsCount, dayVisitors, dislikeCount, likeCount, body, followers } } = props.data;
+    const authenticated = props.user.authenticated;
     const errors = useRef(false);
     const generals = useRef(false);
     useEffect(() => {
@@ -169,7 +175,7 @@ const AnotherSeller = (props) => {
                     <Card.Title>
                         <div className="d-flex justify-content-between align-items-center">
                             <div>{props.seller} seller account</div>
-                            <div style={{ paddingRight: '5%' }}><Nav.Link href="#" onClick={handleShowAddDeal}><FontAwesomeIcon icon={faPaperPlane} /></Nav.Link></div>
+                            {authenticated ? <div style={{ paddingRight: '5%' }}><Nav.Link href="#" onClick={handleShowAddDeal}><FontAwesomeIcon icon={faPaperPlane} /></Nav.Link></div> : ''}
                         </div>
                     </Card.Title>
                     <Card.Text>
@@ -193,11 +199,11 @@ const AnotherSeller = (props) => {
                             <Card.Link href="#" onClick={handleShowLikes}>Likes</Card.Link>
                             <Card.Link href="#" onClick={handleShowDisLikes}>Dislikes</Card.Link>
                         </div>
-                        <div>
+                        {authenticated ? <div>
                             <Card.Link href="#" onClick={handleShowAddComment}><FontAwesomeIcon icon={faComment} /></Card.Link>
                             <Card.Link href="#" onClick={handleAddLike}><FontAwesomeIcon icon={faThumbsUp} /></Card.Link>
                             <Card.Link href="#" onClick={handleAddDislike}><FontAwesomeIcon icon={faThumbsDown} /></Card.Link>
-                        </div>
+                        </div> : ''}
                     </div>
                 </Card.Body>
             </Card>
@@ -284,7 +290,8 @@ const AnotherSeller = (props) => {
 }
 
 const mapStateToProps = state => ({
-    UI: state.UI
+    UI: state.UI,
+    user: state.user
 })
 
 export default connect(mapStateToProps, {
