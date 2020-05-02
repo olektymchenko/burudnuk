@@ -5,7 +5,7 @@ import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 import uiReducer from './reducers/uiReducer';
-//import dataReducer from './reducers/dataReducer';
+import dataReducer from './reducers/dataReducer';
 import userReducer from './reducers/userReducer';
 
 const initialState = {};
@@ -20,7 +20,7 @@ const middleware = [thunk];
 
 const rootReducer = combineReducers({
     UI: uiReducer,
-    // data: dataReducer,
+    data: dataReducer,
     user: userReducer,
 });
 

@@ -515,6 +515,8 @@ export const sentFacebookDeal = (userId, deal) => (dispatch) => {
         });
     }).then(res => {
         dispatch({ type: STOP_LOADING_UI });
+    }).then(res => {
+        dispatch({ type: CLEAR_ERRORS });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -534,6 +536,8 @@ export const sentInstagramDeal = (userId, deal) => (dispatch) => {
         });
     }).then(res => {
         dispatch({ type: STOP_LOADING_UI });
+    }).then(res => {
+        dispatch({ type: CLEAR_ERRORS });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -553,6 +557,8 @@ export const sentTikTokDeal = (userId, deal) => (dispatch) => {
         });
     }).then(res => {
         dispatch({ type: STOP_LOADING_UI });
+    }).then(res => {
+        dispatch({ type: CLEAR_ERRORS });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -571,6 +577,8 @@ export const sentTelegramDeal = (userId, deal) => (dispatch) => {
         });
     }).then(res => {
         dispatch({ type: STOP_LOADING_UI });
+    }).then(res => {
+        dispatch({ type: CLEAR_ERRORS });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
