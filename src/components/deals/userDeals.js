@@ -54,7 +54,10 @@ const UserDeal = (props) => {
     const deal = props.deals.deals.map((deal, index) => {
         return (
             <Card key={index} style={{ marginLeft: '1%', marginTop: '3%' }}>
-                <Card.Header as="h5" className="d-flex justify-content-between align-items-center"><div>{<Nav.Link href={`/users/${deal.dealsendernickname}`} >{deal.dealsendernickname}</Nav.Link>}</div><div>{deal.dealdone === true ? (<FontAwesomeIcon icon={faCheckCircle} style={{ color: 'green' }} />) : (<FontAwesomeIcon icon={faCheckCircle} style={{ color: 'red' }} />)}</div></Card.Header>
+                <Card.Header as="h5" className="d-flex justify-content-between align-items-baseline"><div>{<Nav.Link href={`/users/${deal.dealsendernickname}`} >{deal.dealsendernickname}</Nav.Link>}</div><div>{deal.dealdone === true ?
+                    (<div className="d-flex"><p style={{ marginRight: '9%' }}>Accepted</p><FontAwesomeIcon icon={faCheckCircle} style={{ color: 'green' }} /> </div>) :
+                    (deal.dealactive === false ? (<div className="d-flex"><p style={{ marginRight: '9%' }}>Rejected</p><FontAwesomeIcon icon={faCheckCircle} style={{ color: 'red' }} /> </div>)
+                        : (''))}</div></Card.Header>
                 <Card.Body>
                     <Card.Title>{deal.price} USD</Card.Title>
                     <Card.Text>{deal.message}</Card.Text>

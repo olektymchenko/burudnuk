@@ -5,7 +5,12 @@ import {
     SET_ANOTHER_FACEBOOK, SET_ANOTHER_INSTAGRAM, SET_ANOTHER_TIKTOK, SET_ANOTHER_TELEGRAM,
     SET_LOADING_FACEBOOK, SET_LOADING_INSTAGRAM, SET_LOADING_TIKOK, SET_LOADING_TELEGRAM,
     STOP_LOADING_FACEBOOK, STOP_LOADING_INSTAGRAM, STOP_LOADING_TIKOK, STOP_LOADING_TELEGRAM,
-    LIKE_SELLER, DISLIKE_SELLER, STOP_LIKE_SELLER, STOP_DISLIKE_SELLER, DEAL_SUCCESS
+    LIKE_SELLER, DISLIKE_SELLER, STOP_LIKE_SELLER, STOP_DISLIKE_SELLER, DEAL_SUCCESS,
+    ADD_FACEBOOK_LIKE_COUNT, ADD_FACEBOOK_DISLIKE_COUNT, ADD_FACEBOOK_COMMENT_COUNT,
+    ADD_INSTAGRAM_LIKE_COUNT, ADD_INSTAGRAM_DISLIKE_COUNT, ADD_INSTAGRAM_COMMENT_COUNT,
+    ADD_TIKTOK_LIKE_COUNT, ADD_TIKTOK_DISLIKE_COUNT, ADD_TIKTOK_COMMENT_COUNT,
+    ADD_TELEGRAM_LIKE_COUNT, ADD_TELEGRAM_DISLIKE_COUNT, ADD_TELEGRAM_COMMENT_COUNT,
+    SET_COMMENT_SUCCESS
 } from '../types';
 import axios from 'axios';
 import { persistor } from '../store';
@@ -309,7 +314,7 @@ export const addFacebookSellerLike = (userId) => (dispatch) => {
     axios.get(`/users/${userId}/likefacebook`).then(res => {
         dispatch({ type: CLEAR_ERRORS });
     }).then(res => {
-        dispatch(getAnotherFacebookData(userId));
+        dispatch({ type: ADD_FACEBOOK_LIKE_COUNT });
     }).then(res => {
         dispatch({ type: STOP_LIKE_SELLER });
     }).catch(err => {
@@ -325,7 +330,7 @@ export const addInstagramSellerLike = (userId) => (dispatch) => {
     axios.get(`/users/${userId}/likeinstagram`).then(res => {
         dispatch({ type: CLEAR_ERRORS });
     }).then(res => {
-        dispatch(getAnotherInstagramData(userId));
+        dispatch({ type: ADD_INSTAGRAM_LIKE_COUNT });
     }).then(res => {
         dispatch({ type: STOP_LIKE_SELLER });
     }).catch(err => {
@@ -341,7 +346,7 @@ export const addTikTokSellerLike = (userId) => (dispatch) => {
     axios.get(`/users/${userId}/liketiktok`).then(res => {
         dispatch({ type: CLEAR_ERRORS });
     }).then(res => {
-        dispatch(getAnotherTikTokData(userId));
+        dispatch({ type: ADD_TIKTOK_LIKE_COUNT });
     }).then(res => {
         dispatch({ type: STOP_LIKE_SELLER });
     }).catch(err => {
@@ -359,7 +364,7 @@ export const addTelegramSellerLike = (userId) => (dispatch) => {
     }).then(res => {
         dispatch({ type: STOP_LIKE_SELLER });
     }).then(res => {
-        dispatch(getAnotherTelegramData(userId));
+        dispatch({ type: ADD_TELEGRAM_LIKE_COUNT });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -376,7 +381,7 @@ export const addFacebookSellerDislike = (userId) => (dispatch) => {
     }).then(res => {
         dispatch({ type: STOP_DISLIKE_SELLER });
     }).then(res => {
-        dispatch(getAnotherFacebookData(userId));
+        dispatch({ type: ADD_FACEBOOK_DISLIKE_COUNT });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -392,7 +397,7 @@ export const addInstagramSellerDislike = (userId) => (dispatch) => {
     }).then(res => {
         dispatch({ type: STOP_DISLIKE_SELLER });
     }).then(res => {
-        dispatch(getAnotherInstagramData(userId));
+        dispatch({ type: ADD_INSTAGRAM_DISLIKE_COUNT });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -408,7 +413,7 @@ export const addTikTokSellerDislike = (userId) => (dispatch) => {
     }).then(res => {
         dispatch({ type: STOP_DISLIKE_SELLER });
     }).then(res => {
-        dispatch(getAnotherTikTokData(userId));
+        dispatch({ type: ADD_TIKTOK_DISLIKE_COUNT });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -424,7 +429,7 @@ export const addTelegramSellerDislike = (userId) => (dispatch) => {
     }).then(res => {
         dispatch({ type: STOP_DISLIKE_SELLER });
     }).then(res => {
-        dispatch(getAnotherTelegramData(userId));
+        dispatch({ type: ADD_TELEGRAM_DISLIKE_COUNT });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -439,11 +444,16 @@ export const addTelegramSellerDislike = (userId) => (dispatch) => {
 export const addFacebookSellerComment = (userId, comment) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post(`/users/${userId}/commentfacebook`, comment).then(res => {
-        dispatch({ type: CLEAR_ERRORS });
+        dispatch({
+            type: SET_COMMENT_SUCCESS,
+            payload: res.data
+        })
     }).then(res => {
         dispatch({ type: STOP_LOADING_UI });
     }).then(res => {
-        dispatch(getAnotherFacebookData(userId));
+        dispatch({ type: ADD_FACEBOOK_COMMENT_COUNT });
+    }).then(res => {
+        dispatch({ type: CLEAR_ERRORS });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -457,11 +467,16 @@ export const addFacebookSellerComment = (userId, comment) => (dispatch) => {
 export const addInstagramSellerComment = (userId, comment) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post(`/users/${userId}/commentinstagram`, comment).then(res => {
-        dispatch({ type: CLEAR_ERRORS });
+        dispatch({
+            type: SET_COMMENT_SUCCESS,
+            payload: res.data
+        })
     }).then(res => {
         dispatch({ type: STOP_LOADING_UI });
     }).then(res => {
-        dispatch(getAnotherInstagramData(userId));
+        dispatch({ type: ADD_INSTAGRAM_COMMENT_COUNT });
+    }).then(res => {
+        dispatch({ type: CLEAR_ERRORS });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -474,11 +489,16 @@ export const addInstagramSellerComment = (userId, comment) => (dispatch) => {
 export const addTikTokSellerComment = (userId, comment) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post(`/users/${userId}/commenttiktok`, comment).then(res => {
-        dispatch({ type: CLEAR_ERRORS });
+        dispatch({
+            type: SET_COMMENT_SUCCESS,
+            payload: res.data
+        })
     }).then(res => {
         dispatch({ type: STOP_LOADING_UI });
     }).then(res => {
-        dispatch(getAnotherTikTokData(userId));
+        dispatch({ type: ADD_TIKTOK_COMMENT_COUNT });
+    }).then(res => {
+        dispatch({ type: CLEAR_ERRORS });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -492,11 +512,16 @@ export const addTikTokSellerComment = (userId, comment) => (dispatch) => {
 export const addTelegramSellerComment = (userId, comment) => (dispatch) => {
     dispatch({ type: LOADING_UI });
     axios.post(`/users/${userId}/commenttelegram`, comment).then(res => {
-        dispatch({ type: CLEAR_ERRORS });
+        dispatch({
+            type: SET_COMMENT_SUCCESS,
+            payload: res.data
+        })
     }).then(res => {
         dispatch({ type: STOP_LOADING_UI });
     }).then(res => {
-        dispatch(getAnotherTelegramData(userId));
+        dispatch({ type: ADD_TELEGRAM_COMMENT_COUNT });
+    }).then(res => {
+        dispatch({ type: CLEAR_ERRORS });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,

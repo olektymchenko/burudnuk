@@ -5,17 +5,45 @@ import {
     SET_ANOTHER_INSTAGRAM, SET_ANOTHER_TIKTOK, SET_ANOTHER_TELEGRAM,
     SET_LOADING_FACEBOOK, SET_LOADING_INSTAGRAM, SET_LOADING_TIKOK, SET_LOADING_TELEGRAM,
     STOP_LOADING_FACEBOOK, STOP_LOADING_INSTAGRAM, STOP_LOADING_TIKOK, STOP_LOADING_TELEGRAM,
-    LIKE_SELLER, DISLIKE_SELLER, COMMENT_SELLER, STOP_LIKE_SELLER, STOP_DISLIKE_SELLER, STOP_COMMENT_SELLER
+    LIKE_SELLER, DISLIKE_SELLER, COMMENT_SELLER, STOP_LIKE_SELLER, STOP_DISLIKE_SELLER, STOP_COMMENT_SELLER,
+    ADD_FACEBOOK_LIKE_COUNT, ADD_FACEBOOK_DISLIKE_COUNT, ADD_FACEBOOK_COMMENT_COUNT,
+    ADD_INSTAGRAM_LIKE_COUNT, ADD_INSTAGRAM_DISLIKE_COUNT, ADD_INSTAGRAM_COMMENT_COUNT,
+    ADD_TIKTOK_LIKE_COUNT, ADD_TIKTOK_DISLIKE_COUNT, ADD_TIKTOK_COMMENT_COUNT,
+    ADD_TELEGRAM_LIKE_COUNT, ADD_TELEGRAM_DISLIKE_COUNT, ADD_TELEGRAM_COMMENT_COUNT,
 } from '../types';
 
 const initialState = {
     authenticated: false,
     userdata: {},
     anotheruser: {},
-    anotherfacebook: {},
-    anotherinstagram: {},
-    anothertiktok: {},
-    anothertelegram: {},
+    anotherfacebook: {
+        mainInfo: {
+            commentCount: '',
+            likeCount: '',
+            dislikeCount: ''
+        }
+    },
+    anotherinstagram: {
+        mainInfo: {
+            commentCount: '',
+            likeCount: '',
+            dislikeCount: ''
+        }
+    },
+    anothertiktok: {
+        mainInfo: {
+            commentCount: '',
+            likeCount: '',
+            dislikeCount: ''
+        }
+    },
+    anothertelegram: {
+        mainInfo: {
+            commentCount: '',
+            likeCount: '',
+            dislikeCount: ''
+        }
+    },
     sellerdata: {},
     notifications: [],
     loading: false,
@@ -109,6 +137,149 @@ export default function (state = initialState, action) {
                 loadingtiktok: false,
                 loadingtelegram: false
             }
+
+        /* Adding like to user with sending new request, in local state */
+        case ADD_FACEBOOK_LIKE_COUNT:
+            return {
+                ...state,
+                anotherfacebook: {
+                    ...state.anotherfacebook,
+                    mainInfo: {
+                        ...state.anotherfacebook.mainInfo,
+                        likeCount: state.anotherfacebook.mainInfo.likeCount + 1
+                    }
+                }
+            }
+        case ADD_INSTAGRAM_LIKE_COUNT:
+            return {
+                ...state,
+                anotherinstagram: {
+                    ...state.anotherinstagram,
+                    mainInfo: {
+                        ...state.anotherinstagram.mainInfo,
+                        likeCount: state.anotherinstagram.mainInfo.likeCount + 1
+                    }
+                }
+            }
+
+        case ADD_TIKTOK_LIKE_COUNT:
+            return {
+                ...state,
+                anothertiktok: {
+                    ...state.anothertiktok,
+                    mainInfo: {
+                        ...state.anothertiktok.mainInfo,
+                        likeCount: state.anothertiktok.mainInfo.likeCount + 1
+                    }
+                }
+            }
+        case ADD_TELEGRAM_LIKE_COUNT:
+            return {
+                ...state,
+                anothertelegram: {
+                    ...state.anothertelegram,
+                    mainInfo: {
+                        ...state.anothertelegram.mainInfo,
+                        likeCount: state.anothertelegram.mainInfo.likeCount + 1
+                    }
+                }
+            }
+        /* Adding dislike to another user, without sending new server request */
+        case ADD_FACEBOOK_DISLIKE_COUNT:
+            return {
+                ...state,
+                anotherfacebook: {
+                    ...state.anotherfacebook,
+                    mainInfo: {
+                        ...state.anotherfacebook.mainInfo,
+                        dislikeCount: state.anotherfacebook.mainInfo.dislikeCount + 1
+                    }
+                }
+            }
+        case ADD_INSTAGRAM_DISLIKE_COUNT:
+            return {
+                ...state,
+                anotherinstagram: {
+                    ...state.anotherinstagram,
+                    mainInfo: {
+                        ...state.anotherinstagram.mainInfo,
+                        dislikeCount: state.anotherinstagram.mainInfo.dislikeCount + 1
+                    }
+                }
+            }
+
+        case ADD_TIKTOK_DISLIKE_COUNT:
+            return {
+                ...state,
+                anothertiktok: {
+                    ...state.anothertiktok,
+                    mainInfo: {
+                        ...state.anothertiktok.mainInfo,
+                        dislikeCount: state.anothertiktok.mainInfo.dislikeCount + 1
+                    }
+                }
+            }
+        case ADD_TELEGRAM_DISLIKE_COUNT:
+            return {
+                ...state,
+                anothertelegram: {
+                    ...state.anothertelegram,
+                    mainInfo: {
+                        ...state.anothertelegram.mainInfo,
+                        dislikeCount: state.anothertelegram.mainInfo.dislikeCount + 1
+                    }
+                }
+            }
+
+        /* Add user comment count without page reload */
+
+        case ADD_FACEBOOK_COMMENT_COUNT:
+            return {
+                ...state,
+                anotherfacebook: {
+                    ...state.anotherfacebook,
+                    mainInfo: {
+                        ...state.anotherfacebook.mainInfo,
+                        commentCount: state.anotherfacebook.mainInfo.commentCount + 1
+                    }
+                }
+            }
+        case ADD_INSTAGRAM_COMMENT_COUNT:
+            return {
+                ...state,
+                anotherinstagram: {
+                    ...state.anotherinstagram,
+                    mainInfo: {
+                        ...state.anotherinstagram.mainInfo,
+                        commentCount: state.anotherinstagram.mainInfo.commentCount + 1
+                    }
+                }
+            }
+
+        case ADD_TIKTOK_COMMENT_COUNT:
+            return {
+                ...state,
+                anothertiktok: {
+                    ...state.anothertiktok,
+                    mainInfo: {
+                        ...state.anothertiktok.mainInfo,
+                        commentCount: state.anothertiktok.mainInfo.commentCount + 1
+                    }
+                }
+            }
+        case ADD_TELEGRAM_COMMENT_COUNT:
+            return {
+                ...state,
+                anothertelegram: {
+                    ...state.anothertelegram,
+                    mainInfo: {
+                        ...state.anothertelegram.mainInfo,
+                        commentCount: state.anothertelegram.mainInfo.commentCount + 1
+                    }
+                }
+            }
+
+
         /* Action to get another user data ///////////////////////////////////////////// */
         case SET_ANOTHER_USER:
             return {

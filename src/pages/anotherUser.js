@@ -23,6 +23,8 @@ function notEmpty(obj) {
     return false;
 }
 
+
+
 class anotherUser extends Component {
 
     componentDidMount() {
@@ -31,8 +33,8 @@ class anotherUser extends Component {
         this.props.getAnotherInstagramData(this.props.match.params.userId);
         this.props.getAnotherTikTokData(this.props.match.params.userId);
         this.props.getAnotherTelegramData(this.props.match.params.userId);
-
     }
+
     render() {
         const loggedUser = this.props.user.userdata.userId;
         const userId = this.props.match.params.userId;

@@ -71,6 +71,7 @@ const FacebookProfile = (props) => {
 
     const { mainInfo: { commentCount, accountLink, barter, dealsCount, dayVisitors, dislikeCount, likeCount, body, followers } } = props.data.sellerdata;
     const errors = useRef(false);
+
     useEffect(() => {
         const error = props.errors.errors;
         errors.current = error

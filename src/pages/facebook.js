@@ -47,7 +47,8 @@ class facebook extends Component {
 
         let deals = this.props.data.deals;
         let dealsvalue = false;
-        if (deals !== null)
+
+        if (deals !== null && notEmpty(deals))
             dealsvalue = true;
 
 
@@ -68,7 +69,7 @@ class facebook extends Component {
                         </Card>) : (loadingdata === false ? (facebookvalue === true ? <FacebookProfile data={this.props} seller="Facebook" /> : <Spinner animation="border" />) : <Spinner animation="border" />)}
                     </Col>
                     <Col>
-                        {facebookvalue === false ? "Nothing to show" : (dealsvalue === true ? <Deals deals={this.props.data} app="Facebook" /> : <Spinner animation="border" />)}
+                        {facebookvalue === false ? <p>You need to start your selling accoung</p> : (dealsvalue === true ? <Deals deals={this.props.data} app="Facebook" /> : <Spinner animation="border" />)}
                     </Col>
                 </Row>
             </Container>
