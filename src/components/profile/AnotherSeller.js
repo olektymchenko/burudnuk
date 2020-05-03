@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button'
 import Nav from 'react-bootstrap/Nav'
 import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
+import InputGroup from 'react-bootstrap/InputGroup'
+import FormControl from 'react-bootstrap/FormControl'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt, faFrown, faComment, faThumbsUp, faThumbsDown, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import Comments from './comments';
@@ -57,6 +59,7 @@ const AnotherSeller = (props) => {
 
     const [messageData, setMessage] = useState('');
     const handleUpdateMessage = (event) => setMessage(event.target.value)
+
 
     let handleAddLike;
     let handleAddDislike;
@@ -168,8 +171,14 @@ const AnotherSeller = (props) => {
         const general = props.UI.general;
         generals.current = general;
     })
-    return (
-        < Fragment >
+    if (Object.keys(props.data).length === 1) {
+        return (
+            <Fragment>
+                <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have a seller account</p></div><div className="text-center"><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>
+            </Fragment>
+        )
+    } else {
+        return (< Fragment >
             <Card style={{ margin: '5%', width: '100%', padding: '1%' }} bg="light" border="primary">
                 <Card.Body>
                     <Card.Title>
@@ -216,7 +225,7 @@ const AnotherSeller = (props) => {
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseComments}>
                         Close
-              </Button>
+                  </Button>
                 </Modal.Footer>
             </Modal>
             {/* Show likes dialog */}
@@ -228,7 +237,7 @@ const AnotherSeller = (props) => {
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseLikes}>
                         Close
-              </Button>
+                  </Button>
                 </Modal.Footer>
             </Modal>
             {/* Show dislikes dialog */}
@@ -240,7 +249,7 @@ const AnotherSeller = (props) => {
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseDislikes}>
                         Close
-              </Button>
+                  </Button>
                 </Modal.Footer>
             </Modal>
 
@@ -254,6 +263,7 @@ const AnotherSeller = (props) => {
                         <Form.Control as="textarea" rows="3" name="body" value={bodyData} onChange={handleUpdateBody} placeholder="Let another users know more about this seller" />
                         {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.body}</Form.Text>) : ""}
                     </Form.Group>
+                    {generals.current !== null ? (<Form.Text className="text-muted">{generals.current.general}</Form.Text>) : ""}
                 </Form>
                 <Modal.Footer>
                     {props.UI.loading === false ? <Button variant="secondary" onClick={handleCloseAddComment}>Close</Button> : null}
@@ -268,15 +278,24 @@ const AnotherSeller = (props) => {
                     <Modal.Title>Sent deal</Modal.Title>
                 </Modal.Header>
                 <Form>
-                    <Form.Group controlId="formUserFollowers" style={{ padding: '2%' }}>
-                        <Form.Label>Price:</Form.Label>
-                        <Form.Control type="text" name="price" value={priceData} onChange={handleUpdatePrice} placeholder=" Enter your price" />
-                        {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.price}</Form.Text>) : ""}
-                    </Form.Group>
+                    <InputGroup className="mb-3" style={{ padding: '2%' }}>
+                        <FormControl
+                            placeholder="Enter your price in dollars..."
+                            aria-label="price"
+                            aria-describedby="basic-addon2"
+                            name="price"
+                            value={priceData}
+                            onChange={handleUpdatePrice}
+
+                        />
+                        <InputGroup.Append>
+                            <InputGroup.Text id="basic-addon2" >$</InputGroup.Text>
+                        </InputGroup.Append>
+                    </InputGroup>
                     <Form.Group controlId="exampleForm.ControlTextarea1" style={{ padding: '2%' }}>
-                        <Form.Label>Message:</Form.Label>
-                        <Form.Control as="textarea" rows="3" name="message" value={messageData} onChange={handleUpdateMessage} placeholder="Your message..." />
+                        <Form.Control as="textarea" rows="3" name="message" value={messageData} onChange={handleUpdateMessage} placeholder="Enter your message..." />
                         {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.message}</Form.Text>) : ""}
+                        <div className="d-flex justify-content-around" style={{ marginTop: '3%' }}><div><input id="dateFrom" type="date" /></div><div><input id="dateTo" type="date" /></div></div>
                     </Form.Group>
                     {generals.current !== null ? (<Form.Text className="text-muted">{generals.current.general}</Form.Text>) : ""}
                 </Form>
@@ -285,8 +304,9 @@ const AnotherSeller = (props) => {
                     {props.UI.loading === false ? <Button variant="primary" onClick={handleAddDeal}>Sent</Button> : <Spinner animation="border" />}
                 </Modal.Footer>
             </Modal>
-        </Fragment >
-    )
+        </Fragment >)
+    }
+
 }
 
 const mapStateToProps = state => ({
