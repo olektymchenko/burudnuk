@@ -30,6 +30,7 @@ import { SET_AUTHENTICATED } from './redux/types';
 import { logoutUser } from './redux/actions/userActions';
 
 axios.defaults.baseURL = "https://europe-west2-burunduk-fb67a.cloudfunctions.net/api";
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 const token = localStorage.FBIdToken;
 if (token) {

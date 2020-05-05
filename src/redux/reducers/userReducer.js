@@ -10,6 +10,7 @@ import {
     ADD_INSTAGRAM_LIKE_COUNT, ADD_INSTAGRAM_DISLIKE_COUNT, ADD_INSTAGRAM_COMMENT_COUNT,
     ADD_TIKTOK_LIKE_COUNT, ADD_TIKTOK_DISLIKE_COUNT, ADD_TIKTOK_COMMENT_COUNT,
     ADD_TELEGRAM_LIKE_COUNT, ADD_TELEGRAM_DISLIKE_COUNT, ADD_TELEGRAM_COMMENT_COUNT,
+    ADD_SELLER_DEAL_COUNT
 } from '../types';
 
 const initialState = {
@@ -34,7 +35,8 @@ const initialState = {
         mainInfo: {
             commentCount: '',
             likeCount: '',
-            dislikeCount: ''
+            dislikeCount: '',
+
         }
     },
     anothertelegram: {
@@ -44,7 +46,11 @@ const initialState = {
             dislikeCount: ''
         }
     },
-    sellerdata: {},
+    sellerdata: {
+        mainInfo: {
+            dealsCount: ''
+        }
+    },
     notifications: [],
     loading: false,
     loadingfacebook: false,
@@ -279,6 +285,18 @@ export default function (state = initialState, action) {
                 }
             }
 
+        /* Add accept deal if user accept deal without page reaload */
+        case ADD_SELLER_DEAL_COUNT:
+            return {
+                ...state,
+                sellerdata: {
+                    ...state.sellerdata,
+                    mainInfo: {
+                        ...state.sellerdata.mainInfo,
+                        dealsCount: state.sellerdata.mainInfo.dealsCount + 1
+                    }
+                }
+            }
 
         /* Action to get another user data ///////////////////////////////////////////// */
         case SET_ANOTHER_USER:

@@ -1,4 +1,9 @@
-import { LOADING_DEALS, STOP_LOADING_DEALS, SET_DEALS, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, STOP_LOADING_UI } from '../types';
+import {
+    LOADING_DEALS, STOP_LOADING_DEALS, SET_DEALS,
+    SET_ERRORS, CLEAR_ERRORS, LOADING_UI, STOP_LOADING_UI,
+    ADD_SELLER_DEAL_COUNT, LOADING_ACCEPTED_DEALS,
+    STOP_LOADING_ACCEPTED_DEALS, SET_ACCEPTED_DEALS
+} from '../types';
 
 import axios from 'axios';
 
@@ -71,6 +76,79 @@ export const loadingTelegramDeals = () => (dispatch) => {
     })
     dispatch({ type: STOP_LOADING_DEALS });
 }
+/* Loading seller accepted deals */
+
+export const acceptedFacebookDeals = () => (dispatch) => {
+    dispatch({ type: LOADING_ACCEPTED_DEALS });
+    axios.get('/deals/facebookdone').then(res => {
+        dispatch({
+            type: SET_ACCEPTED_DEALS,
+            payload: res.data
+        })
+    }).then(() => {
+        dispatch({ type: CLEAR_ERRORS });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_ACCEPTED_DEALS })
+    })
+}
+
+export const acceptedInstagramDeals = () => (dispatch) => {
+    dispatch({ type: LOADING_ACCEPTED_DEALS });
+    axios.get('/deals/instagramdone').then(res => {
+        dispatch({
+            type: SET_ACCEPTED_DEALS,
+            payload: res.data
+        })
+    }).then(() => {
+        dispatch({ type: CLEAR_ERRORS });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_ACCEPTED_DEALS })
+    })
+}
+
+export const acceptedTikTokDeals = () => (dispatch) => {
+    dispatch({ type: LOADING_ACCEPTED_DEALS });
+    axios.get('/deals/tiktokdone').then(res => {
+        dispatch({
+            type: SET_ACCEPTED_DEALS,
+            payload: res.data
+        })
+    }).then(() => {
+        dispatch({ type: CLEAR_ERRORS });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_ACCEPTED_DEALS })
+    })
+}
+export const acceptedTelegramDeals = () => (dispatch) => {
+    dispatch({ type: LOADING_ACCEPTED_DEALS });
+    axios.get('/deals/telegramdone').then(res => {
+        dispatch({
+            type: SET_ACCEPTED_DEALS,
+            payload: res.data
+        })
+    }).then(() => {
+        dispatch({ type: CLEAR_ERRORS });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_ACCEPTED_DEALS })
+    })
+}
+
 /* Accepting deals */
 export const acceptFacebookDeal = (dealId) => (dispatch) => {
     dispatch({ type: LOADING_UI });
@@ -81,6 +159,8 @@ export const acceptFacebookDeal = (dealId) => (dispatch) => {
             dispatch({ type: STOP_LOADING_UI });
         }).then(res => {
             dispatch(loadingFacebookDeals());
+        }).then(res => {
+            dispatch({ type: ADD_SELLER_DEAL_COUNT });
         }).catch(err => {
             dispatch({
                 type: SET_ERRORS,
@@ -99,6 +179,8 @@ export const acceptInstagramDeal = (dealId) => (dispatch) => {
             dispatch({ type: STOP_LOADING_UI });
         }).then(res => {
             dispatch(loadingInstagramDeals());
+        }).then(res => {
+            dispatch({ type: ADD_SELLER_DEAL_COUNT });
         }).catch(err => {
             dispatch({
                 type: SET_ERRORS,
@@ -117,6 +199,8 @@ export const acceptTikTokDeal = (dealId) => (dispatch) => {
             dispatch({ type: STOP_LOADING_UI });
         }).then(res => {
             dispatch(loadingTikTokDeals());
+        }).then(res => {
+            dispatch({ type: ADD_SELLER_DEAL_COUNT });
         }).catch(err => {
             dispatch({
                 type: SET_ERRORS,
@@ -134,6 +218,8 @@ export const acceptTelegramDeal = (dealId) => (dispatch) => {
             dispatch({ type: STOP_LOADING_UI });
         }).then(res => {
             dispatch(loadingTelegramDeals());
+        }).then(res => {
+            dispatch({ type: ADD_SELLER_DEAL_COUNT });
         }).catch(err => {
             dispatch({
                 type: SET_ERRORS,

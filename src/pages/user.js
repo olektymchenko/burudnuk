@@ -20,8 +20,7 @@ class user extends Component {
                     <Col className="d-flex justify-content-center" xs={12} md={6} lg={4} xl={4}>
                         <UserProfile userdata={this.props} />
                     </Col>
-                    <Col xs={10} md={10} lg={4} xl={4}>
-
+                    <Col xs={10} md={10} lg={8} xl={8}>
                     </Col>
                 </Row>
             </Container >

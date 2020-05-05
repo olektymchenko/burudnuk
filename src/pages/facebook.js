@@ -5,11 +5,14 @@ import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import { connect } from 'react-redux';
 import { getFacebookData, becomeFacebokSeller } from '../redux/actions/userActions';
-import { loadingFacebookDeals } from '../redux/actions/dataActions';
+import { loadingFacebookDeals, acceptedFacebookDeals } from '../redux/actions/dataActions';
 import FacebookProfile from '../components/profile/sellerProfile';
 import Deals from '../components/deals/userDeals'
+import Calendar from '../components/deals/calendar'
 
 let userId;
 function notEmpty(obj) {
@@ -32,6 +35,7 @@ class facebook extends Component {
         if (this.props.userdata.facebook === true)
             this.props.getFacebookData(userId);
         this.props.loadingFacebookDeals(userId);
+        this.props.acceptedFacebookDeals();
     }
 
     handleClick = () => {
@@ -42,21 +46,27 @@ class facebook extends Component {
         const loadingdata = this.props.userloading.loading;
         const sellerdata = this.props.sellerdata.mainInfo;
         let facebookvalue = false;
-        if (sellerdata !== null && notEmpty(sellerdata))
+        if (sellerdata !== null && notEmpty(sellerdata)) // Checking if data for user has been loaded
             facebookvalue = true;
 
         let deals = this.props.data.deals;
         let dealsvalue = false;
 
-        if (deals !== null && notEmpty(deals))
+        if (deals !== null && notEmpty(deals)) // Checking if data for deals has been loaded
             dealsvalue = true;
+
+        let calendardeals = this.props.data.acceptedDeals; // Checking if data for Calendar has benn loaded
+        let calendarValue = false;
+
+        if (calendardeals !== null && notEmpty(calendardeals))
+            calendarValue = true;
 
 
 
         return (
             <Container>
-                <Row>
-                    <Col>
+                <Row className="d-flex justify-content-center">
+                    <Col xs={10} md={10} lg={4} xl={4}>
                         {facebookvalue === false ? (<Card>
                             <Card.Header>Facebook</Card.Header>
                             <Card.Body>
@@ -68,8 +78,16 @@ class facebook extends Component {
                             </Card.Body>
                         </Card>) : (loadingdata === false ? (facebookvalue === true ? <FacebookProfile data={this.props} seller="Facebook" /> : <Spinner animation="border" />) : <Spinner animation="border" />)}
                     </Col>
-                    <Col>
-                        {facebookvalue === false ? <p>You need to start your selling accoung</p> : (dealsvalue === true ? <Deals deals={this.props.data} app="Facebook" /> : <Spinner animation="border" />)}
+                    <Col xs={10} md={10} lg={8} xl={8}>
+                        <Tabs defaultActiveKey="calendar" id="uncontrolled-tab-example">
+                            <Tab eventKey="calendar" title="Calendar">
+                                {facebookvalue === false ? <p>You need to start your selling accoung</p> : (calendarValue === true ? <Calendar deals={this.props.data.acceptedDeals} /> : <h4>You calendar is empty</h4>)}
+                            </Tab>
+                            <Tab eventKey="deals" title="Offers">
+                                {facebookvalue === false ? <p>You need to start your selling accoung</p> : (dealsvalue === true ? <Deals deals={this.props.data} app="Facebook" /> : <Spinner animation="border" />)}
+                            </Tab>
+                        </Tabs>
+
                     </Col>
                 </Row>
             </Container>
@@ -85,4 +103,4 @@ const mapStateToProps = state => ({
     UI: state.UI,
     data: state.data
 })
-export default connect(mapStateToProps, { getFacebookData, becomeFacebokSeller, loadingFacebookDeals })(facebook)
+export default connect(mapStateToProps, { getFacebookData, becomeFacebokSeller, loadingFacebookDeals, acceptedFacebookDeals })(facebook)
