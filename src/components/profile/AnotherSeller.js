@@ -9,6 +9,8 @@ import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExchangeAlt, faFrown, faComment, faThumbsUp, faThumbsDown, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import Comments from './comments';
@@ -60,6 +62,12 @@ const AnotherSeller = (props) => {
     const [messageData, setMessage] = useState('');
     const handleUpdateMessage = (event) => setMessage(event.target.value)
 
+    /* State for date */
+
+    const [dateFrom, setDateFrom] = useState(new Date());
+
+    const [dateTo, setDateTo] = useState(new Date());
+
 
     let handleAddLike;
     let handleAddDislike;
@@ -84,9 +92,12 @@ const AnotherSeller = (props) => {
         handleAddDeal = () => {
             let newDeal = {
                 price: priceData,
-                message: messageData
+                message: messageData,
+                dateFrom: dateFrom,
+                dateTo: dateTo
             }
             props.sentFacebookDeal(props.data.mainInfo.userId, newDeal);
+
         }
     }
     if (props.seller === 'Instagram') {
@@ -108,7 +119,9 @@ const AnotherSeller = (props) => {
         handleAddDeal = () => {
             let newDeal = {
                 price: priceData,
-                message: messageData
+                message: messageData,
+                dateFrom: dateFrom,
+                dateTo: dateTo
             }
             props.sentInstagramDeal(props.data.mainInfo.userId, newDeal);
         }
@@ -131,7 +144,9 @@ const AnotherSeller = (props) => {
         handleAddDeal = () => {
             let newDeal = {
                 price: priceData,
-                message: messageData
+                message: messageData,
+                dateFrom: dateFrom,
+                dateTo: dateTo
             }
             props.sentTikTokDeal(props.data.mainInfo.userId, newDeal);
         }
@@ -154,7 +169,9 @@ const AnotherSeller = (props) => {
         handleAddDeal = () => {
             let newDeal = {
                 price: priceData,
-                message: messageData
+                message: messageData,
+                dateFrom: dateFrom,
+                dateTo: dateTo
             }
             props.sentTelegramDeal(props.data.mainInfo.userId, newDeal);
 
@@ -179,7 +196,7 @@ const AnotherSeller = (props) => {
         )
     } else {
         return (< Fragment >
-            <Card style={{ margin: '5%', width: '100%', padding: '1%' }} bg="light" border="primary">
+            <Card style={{ marginTop: '3%', marginBottom: '5%', width: '100%', padding: '1%' }} bg="light" border="primary">
                 <Card.Body>
                     <Card.Title>
                         <div className="d-flex justify-content-between align-items-center">
@@ -295,7 +312,7 @@ const AnotherSeller = (props) => {
                     <Form.Group controlId="exampleForm.ControlTextarea1" style={{ padding: '2%' }}>
                         <Form.Control as="textarea" rows="3" name="message" value={messageData} onChange={handleUpdateMessage} placeholder="Enter your message..." />
                         {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.message}</Form.Text>) : ""}
-                        <div className="d-flex justify-content-around" style={{ marginTop: '3%' }}><div><input id="dateFrom" type="date" /></div><div><input id="dateTo" type="date" /></div></div>
+                        <div className="d-flex justify-content-around" style={{ marginTop: '3%' }}><div><p>From:</p><DatePicker selected={dateFrom} selectsStart startDate={dateFrom} endDate={dateTo} onChange={date => setDateFrom(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div><div><p>To:</p><DatePicker selectsEnd startDate={dateFrom} endDate={dateTo} minDate={dateFrom} selected={dateTo} onChange={date => setDateTo(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div></div>
                     </Form.Group>
                     {generals.current !== null ? (<Form.Text className="text-muted">{generals.current.general}</Form.Text>) : ""}
                 </Form>
