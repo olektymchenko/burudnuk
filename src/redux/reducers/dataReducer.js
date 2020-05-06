@@ -1,7 +1,7 @@
 import {
     LOADING_DEALS, STOP_LOADING_DEALS, SET_DEALS,
     LOADING_ACCEPTED_DEALS, STOP_LOADING_ACCEPTED_DEALS, SET_ACCEPTED_DEALS,
-    LOADING_USER_NOTIFICATIONS, STOP_LOADING_USER_NOTIFiCATIONS, SET_USER_NOTIFICATIONS
+    LOADING_USER_NOTIFICATIONS, STOP_LOADING_USER_NOTIFiCATIONS, SET_USER_NOTIFICATIONS, CLEAR_NOTIFICATIONS
 } from '../types';
 
 const initialState = {
@@ -63,6 +63,12 @@ export default function (state = initialState, action) {
                 notifications: action.payload,
                 notificationsloading: false
             }
+        case CLEAR_NOTIFICATIONS:
+            return {
+                ...state,
+                notifications: []
+            }
+
         default:
             return state;
     }

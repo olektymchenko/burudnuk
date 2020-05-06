@@ -10,7 +10,8 @@ import {
     ADD_INSTAGRAM_LIKE_COUNT, ADD_INSTAGRAM_DISLIKE_COUNT, ADD_INSTAGRAM_COMMENT_COUNT,
     ADD_TIKTOK_LIKE_COUNT, ADD_TIKTOK_DISLIKE_COUNT, ADD_TIKTOK_COMMENT_COUNT,
     ADD_TELEGRAM_LIKE_COUNT, ADD_TELEGRAM_DISLIKE_COUNT, ADD_TELEGRAM_COMMENT_COUNT,
-    SET_COMMENT_SUCCESS, LOADING_USER_NOTIFICATIONS, STOP_LOADING_USER_NOTIFiCATIONS, SET_USER_NOTIFICATIONS
+    SET_COMMENT_SUCCESS, LOADING_USER_NOTIFICATIONS, STOP_LOADING_USER_NOTIFiCATIONS, SET_USER_NOTIFICATIONS,
+    CLEAR_NOTIFICATIONS
 } from '../types';
 import axios from 'axios';
 import { persistor } from '../store';
@@ -85,6 +86,8 @@ export const getUserNotifications = () => (dispatch) => {
 export const markNotificationRead = (offersId) => (dispatch) => {
     axios.post('/deals/marknotificationread', offersId).then(res => {
         dispatch({ type: CLEAR_ERRORS });
+    }).then(() => {
+        dispatch({ type: CLEAR_NOTIFICATIONS });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,

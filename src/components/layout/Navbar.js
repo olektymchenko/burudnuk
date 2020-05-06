@@ -19,6 +19,12 @@ import { logoutUser, markNotificationRead } from '../../redux/actions/userAction
 
 toast.configure();
 class Navigationbar extends Component {
+    constructor() {
+        super();
+        this.state = {
+            sended: false
+        }
+    }
 
     handleLogout = () => {
         this.props.logoutUser();
@@ -28,7 +34,7 @@ class Navigationbar extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.usernotifications) {
             let notifyarray = [];
-            let markarray = [];
+            var markarray = [];
             nextProps.usernotifications.forEach(element => {
                 let CustomToast = () => {
                     dayjs.extend(relativeTime)
@@ -45,7 +51,10 @@ class Navigationbar extends Component {
             });
             this.notify = () => {
                 this.apply(null, notifyarray);
+            }
+            if (markarray.length > 0 && this.state.sended === false) {
                 this.props.markNotificationRead(markarray);
+                this.setState({ sended: true })
             }
 
         }
