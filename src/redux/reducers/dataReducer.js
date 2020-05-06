@@ -1,10 +1,16 @@
-import { LOADING_DEALS, STOP_LOADING_DEALS, SET_DEALS, LOADING_ACCEPTED_DEALS, STOP_LOADING_ACCEPTED_DEALS, SET_ACCEPTED_DEALS } from '../types';
+import {
+    LOADING_DEALS, STOP_LOADING_DEALS, SET_DEALS,
+    LOADING_ACCEPTED_DEALS, STOP_LOADING_ACCEPTED_DEALS, SET_ACCEPTED_DEALS,
+    LOADING_USER_NOTIFICATIONS, STOP_LOADING_USER_NOTIFiCATIONS, SET_USER_NOTIFICATIONS
+} from '../types';
 
 const initialState = {
     deals: [],
     acceptedDeals: [],
+    notifications: [],
     loading: false,
-    calendarloading: false
+    calendarloading: false,
+    notificationsloading: false
 }
 export default function (state = initialState, action) {
 
@@ -40,6 +46,22 @@ export default function (state = initialState, action) {
                 ...state,
                 acceptedDeals: action.payload,
                 calendarloading: false
+            }
+        case LOADING_USER_NOTIFICATIONS:
+            return {
+                ...state,
+                notificationsloading: true
+            }
+        case STOP_LOADING_USER_NOTIFiCATIONS:
+            return {
+                ...state,
+                notificationsloading: false
+            }
+        case SET_USER_NOTIFICATIONS:
+            return {
+                ...state,
+                notifications: action.payload,
+                notificationsloading: false
             }
         default:
             return state;

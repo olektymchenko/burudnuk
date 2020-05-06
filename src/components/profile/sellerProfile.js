@@ -78,7 +78,7 @@ const FacebookProfile = (props) => {
     })
     return (
         <Fragment>
-            <Card style={{ marginTop: '3%', marginBottom: '50px', padding: '1%' }} bg="light" border="primary">
+            <Card style={{ marginTop: '3%', marginBottom: '50px', padding: '1%', width: '100%' }} bg="light" border="primary">
                 <Card.Body>
                     <Card.Title>Your {props.seller} seller account</Card.Title>
                     <Card.Text>

@@ -66,7 +66,7 @@ class facebook extends Component {
         return (
             <Container>
                 <Row className="d-flex justify-content-center">
-                    <Col xs={10} md={10} lg={4} xl={4}>
+                    <Col xs={12} md={10} lg={4} xl={4}>
                         {facebookvalue === false ? (<Card>
                             <Card.Header>Facebook</Card.Header>
                             <Card.Body>
@@ -78,7 +78,7 @@ class facebook extends Component {
                             </Card.Body>
                         </Card>) : (loadingdata === false ? (facebookvalue === true ? <FacebookProfile data={this.props} seller="Facebook" /> : <Spinner animation="border" />) : <Spinner animation="border" />)}
                     </Col>
-                    <Col xs={10} md={10} lg={8} xl={8}>
+                    <Col xs={12} md={10} lg={8} xl={8}>
                         <Tabs defaultActiveKey="calendar" id="uncontrolled-tab-example">
                             <Tab eventKey="calendar" title="Calendar">
                                 {facebookvalue === false ? <p>You need to start your selling accoung</p> : (calendarValue === true ? <Calendar deals={this.props.data.acceptedDeals} /> : <h4>You calendar is empty</h4>)}

@@ -7,17 +7,48 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Logo from '../../images/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faStickyNote, faPlayCircle, faUser, faSignOutAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faStickyNote, faEnvelope, faPlayCircle, faUser, faSignOutAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 //Redux stuff
 import { connect } from 'react-redux';
-import { logoutUser } from '../../redux/actions/userActions';
+import { logoutUser, markNotificationRead } from '../../redux/actions/userActions';
 
-
+toast.configure();
 class Navigationbar extends Component {
 
     handleLogout = () => {
         this.props.logoutUser();
+    }
+
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.usernotifications) {
+            let notifyarray = [];
+            let markarray = [];
+            nextProps.usernotifications.forEach(element => {
+                let CustomToast = () => {
+                    dayjs.extend(relativeTime)
+                    return (
+                        <div>
+                            <div className="d-flex justify-content-between align-items-center"><div><h5>Offer from {element.dealsendernickname}</h5></div><div style={{ marginRight: '5%' }}><h5>{element.price} USD</h5></div></div>
+                            <p>In {element.app}</p>
+                            <div className="d-flex justify-content-end"><small>{dayjs(element.createdAt).fromNow()}</small></div>
+                        </div>
+                    )
+                }
+                markarray.push(element.offerId)
+                notifyarray.push(toast.info(CustomToast, { autoClose: 10000 }))
+            });
+            this.notify = () => {
+                this.apply(null, notifyarray);
+                this.props.markNotificationRead(markarray);
+            }
+
+        }
     }
     render() {
         const { authenticated } = this.props;
@@ -42,10 +73,10 @@ class Navigationbar extends Component {
                                     <Nav.Link className="d-flex align-items-center" href="/register"><FontAwesomeIcon icon={faStickyNote} size='2x' />Register</Nav.Link>
                                 </Nav.Item>) : (
                                         <Nav.Item >
-                                            <Nav.Link className="d-flex align-items-center" href="/user"><FontAwesomeIcon icon={faUser} size='2x' />My Account</Nav.Link>
+                                            <Nav.Link className="d-flex align-items-center" href="/user"><FontAwesomeIcon icon={faUser} size='2x' />My account</Nav.Link>
                                         </Nav.Item>
                                     )}
-                                {!authenticated ? (null) : (<NavDropdown title={< FontAwesomeIcon icon={faShoppingCart} size='2x' />} id="basic-nav-dropdown">
+                                {!authenticated ? (null) : (<NavDropdown title={<div className="d-flex align-items-center">< FontAwesomeIcon icon={faShoppingCart} size='2x' />Market</div>} id="basic-nav-dropdown">
                                     <NavDropdown.Item href="/instagram">Instagram</NavDropdown.Item>
                                     <NavDropdown.Item href="/facebook">Facebook</NavDropdown.Item>
                                     <NavDropdown.Item href="/tiktok">TikTok</NavDropdown.Item>
@@ -54,7 +85,7 @@ class Navigationbar extends Component {
                                 {!authenticated ? (<Nav.Item>
                                     <Nav.Link className="d-flex align-items-center" href="/login"><FontAwesomeIcon icon={faPlayCircle} size='2x' />Login</Nav.Link>
                                 </Nav.Item>) : (<Nav.Item>
-                                    <Nav.Link className="d-flex align-items-center" href="/Dontknow"><FontAwesomeIcon icon={faPlayCircle} size='2x' />NewFeature</Nav.Link>
+                                    <Nav.Link className="d-flex align-items-center" href="/Dontknow"><FontAwesomeIcon icon={faEnvelope} size='2x' />Messeges</Nav.Link>
                                 </Nav.Item>)}
                                 {!authenticated ? (<Nav.Item>
                                     <Nav.Link className="d-flex align-items-center" href="/home"> <FontAwesomeIcon icon={faHome} size="2x" />Home</Nav.Link>
@@ -72,6 +103,7 @@ class Navigationbar extends Component {
 
 const mapStateToProps = state => ({
     authenticated: state.user.authenticated,
-    userrdata: state.user.userdata
+    userrdata: state.user.userdata,
+    usernotifications: state.data.notifications
 })
-export default connect(mapStateToProps, { logoutUser })(Navigationbar)
+export default connect(mapStateToProps, { logoutUser, markNotificationRead })(Navigationbar)
