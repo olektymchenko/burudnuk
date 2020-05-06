@@ -10,7 +10,7 @@ import {
     ADD_INSTAGRAM_LIKE_COUNT, ADD_INSTAGRAM_DISLIKE_COUNT, ADD_INSTAGRAM_COMMENT_COUNT,
     ADD_TIKTOK_LIKE_COUNT, ADD_TIKTOK_DISLIKE_COUNT, ADD_TIKTOK_COMMENT_COUNT,
     ADD_TELEGRAM_LIKE_COUNT, ADD_TELEGRAM_DISLIKE_COUNT, ADD_TELEGRAM_COMMENT_COUNT,
-    SET_COMMENT_SUCCESS
+    SET_COMMENT_SUCCESS, LOADING_USER_NOTIFICATIONS, STOP_LOADING_USER_NOTIFiCATIONS, SET_USER_NOTIFICATIONS
 } from '../types';
 import axios from 'axios';
 import { persistor } from '../store';
@@ -44,6 +44,8 @@ export const loginUser = (userData, history) => (dispatch) => {
         history.push('/user');
     }).then(() => {
         dispatch({ type: SET_AUTHENTICATED })
+    }).then(() => {
+        dispatch(getUserNotifications());
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -59,6 +61,36 @@ export const logoutUser = () => (dispatch) => {
     dispatch({ type: CLEAR_ERRORS });
     delete axios.defaults.headers.common['Authorization'];
     dispatch({ type: SET_UNAUTHENTICATED });
+}
+/* Get use notifications */
+
+export const getUserNotifications = () => (dispatch) => {
+    dispatch({ type: LOADING_USER_NOTIFICATIONS });
+    axios.get('/deals/getusernotifications').then(res => {
+        dispatch({
+            type: SET_USER_NOTIFICATIONS,
+            payload: res.data
+        })
+    }).then(() => {
+        dispatch({ type: CLEAR_ERRORS });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_USER_NOTIFiCATIONS })
+    })
+}
+
+export const markNotificationRead = (offersId) => (dispatch) => {
+    axios.post('/deals/marknotificationread', offersId).then(res => {
+        dispatch({ type: CLEAR_ERRORS });
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+    })
 }
 
 /* Get own user profile data /////////////////////////////////////////////////////////////// */

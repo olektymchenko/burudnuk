@@ -18,7 +18,7 @@ const UserCalendar = (props) => {
     return (
         <Fragment>
             <Calendar
-                style={{ marginTop: '3%', marginBottom: '5%', minHeight: '600px' }}
+                style={{ marginTop: '3%', marginBottom: '5%', minHeight: '600px', width: '100%' }}
                 localizer={localizer}
                 events={myEventsList}
                 startAccessor="start"

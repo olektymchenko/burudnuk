@@ -3,7 +3,7 @@ import './App.scss';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios'
-import Container from 'react-bootstrap/Container'
+import Container from 'react-bootstrap/Container';
 //REDUX
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
