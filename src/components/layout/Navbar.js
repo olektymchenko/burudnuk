@@ -94,7 +94,7 @@ class Navigationbar extends Component {
                                 {!authenticated ? (<Nav.Item>
                                     <Nav.Link className="d-flex align-items-center" href="/login"><FontAwesomeIcon icon={faPlayCircle} size='2x' />Login</Nav.Link>
                                 </Nav.Item>) : (<Nav.Item>
-                                    <Nav.Link className="d-flex align-items-center" href="/Dontknow"><FontAwesomeIcon icon={faEnvelope} size='2x' />Messeges</Nav.Link>
+                                    <Nav.Link className="d-flex align-items-center" href="/messages"><FontAwesomeIcon icon={faEnvelope} size='2x' />Messages</Nav.Link>
                                 </Nav.Item>)}
                                 {!authenticated ? (<Nav.Item>
                                     <Nav.Link className="d-flex align-items-center" href="/home"> <FontAwesomeIcon icon={faHome} size="2x" />Home</Nav.Link>
