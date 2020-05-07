@@ -2,7 +2,10 @@ import {
     LOADING_DEALS, STOP_LOADING_DEALS, SET_DEALS,
     SET_ERRORS, CLEAR_ERRORS, LOADING_UI, STOP_LOADING_UI,
     ADD_SELLER_DEAL_COUNT, LOADING_ACCEPTED_DEALS,
-    STOP_LOADING_ACCEPTED_DEALS, SET_ACCEPTED_DEALS
+    STOP_LOADING_ACCEPTED_DEALS, SET_ACCEPTED_DEALS,
+    START_LOADING_SELLER_DEALSLIST, STOP_LOADING_SELLER_DEALSLIST, SET_SELLER_DEALSLIST,
+    START_LOADING_CLIENT_DEALSLIST, STOP_LOADING_CLIENT_DEALSLIST, SET_CLIENT_DEALSLIST,
+    START_LOADING_MESSAGES, STOP_LOADING_MESSAGES, SET_MESSAGES
 } from '../types';
 
 import axios from 'axios';
@@ -301,3 +304,60 @@ export const rejectTelegramDeal = (dealId) => (dispatch) => {
         })
 }
 
+// Working with messages
+
+export const getSellerListDeals = () => (dispatch) => {
+    dispatch({ type: START_LOADING_SELLER_DEALSLIST });
+    axios.get('/messages/getuserofferres')
+        .then(res => {
+            dispatch({
+                type: SET_SELLER_DEALSLIST,
+                payload: res.data
+            })
+        }).then(() => {
+            dispatch({ type: CLEAR_ERRORS })
+        }).catch(err => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
+            })
+            dispatch({ type: STOP_LOADING_SELLER_DEALSLIST })
+        })
+}
+
+export const getClientListDeals = () => (dispatch) => {
+    dispatch({ type: START_LOADING_CLIENT_DEALSLIST });
+    axios.get('/messages/getuseroffersend')
+        .then(res => {
+            dispatch({
+                type: SET_CLIENT_DEALSLIST,
+                payload: res.data
+            })
+        }).then(() => {
+            dispatch({ type: CLEAR_ERRORS })
+        }).catch(err => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
+            })
+            dispatch({ type: STOP_LOADING_CLIENT_DEALSLIST })
+        })
+}
+
+export const getMessages = (dealId) => (dispatch) => {
+    dispatch({ type: START_LOADING_MESSAGES });
+    axios.get(`/messages/${dealId}`).then(res => {
+        dispatch({
+            type: SET_MESSAGES,
+            payload: res.data
+        })
+    }).then(() => {
+        dispatch({ type: CLEAR_ERRORS })
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_MESSAGES })
+    })
+}

@@ -25,7 +25,7 @@ import facebook from './pages/facebook';
 import instagram from './pages/instagram';
 import tiktok from './pages/tiktok';
 import telegram from './pages/telegram';
-import makedeal from './pages/makedeal';
+import messeges from './pages/messeges';
 import { SET_AUTHENTICATED } from './redux/types';
 import { logoutUser } from './redux/actions/userActions';
 
@@ -67,7 +67,7 @@ class App extends Component {
                 <UserRoute exact path="/instagram" component={instagram} />
                 <UserRoute exact path="/tiktok" component={tiktok} />
                 <UserRoute exact path="/telegram" component={telegram} />
-                <UserRoute exact path="/makedeal" component={makedeal} />
+                <UserRoute exact path="/messages" component={messeges} />
               </Switch>
             </Container>
           </PersistGate>
