@@ -10,6 +10,7 @@ import MessageClient from '../components/messages/messageclient';
 import MessageList from '../components/messages/messagesfordeal';
 import { connect } from 'react-redux';
 import { getSellerListDeals, getClientListDeals } from '../redux/actions/dataActions';
+import firebase from '../fireconfig';
 
 
 function notEmpty(obj) {
@@ -20,16 +21,30 @@ function notEmpty(obj) {
     return false;
 }
 class messeges extends Component {
+    constructor() {
+        super();
+        this.state = {
+            messageId: '0'
+        }
+    }
     componentDidMount() {
-        this.props.getSellerListDeals();
-        this.props.getClientListDeals();
+        let userIdForFunc = this.props.userId;
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.props.getSellerListDeals(userIdForFunc);
+                this.props.getClientListDeals(userIdForFunc);
+            } else {
+                console.log("Your are not logged");
+            }
+        })
+    }
+
+    getMessagesWithId = (e) => {
+        this.setState({ messageId: e.target.value })
     }
     render() {
         const { loadingsellerdeals } = this.props;
         const { loadingclientdeals } = this.props;
-        const { loadingmessages } = this.props;
-        console.log(loadingsellerdeals);
-        console.log(loadingclientdeals);
 
         let sellerdeals = this.props.listofsellerdeals;
         let sellervalue = false;
@@ -47,16 +62,16 @@ class messeges extends Component {
                     <Col xs={12} md={12} lg={4} xl={4}>
                         <Tabs defaultActiveKey="seller" id="uncontrolled-tab-example">
                             <Tab eventKey="seller" title="For me">
-                                {loadingsellerdeals === false ? (sellervalue === true ? (<MessageSeller />) : ("No messages")) : (<Spinner animation="border" />)}
+                                {loadingsellerdeals === false ? (sellervalue === true && this.state.messageId !== '0' ? (<MessageSeller data={this.props.listofsellerdeals} click={this.getMessagesWithId} />) : ("No messages")) : (<Spinner animation="border" />)}
                             </Tab>
                             <Tab eventKey="client" title="From me">
-                                {loadingclientdeals === false ? (clientvalue === true ? (<MessageClient />) : ("No messages")) : (<Spinner animation="border" />)}
+                                {loadingclientdeals === false ? (clientvalue === true && this.state.messageId !== '0' ? (<MessageClient data={this.props.listofclientdeals} click={this.getMessagesWithId} />) : ("No messages")) : (<Spinner animation="border" />)}
                             </Tab>
                         </Tabs>
 
                     </Col>
                     <Col xs={12} md={12} lg={8} xl={8}>
-                        <MessageList />
+                        <MessageList id={this.state.messageId} />
                     </Col>
                 </Row>
             </Container >
@@ -69,7 +84,8 @@ const setStateToProps = state => ({
     loadingclientdeals: state.data.loadinglistofclientdeals,
     loadingmessages: state.data.loadinglistofmessages,
     listofsellerdeals: state.data.listofsellerdeals,
-    listofclientdeals: state.data.listofclientdeals
+    listofclientdeals: state.data.listofclientdeals,
+    userId: state.user.userdata.userId
 })
 
 export default connect(setStateToProps, { getSellerListDeals, getClientListDeals })(messeges)

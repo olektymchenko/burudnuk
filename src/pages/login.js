@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import PropTypes from 'prop-types';
+import firebase from '../fireconfig';
 
 //Redux staff
 import { connect } from 'react-redux';
@@ -38,6 +39,9 @@ class login extends Component {
             password: this.state.password
         }
         this.props.loginUser(newUser, this.props.history);
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(err => {
+            console.log(err);
+        })
     }
     render() {
         const { loading } = this.props.user;
