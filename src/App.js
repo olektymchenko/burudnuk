@@ -3,6 +3,7 @@ import './App.scss';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios'
+import firebase from './fireconfig';
 import Container from 'react-bootstrap/Container';
 //REDUX
 import { Provider } from 'react-redux';
@@ -37,6 +38,7 @@ if (token) {
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
     store.dispatch(logoutUser());
+    firebase.auth().signOut();
     window.location.href = '/login';
   }
   else {
@@ -46,6 +48,7 @@ if (token) {
 }
 if (!token) {
   store.dispatch(logoutUser());
+  firebase.auth().signOut();
 }
 
 class App extends Component {

@@ -9,6 +9,7 @@ import {
 } from '../types';
 
 import axios from 'axios';
+import firebase from '../../fireconfig';
 
 export const loadingFacebookDeals = () => (dispatch) => {
     dispatch({ type: LOADING_DEALS });
@@ -306,39 +307,73 @@ export const rejectTelegramDeal = (dealId) => (dispatch) => {
 
 // Working with messages
 
-export const getSellerListDeals = () => (dispatch) => {
+export const getSellerListDeals = (userId) => (dispatch) => {
+    let funcdata = [];
     dispatch({ type: START_LOADING_SELLER_DEALSLIST });
-    axios.get('/messages/getuserofferres')
-        .then(res => {
+    firebase.firestore().collection('messages').where('dealreciever', '==', userId).orderBy('dealsender').get()
+        .then(data => {
+            data.forEach(doc => {
+                funcdata.push({
+                    messageId: doc.id,
+                    id: doc.data().id,
+                    dealsender: doc.data().dealsender,
+                    dealreciever: doc.data().dealreciever,
+                    createdAt: doc.data().createdAt,
+                    dateFrom: doc.data().dateFrom,
+                    dateTo: doc.data().dateTo,
+                    dealsendernickname: doc.data().dealsendernickname,
+                    message: doc.data().message,
+                    price: doc.data().price,
+                    massages: doc.data().messages
+                })
+            })
+        }).then(res => {
             dispatch({
                 type: SET_SELLER_DEALSLIST,
-                payload: res.data
+                payload: funcdata
             })
         }).then(() => {
             dispatch({ type: CLEAR_ERRORS })
         }).catch(err => {
             dispatch({
                 type: SET_ERRORS,
-                payload: err.response.data
-            })
+                payload: err
+            });
             dispatch({ type: STOP_LOADING_SELLER_DEALSLIST })
         })
 }
 
-export const getClientListDeals = () => (dispatch) => {
+export const getClientListDeals = (userId) => (dispatch) => {
+    let funcdata = [];
     dispatch({ type: START_LOADING_CLIENT_DEALSLIST });
-    axios.get('/messages/getuseroffersend')
-        .then(res => {
+    firebase.firestore().collection('messages').where('dealsender', '==', userId).orderBy('dealreciever').get()
+        .then(data => {
+            data.forEach(doc => {
+                funcdata.push({
+                    messageId: doc.id,
+                    id: doc.data().id,
+                    dealsender: doc.data().dealsender,
+                    dealreciever: doc.data().dealreciever,
+                    createdAt: doc.data().createdAt,
+                    dateFrom: doc.data().dateFrom,
+                    dateTo: doc.data().dateTo,
+                    dealsendernickname: doc.data().dealsendernickname,
+                    message: doc.data().message,
+                    price: doc.data().price,
+                    massages: doc.data().messages
+                })
+            })
+        }).then(res => {
             dispatch({
                 type: SET_CLIENT_DEALSLIST,
-                payload: res.data
+                payload: funcdata
             })
         }).then(() => {
             dispatch({ type: CLEAR_ERRORS })
         }).catch(err => {
             dispatch({
                 type: SET_ERRORS,
-                payload: err.response.data
+                payload: err
             })
             dispatch({ type: STOP_LOADING_CLIENT_DEALSLIST })
         })
