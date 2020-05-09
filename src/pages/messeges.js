@@ -20,7 +20,7 @@ function notEmpty(obj) {
     }
     return false;
 }
-class messeges extends Component {
+class messeges extends React.PureComponent {
     constructor() {
         super();
         this.state = {
@@ -62,10 +62,10 @@ class messeges extends Component {
                     <Col xs={12} md={12} lg={4} xl={4}>
                         <Tabs defaultActiveKey="seller" id="uncontrolled-tab-example">
                             <Tab eventKey="seller" title="For me">
-                                {loadingsellerdeals === false ? (sellervalue === true && this.state.messageId !== '0' ? (<MessageSeller data={this.props.listofsellerdeals} click={this.getMessagesWithId} />) : ("No messages")) : (<Spinner animation="border" />)}
+                                {loadingsellerdeals === false ? (sellervalue === true ? (<MessageSeller data={this.props.listofsellerdeals} click={this.getMessagesWithId} />) : ("No messages")) : (<Spinner animation="border" />)}
                             </Tab>
                             <Tab eventKey="client" title="From me">
-                                {loadingclientdeals === false ? (clientvalue === true && this.state.messageId !== '0' ? (<MessageClient data={this.props.listofclientdeals} click={this.getMessagesWithId} />) : ("No messages")) : (<Spinner animation="border" />)}
+                                {loadingclientdeals === false ? (clientvalue === true ? (<MessageClient data={this.props.listofclientdeals} click={this.getMessagesWithId} />) : ("No messages")) : (<Spinner animation="border" />)}
                             </Tab>
                         </Tabs>
 
