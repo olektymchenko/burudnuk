@@ -1,45 +1,52 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import firebase from '../../fireconfig';
-import Spinner from 'react-bootstrap/Spinner';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 
-let messagesToShow = [];
-let messages;
 
-const Messages = React.memo(function MyComponent(props) {
 
-    const [messages, setMessages] = useState([]);
+const Messages = (props) => {
+    dayjs.extend(relativeTime)
+    let doc = firebase.firestore().collection('messages').doc(props.id);
+    const [messages, setMessages] = useState();
     const handleAddMessages = (messages) => setMessages(messages);
 
-    if (props.id === '0') {
-        return (
-            <Card border="primary" style={{ marginTop: '5%', height: '50vh' }} className="d-flex align-items-center justify-content-center">
-                <Card.Text>Hello, please choose a deal to start!</Card.Text>
-            </Card>
-        )
-    } else {
-        let doc = firebase.firestore().collection('messages').doc(props.id);
-        let listOfMessages = doc.get().then(doc => {
-            doc.data().messages.map((item) => {
-                messagesToShow.push({
-                    text: item.text,
-                    createdAt: item.createdAt,
-                    messageSender: item.messageSender
-                })
-            })
-        })
+    const [doingdata, setDoingData] = useState(false);
+    const handleDoingDataFalse = () => setDoingData(false);
+    const handleDoingDataTrue = () => setDoingData(true);
 
-    }
+    useEffect(() => {
+        handleDoingDataFalse();
+        let listOfMessages = doc.get().then(doc => {
+            let messagesToShow = doc.data().messages.map((item, index) => {
+                if (item.sender === props.nickname) {
+                    return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div className="text-right">By <span style={{ fontWeight: '500' }}>{props.nickname} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                }
+                else {
+                    return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginLeft: '1%', float: 'left' }} bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div>By <span style={{ fontWeight: '500' }}>{props.nickname} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                }
+
+            })
+            handleAddMessages(messagesToShow);
+            handleDoingDataTrue()
+        }).catch(err => {
+            console.log(err);
+        })
+    }, [props.id])
+
+
+
+
 
     return (
         <Fragment>
-            {console.log(messagesToShow)}
-            <Card style={{ width: '100%', marginTop: '3%', marginBottom: '5%' }} border="primary">
-                {messagesToShow}
-            </Card>
+            <div style={{ maxHeight: '70vh', overflow: 'auto' }}>
+                {doingdata === true ? messages : ''}
+            </div>
             <div className="d-flex align-items-center justify-content-around" style={{ backgroundColor: 'gainsboro', padding: '15px' }}>
                 <Form.Group controlId="exampleForm.ControlTextarea1" style={{ width: '70%', margin: '0' }}>
                     <Form.Control as="textarea" placeholder="Write a message" />
@@ -49,7 +56,7 @@ const Messages = React.memo(function MyComponent(props) {
         </Fragment>
     )
 
-})
+}
 
 
-export default React.memo(Messages); 
+export default Messages 

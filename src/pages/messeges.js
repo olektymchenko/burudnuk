@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import Card from 'react-bootstrap/Card'
 import Spinner from 'react-bootstrap/Spinner'
 import MessageSeller from '../components/messages/messageoffer';
 import MessageClient from '../components/messages/messageclient';
@@ -71,7 +72,9 @@ class messeges extends React.PureComponent {
 
                     </Col>
                     <Col xs={12} md={12} lg={8} xl={8}>
-                        <MessageList id={this.state.messageId} />
+                        {this.state.messageId !== '0' ? (<MessageList id={this.state.messageId} nickname={this.props.nickname} />) : (<Card border="primary" style={{ marginTop: '5%', height: '50vh' }} className="d-flex align-items-center justify-content-center">
+                            <Card.Text>Hello, please choose a deal to start!</Card.Text>
+                        </Card>)}
                     </Col>
                 </Row>
             </Container >
@@ -85,7 +88,8 @@ const setStateToProps = state => ({
     loadingmessages: state.data.loadinglistofmessages,
     listofsellerdeals: state.data.listofsellerdeals,
     listofclientdeals: state.data.listofclientdeals,
-    userId: state.user.userdata.userId
+    userId: state.user.userdata.userId,
+    nickname: state.user.userdata.nickname
 })
 
 export default connect(setStateToProps, { getSellerListDeals, getClientListDeals })(messeges)
