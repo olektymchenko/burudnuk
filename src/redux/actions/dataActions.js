@@ -396,3 +396,15 @@ export const getMessages = (dealId) => (dispatch) => {
         dispatch({ type: STOP_LOADING_MESSAGES })
     })
 }
+
+export const sendMessage = (messageId, message) => (dispatch) => {
+    dispatch({ type: START_LOADING_MESSAGES });
+    axios.post(`/messages/sendbyseller/${messageId}`, message).then(res => {
+        dispatch({ type: CLEAR_ERRORS })
+    }).then(res => {
+        dispatch({ type: STOP_LOADING_MESSAGES })
+    }).catch(err => {
+        console.log(err);
+        dispatch({ type: STOP_LOADING_MESSAGES })
+    })
+}
