@@ -113,7 +113,7 @@ const Messages = (props) => {
                 {doingdata === true ? messages : ''}
             </div>
             <div className="d-flex align-items-center justify-content-around" style={{ backgroundColor: 'gainsboro', padding: '15px' }}>
-                {props.loading === false ? (<Nav.Item>
+                {props.loading === false ? (<Nav.Item >
                     <Nav.Link href="#" onClick={handleAddImage}><FontAwesomeIcon icon={faImage} size='2x' /></Nav.Link>
                 </Nav.Item>) : ''}
                 <Form.Group controlId="exampleForm.ControlTextarea1" style={{ width: '70%', margin: '0' }}>
