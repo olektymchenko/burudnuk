@@ -10,13 +10,28 @@ import { faSmile, faFrown, faCheckCircle } from '@fortawesome/free-solid-svg-ico
 import { connect } from 'react-redux';
 import { updateProfile } from '../../redux/actions/userActions'
 
+import imageCompression from 'browser-image-compression'; // We comporess images before sending to server
+
 
 const userProfile = (props) => {
     const submitImage = (event) => {
         const image = event.target.files[0];
-        const formData = new FormData();
-        formData.append('image', image, image.name);
-        props.updateProfile(formData);
+        var options = {
+            maxSizeMB: 0.5,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true
+        }
+        imageCompression(image, options)
+            .then(function (compressedFile) {
+                const formData = new FormData();
+                formData.append('image', compressedFile, compressedFile.name);
+
+                return props.updateProfile(formData);
+            })
+            .catch(function (error) {
+                console.log(error.message);
+            });
+
     }
 
     const handleEditPicture = () => {
