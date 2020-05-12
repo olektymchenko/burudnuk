@@ -11,12 +11,13 @@ import { sendMessage, sendImage } from '../../redux/actions/dataActions';
 import ModalImage from "react-modal-image";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
+import imageCompression from 'browser-image-compression'; // We comporess images before sending to server
 
 
-/* function scrollToBottom() {
+function scrollToBottom() {
     var element = document.getElementById('lastMessage');
     element.scrollIntoView({ block: 'end' });
-} */
+}
 
 const Messages = (props) => {
     dayjs.extend(relativeTime);
@@ -26,11 +27,11 @@ const Messages = (props) => {
     const [messages, setMessages] = useState();
     const handleAddMessages = (messages) => setMessages(messages);
 
-    const [doingdata, setDoingData] = useState(false);
-    const handleDoingDataFalse = () => setDoingData(false);
-    const handleDoingDataTrue = () => setDoingData(true);
+    const [doingdata, setDoingData] = useState(false); // Colntrol dialogs
+    const handleDoingDataFalse = () => setDoingData(false); // false when server start asking server for data
+    const handleDoingDataTrue = () => setDoingData(true); // true when server response
 
-    const [messageData, setMessage] = useState('');
+    const [messageData, setMessage] = useState(''); // Collectiong data for messages
     const handleUpdateMessage = (event) => setMessage(event.target.value)
 
     const handleSendDialog = () => { // Send text massage
@@ -45,20 +46,53 @@ const Messages = (props) => {
         const fileInput = document.getElementById('imageInput');
         fileInput.click();
     }
-    const submitImage = (event) => {
+    const submitImage = (event) => { // Preparing image to send
         const image = event.target.files[0];
-        const formData = new FormData();
-        formData.append('image', image, image.name);
-        props.sendImage(props.id, formData);
+        var options = {
+            maxSizeMB: 0.5,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true
+        }
+        imageCompression(image, options)
+            .then(function (compressedFile) {
+                const formData = new FormData();
+                formData.append('image', compressedFile, compressedFile.name);
+
+                return props.sendImage(props.id, formData); // write your own logic
+            })
+            .catch(function (error) {
+                console.log(error.message);
+            });
     }
 
 
 
-    useEffect(() => {
+    useEffect(() => { // Here i aks firebase to give me data and render this data
         handleDoingDataFalse();
+        console.log()
         let listOfMessages = doc.get().then(doc => {
-            let messagesToShow = doc.data().messages.map((item, index) => {
-                if (item.text.startsWith('https')) {
+            let messagesToShow = doc.data().messages.map((item, index) => { // get data form server and map it
+                if (index === doc.data().messages.length - 1) { // cheking for the last element
+                    if (item.text.startsWith('https')) { // checking if image
+                        if (item.sender === props.nickname) {
+                            return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} id='lastMessage' key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                        }
+                        else {
+                            return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginLeft: '1%', float: 'left' }} id='lastMessage' key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                        }
+                    }
+
+                    if (item.sender === props.nickname) { // if no, render text
+                        return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} id='lastMessage' bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div className="text-right">By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                    }
+                    else {
+                        return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginLeft: '1%', float: 'left' }} id='lastMessage' bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                    }
+                }
+
+
+
+                if (item.text.startsWith('https')) { // Iw text start with 'https' , then is image
                     if (item.sender === props.nickname) {
                         return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
                     }
@@ -67,7 +101,7 @@ const Messages = (props) => {
                     }
                 }
 
-                if (item.sender === props.nickname) {
+                if (item.sender === props.nickname) { // rendering text dialogs
                     return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div className="text-right">By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
                 }
                 else {
@@ -77,14 +111,34 @@ const Messages = (props) => {
             })
             handleAddMessages(messagesToShow);
             handleDoingDataTrue()
+        }).then(() => {
+            scrollToBottom();
         }).catch(err => {
             console.log(err);
         })
     }, [props.id])
 
-    useEffect(() => {
+    useEffect(() => { // Here i'm listening for new messages
         let observer = firebase.firestore().collection('messages').doc(props.id).onSnapshot(querySnapshot => {
             let lastElement = querySnapshot.data().messages.map((item, index) => {
+                ///////////////////////////////////////////////////////////////////////////////// LAST ADD ID FOR LAST
+                if (index === querySnapshot.data().messages.length - 1) { // cheking for the last element
+                    if (item.text.startsWith('https')) { // checking if image
+                        if (item.sender === props.nickname) {
+                            return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} id='lastMessage' key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                        }
+                        else {
+                            return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginLeft: '1%', float: 'left' }} id='lastMessage' key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                        }
+                    }
+                    if (item.sender === props.nickname) { // if no, render text
+                        return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} id='lastMessage' bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div className="text-right">By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                    }
+                    else {
+                        return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginLeft: '1%', float: 'left' }} id='lastMessage' bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
+                    }
+                }
+                ////// NORMAL MAPING
                 if (item.text.startsWith('https')) {
                     if (item.sender === props.nickname) {
                         return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
@@ -102,12 +156,16 @@ const Messages = (props) => {
 
             })
             handleAddMessages(lastElement);
-        }, (error) => console.log(error))
-    }, [])
+            const timer = setTimeout(() => { // wait 1sek, for new messages
+                scrollToBottom();
+            }, 1000);
+            return () => clearTimeout(timer);
+        })
+    }, [props])
 
 
     return (
-        <Fragment>
+        < Fragment >
 
             <div style={{ maxHeight: '70vh', overflow: 'auto' }} >
                 {doingdata === true ? messages : ''}
@@ -122,8 +180,10 @@ const Messages = (props) => {
 
                 {props.loading === false ? <Button variant="primary" onClick={handleSendDialog}>Send</Button> : "Sending"}
             </div>
+
             <input type='file' id='imageInput' hidden='hidden' onChange={submitImage} />
-        </Fragment>
+
+        </Fragment >
     )
 
 }
