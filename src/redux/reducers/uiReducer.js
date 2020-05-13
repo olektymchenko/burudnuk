@@ -5,7 +5,7 @@ const initialState = {
     errors: null,
     success: false,
     general: null
-***REMOVED***
+};
 
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: false,
                 errors: action.payload
-            ***REMOVED***
+            };
         case CLEAR_ERRORS:
             return {
                 ...state,

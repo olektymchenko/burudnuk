@@ -67,58 +67,8 @@ const Messages = (props) => {
 
 
 
-    useEffect(() => { // Here i aks firebase to give me data and render this data
+    useEffect(() => { // Here i'm get all mesages and listen for new
         handleDoingDataFalse();
-        console.log()
-        let listOfMessages = doc.get().then(doc => {
-            let messagesToShow = doc.data().messages.map((item, index) => { // get data form server and map it
-                if (index === doc.data().messages.length - 1) { // cheking for the last element
-                    if (item.text.startsWith('https')) { // checking if image
-                        if (item.sender === props.nickname) {
-                            return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} id='lastMessage' key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
-                        }
-                        else {
-                            return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginLeft: '1%', float: 'left' }} id='lastMessage' key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
-                        }
-                    }
-
-                    if (item.sender === props.nickname) { // if no, render text
-                        return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} id='lastMessage' bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div className="text-right">By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
-                    }
-                    else {
-                        return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginLeft: '1%', float: 'left' }} id='lastMessage' bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
-                    }
-                }
-
-
-
-                if (item.text.startsWith('https')) { // Iw text start with 'https' , then is image
-                    if (item.sender === props.nickname) {
-                        return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
-                    }
-                    else {
-                        return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginLeft: '1%', float: 'left' }} key={index}><Card.Body><div><div style={{ fontWeight: '700' }} className="d-flex justify-content-center"><div style={{ maxWidth: '90%' }}><ModalImage small={item.text} large={item.text} alt="UserImage"></ModalImage></div></div><div className='text-center'>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
-                    }
-                }
-
-                if (item.sender === props.nickname) { // rendering text dialogs
-                    return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginRight: '1%', float: 'right' }} bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div className="text-right">By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
-                }
-                else {
-                    return <Card style={{ width: '51%', marginTop: '3%', marginBottom: '1%', marginLeft: '1%', float: 'left' }} bg="primary" text="white" key={index}><Card.Body><div><div style={{ fontWeight: '700' }}>{item.text}</div><div>By <span style={{ fontWeight: '500' }}>{item.sender} </span>{dayjs(item.createdAt).fromNow()}</div></div></Card.Body></Card>
-                }
-
-            })
-            handleAddMessages(messagesToShow);
-            handleDoingDataTrue()
-        }).then(() => {
-            scrollToBottom();
-        }).catch(err => {
-            console.log(err);
-        })
-    }, [props.id])
-
-    useEffect(() => { // Here i'm listening for new messages
         let observer = firebase.firestore().collection('messages').doc(props.id).onSnapshot(querySnapshot => {
             let lastElement = querySnapshot.data().messages.map((item, index) => {
                 ///////////////////////////////////////////////////////////////////////////////// LAST ADD ID FOR LAST
@@ -155,10 +105,11 @@ const Messages = (props) => {
                 }
 
             })
+            handleDoingDataTrue()
             handleAddMessages(lastElement);
             const timer = setTimeout(() => { // wait 1sek, for new messages
                 scrollToBottom();
-            }, 1000);
+            }, 500);
             return () => clearTimeout(timer);
         })
     }, [props])
@@ -166,7 +117,6 @@ const Messages = (props) => {
 
     return (
         < Fragment >
-
             <div style={{ maxHeight: '70vh', overflow: 'auto' }} >
                 {doingdata === true ? messages : ''}
             </div>

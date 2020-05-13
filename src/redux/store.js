@@ -8,7 +8,7 @@ import uiReducer from './reducers/uiReducer';
 import dataReducer from './reducers/dataReducer';
 import userReducer from './reducers/userReducer';
 
-const initialState = {***REMOVED***
+const initialState = {};
 
 const persistConfig = {
     key: 'root',
@@ -35,4 +35,4 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(...middleware));
 export const store = createStore(reducers, initialState, enhancer);
 export const persistor = persistStore(store);
-export default { store, persistor ***REMOVED***
+export default { store, persistor };

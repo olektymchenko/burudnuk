@@ -57,7 +57,7 @@ const initialState = {
     loadinginstagram: false,
     loadingtiktok: false,
     loadingtelegram: false
-***REMOVED***
+};
 
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -65,7 +65,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 authenticated: true
-            ***REMOVED***
+            };
         case SET_UNAUTHENTICATED:
             return initialState;
         case LOADING_USER:
@@ -385,6 +385,6 @@ export default function (state = initialState, action) {
             }
         default:
             return state;
-    ***REMOVED***
+    };
 
 }
