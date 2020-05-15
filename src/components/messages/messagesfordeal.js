@@ -22,6 +22,11 @@ function scrollToBottom() {
 const Messages = (props) => {
     dayjs.extend(relativeTime);
 
+<<<<<<< HEAD
+=======
+
+    let doc = firebase.firestore().collection('messages').doc(props.id);
+>>>>>>> 34faca1b428f51b516e193d0e6882627e15bdd12
     const [messages, setMessages] = useState();
     const handleAddMessages = (messages) => setMessages(messages);
 
@@ -67,7 +72,7 @@ const Messages = (props) => {
 
     useEffect(() => { // Here i'm get all mesages and listen for new
         handleDoingDataFalse();
-        firebase.firestore().collection('messages').doc(props.id).onSnapshot(querySnapshot => {
+        let observer = firebase.firestore().collection('messages').doc(props.id).onSnapshot(querySnapshot => {
             let lastElement = querySnapshot.data().messages.map((item, index) => {
                 ///////////////////////////////////////////////////////////////////////////////// LAST ADD ID FOR LAST
                 if (index === querySnapshot.data().messages.length - 1) { // cheking for the last element

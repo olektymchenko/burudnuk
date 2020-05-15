@@ -3,12 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/react-fontawesome": "^0.1.9",
+    "@fullcalendar/timegrid": "^4.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "browser-image-compression": "^1.0.11",
+    "dayjs": "^1.8.25",
+    "firebase": "^7.14.2",
+    "glamor": "^2.20.40",
+    "jwt-decode": "^2.2.0",
+    "moment": "^2.25.3",
+    "node-sass": "^4.14.0",
     "react": "^16.13.1",
+    "react-big-calendar": "^0.24.6",
+    "react-bootstrap": "^1.0.1",
+    "react-datepicker": "^2.14.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-modal-image": "^2.5.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1",
+    "react-scroll": "^1.7.16",
+    "react-scroll-to-bottom": "^2.0.0",
+    "react-toastify": "^5.5.0",
+    "redux": "^4.0.5",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -30,5 +55,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "https://europe-west2-burunduk-fb67a.cloudfunctions.net/api"
 }
