@@ -22,11 +22,6 @@ function scrollToBottom() {
 const Messages = (props) => {
     dayjs.extend(relativeTime);
 
-<<<<<<< HEAD
-=======
-
-    let doc = firebase.firestore().collection('messages').doc(props.id);
->>>>>>> 34faca1b428f51b516e193d0e6882627e15bdd12
     const [messages, setMessages] = useState();
     const handleAddMessages = (messages) => setMessages(messages);
 
