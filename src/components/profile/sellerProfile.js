@@ -75,7 +75,7 @@ const FacebookProfile = (props) => {
     useEffect(() => {
         const error = props.errors.errors;
         errors.current = error
-    })
+    }, [props])
     return (
         <Fragment>
             <Card style={{ marginTop: '3%', marginBottom: '50px', padding: '1%', width: '100%' }} bg="light" border="primary">

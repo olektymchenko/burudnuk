@@ -98,6 +98,7 @@ export const markNotificationRead = (offersId) => (dispatch) => {
 
 /* Get own user profile data /////////////////////////////////////////////////////////////// */
 export const getOwnUserData = () => (dispatch) => {
+    dispatch({ type: CLEAR_ERRORS });
     dispatch({ type: LOADING_USER });
     axios.get('/users/owndata').then(res => {
         dispatch({

@@ -7,7 +7,7 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import Logo from '../../images/logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faStickyNote, faEnvelope, faPlayCircle, faUser, faSignOutAlt, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faStickyNote, faEnvelope, faPlayCircle, faUser, faSignOutAlt, faShoppingCart, faBalanceScale } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import dayjs from 'dayjs';
@@ -78,13 +78,21 @@ class Navigationbar extends Component {
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="ml-auto">
+                                {!authenticated ? ("") : (
+                                    <NavDropdown title={<div className="d-flex align-items-center">< FontAwesomeIcon icon={faBalanceScale} size='2x' />Auctions</div>} id="basic-nav-dropdown">
+                                        <NavDropdown.Item href="/user">Users searching</NavDropdown.Item>
+                                        <NavDropdown.Item href="/createoffer">Users offering</NavDropdown.Item>
+                                    </NavDropdown>)
+                                }
                                 {!authenticated ? (<Nav.Item >
                                     <Nav.Link className="d-flex align-items-center" href="/register"><FontAwesomeIcon icon={faStickyNote} size='2x' />Register</Nav.Link>
                                 </Nav.Item>) : (
-                                        <Nav.Item >
-                                            <Nav.Link className="d-flex align-items-center" href="/user"><FontAwesomeIcon icon={faUser} size='2x' />My account</Nav.Link>
-                                        </Nav.Item>
-                                    )}
+                                        <NavDropdown title={<div className="d-flex align-items-center">< FontAwesomeIcon icon={faUser} size='2x' />Profile</div>} id="basic-nav-dropdown">
+                                            <NavDropdown.Item href="/user">My Profile</NavDropdown.Item>
+                                            <NavDropdown.Item href="/createoffer">Create auction</NavDropdown.Item>
+                                            <NavDropdown.Item href="/createsearch">Create search auction</NavDropdown.Item>
+                                            <NavDropdown.Item href="/myauctions">My Auctions</NavDropdown.Item>
+                                        </NavDropdown>)}
                                 {!authenticated ? (null) : (<NavDropdown title={<div className="d-flex align-items-center">< FontAwesomeIcon icon={faShoppingCart} size='2x' />Market</div>} id="basic-nav-dropdown">
                                     <NavDropdown.Item href="/instagram">Instagram</NavDropdown.Item>
                                     <NavDropdown.Item href="/facebook">Facebook</NavDropdown.Item>

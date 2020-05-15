@@ -97,7 +97,10 @@ const AnotherSeller = (props) => {
                 dateTo: dateTo
             }
             props.sentFacebookDeal(props.data.mainInfo.userId, newDeal);
-
+            setPrice('');
+            setMessage('');
+            setDateFrom('');
+            setDateTo('');
         }
     }
     if (props.seller === 'Instagram') {
@@ -124,6 +127,10 @@ const AnotherSeller = (props) => {
                 dateTo: dateTo
             }
             props.sentInstagramDeal(props.data.mainInfo.userId, newDeal);
+            setPrice('');
+            setMessage('');
+            setDateFrom('');
+            setDateTo('');
         }
     }
     if (props.seller === 'TikTok') {
@@ -149,6 +156,10 @@ const AnotherSeller = (props) => {
                 dateTo: dateTo
             }
             props.sentTikTokDeal(props.data.mainInfo.userId, newDeal);
+            setPrice('');
+            setMessage('');
+            setDateFrom('');
+            setDateTo('');
         }
     }
     if (props.seller === 'Telegram') {
@@ -174,6 +185,10 @@ const AnotherSeller = (props) => {
                 dateTo: dateTo
             }
             props.sentTelegramDeal(props.data.mainInfo.userId, newDeal);
+            setPrice('');
+            setMessage('');
+            setDateFrom('');
+            setDateTo('');
 
         }
     }
@@ -187,7 +202,7 @@ const AnotherSeller = (props) => {
         errors.current = error
         const general = props.UI.general;
         generals.current = general;
-    })
+    }, [props])
     if (Object.keys(props.data).length === 1) {
         return (
             <Fragment>
@@ -312,7 +327,8 @@ const AnotherSeller = (props) => {
                     <Form.Group controlId="exampleForm.ControlTextarea1" style={{ padding: '2%' }}>
                         <Form.Control as="textarea" rows="3" name="message" value={messageData} onChange={handleUpdateMessage} placeholder="Enter your message..." />
                         {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.message}</Form.Text>) : ""}
-                        <div className="d-flex justify-content-around" style={{ marginTop: '3%' }}><div><p>From:</p><DatePicker selected={dateFrom} selectsStart startDate={dateFrom} endDate={dateTo} onChange={date => setDateFrom(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div><div><p>To:</p><DatePicker selectsEnd startDate={dateFrom} endDate={dateTo} minDate={dateFrom} selected={dateTo} onChange={date => setDateTo(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div></div>
+                        <div className="d-flex justify-content-around" style={{ marginTop: '3%' }}><div><p>From:</p><DatePicker selected={dateFrom} selectsStart startDate={dateFrom} endDate={dateTo} onChange={date => setDateFrom(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div>
+                            <div><p>To:</p><DatePicker selectsEnd startDate={dateFrom} endDate={dateTo} minDate={dateFrom} selected={dateTo} onChange={date => setDateTo(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div></div>
                     </Form.Group>
                     {generals.current !== null ? (<Form.Text className="text-muted">{generals.current.general}</Form.Text>) : ""}
                 </Form>

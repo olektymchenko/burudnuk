@@ -1,10 +1,16 @@
-import { SET_ERRORS, CLEAR_ERRORS, LOADING_UI, STOP_LOADING_UI, DEAL_SUCCESS, SET_COMMENT_SUCCESS } from '../types';
+import {
+    SET_ERRORS, CLEAR_ERRORS, LOADING_UI, STOP_LOADING_UI, DEAL_SUCCESS, SET_COMMENT_SUCCESS,
+    START_USER_OFFER_AUCTION, START_USER_LOOKING_AUCTION,
+    START_LOADING_AUCTION, STOP_LOADING_AUCTION
+} from '../types';
 
 const initialState = {
     loading: false,
     errors: null,
     success: false,
-    general: null
+    general: null,
+    loadingauction: false
+
 };
 
 export default function (state = initialState, action) {
@@ -28,11 +34,35 @@ export default function (state = initialState, action) {
                 success: true,
                 general: action.payload
             }
+        case START_USER_OFFER_AUCTION:
+            return {
+                ...state,
+                general: action.payload,
+                errors: null
+            }
+        case START_USER_LOOKING_AUCTION:
+            return {
+                ...state,
+                general: action.payload,
+                errors: null
+            }
         case SET_COMMENT_SUCCESS:
             return {
                 ...state,
                 general: action.payload
             }
+        case START_LOADING_AUCTION:
+            return {
+                ...state,
+                loadingauction: true
+            }
+
+        case STOP_LOADING_AUCTION:
+            return {
+                ...state,
+                loadingauction: false
+            }
+
         case LOADING_UI:
             return {
                 ...state,

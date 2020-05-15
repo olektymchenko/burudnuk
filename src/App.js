@@ -27,6 +27,9 @@ import instagram from './pages/instagram';
 import tiktok from './pages/tiktok';
 import telegram from './pages/telegram';
 import messeges from './pages/messeges';
+import offerauction from './pages/createoffer';
+import lookforauction from './pages/createsearch';
+import userauctions from './pages/userauctions';
 import { SET_AUTHENTICATED } from './redux/types';
 import { logoutUser } from './redux/actions/userActions';
 
@@ -71,6 +74,9 @@ class App extends Component {
                 <UserRoute exact path="/tiktok" component={tiktok} />
                 <UserRoute exact path="/telegram" component={telegram} />
                 <UserRoute exact path="/messages" component={messeges} />
+                <UserRoute exact path="/createoffer" component={offerauction} />
+                <UserRoute exact path="/createsearch" component={lookforauction} />
+                <UserRoute exact path="/myauctions" component={userauctions} />
               </Switch>
             </Container>
           </PersistGate>

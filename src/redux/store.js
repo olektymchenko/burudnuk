@@ -7,13 +7,14 @@ import storage from 'redux-persist/lib/storage'
 import uiReducer from './reducers/uiReducer';
 import dataReducer from './reducers/dataReducer';
 import userReducer from './reducers/userReducer';
+import auctionsReducer from './reducers/auctionsReducer';
 
 const initialState = {};
 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['user', 'UI']
+    whitelist: ['user', 'UI', 'auctions']
 }
 
 const middleware = [thunk];
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
     UI: uiReducer,
     data: dataReducer,
     user: userReducer,
+    auctions: auctionsReducer
 });
 
 
