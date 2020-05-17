@@ -17,7 +17,7 @@ const ShowUserAuctions = (props) => {
                 <Card.Text>{element.description}</Card.Text>
                 <Card.Text><div className="d-flex justify-content-between"><div>Initial price: <h5>{element.firstPrice} <span>USD</span></h5></div><div>Actual price: <h5>{element.lastPrice} <span>USD</span></h5></div></div></Card.Text>
                 <Card.Footer className="text-muted text-left d-flex justify-content-between align-items-center"><div><span>Finish </span>{timeNow.to(element.dateEnd)} <span>({dayjs(element.dateEnd).format('LL LT')})</span></div>
-                    <div><Nav.Link href={`/auctions/${props.app}/${element.id}`}>More info</Nav.Link></div></Card.Footer>
+                    <div><Nav.Link href={`/auctions/${props.app}/${element.id}`}>Show more</Nav.Link></div></Card.Footer>
             </Card>
         })
     } else if (props.auctions.userOfferAll !== null && props.auctions.userOfferAll.length > 0) {
@@ -28,7 +28,7 @@ const ShowUserAuctions = (props) => {
                     <Card.Text>{element.description}</Card.Text>
                     <Card.Text><div className="d-flex justify-content-between"><div>Initial price: <h5>{element.firstPrice} <span>USD</span></h5></div><div>Actual price: <h5>{element.lastPrice} <span>USD</span></h5></div></div></Card.Text>
                     <Card.Footer className="text-muted text-left d-flex justify-content-between align-items-center"><div><span>Finish </span>{timeNow.to(element.dateEnd)} <span>({dayjs(element.dateEnd).format('LL LT')})</span></div>
-                        <div><Nav.Link href={`/auctions/${props.app}/${element.id}`}>More info</Nav.Link></div></Card.Footer>
+                        <div><Nav.Link href={`/auctions/${props.app}/${element.id}`}>Show more</Nav.Link></div></Card.Footer>
                 </Card.Body>
             </Card >
         })

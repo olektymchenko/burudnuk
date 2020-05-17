@@ -69,8 +69,8 @@ const UserDeal = (props) => {
                     <Card.Text><div><b>From : </b>{dayjs(deal.dateFrom).format('LL LT')}</div><div><b>To : </b>{dayjs(deal.dateTo).format('LL LT')}</div></Card.Text>
                     <Card.Text>{deal.message}</Card.Text>
                     <div className="d-flex justify-content-between">
-                        {deal.dealdone === true || deal.dealactive === false ? ('') : (props.UI.loading === false ? (<Button variant="danger" onClick={() => handlerRejectDeal(deal.offerId)}>Reject</Button>) : (<Spinner animation="border" />))}
                         {deal.dealdone === true || deal.dealactive === false ? ('') : (props.UI.loading === false ? (<Button variant="success" onClick={() => handlerAcceptDeal(deal.offerId)}>Accept</Button>) : (<Spinner animation="border" />))}
+                        {deal.dealdone === true || deal.dealactive === false ? ('') : (props.UI.loading === false ? (<Button variant="danger" onClick={() => handlerRejectDeal(deal.offerId)}>Reject</Button>) : (<Spinner animation="border" />))}
                     </div>
                 </Card.Body>
                 <Card.Footer className="text-muted text-right">{dayjs(deal.createdAt).fromNow()}</Card.Footer>

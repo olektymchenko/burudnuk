@@ -47,7 +47,7 @@ class Navigationbar extends Component {
                     )
                 }
                 markarray.push(element.offerId)
-                notifyarray.push(toast.info(CustomToast, { autoClose: 10000 }))
+                notifyarray.push(toast.info(CustomToast, { autoClose: false }))
             });
             this.notify = () => {
                 this.apply(null, notifyarray);
@@ -78,12 +78,9 @@ class Navigationbar extends Component {
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="ml-auto">
-                                {!authenticated ? ("") : (
-                                    <NavDropdown title={<div className="d-flex align-items-center">< FontAwesomeIcon icon={faBalanceScale} size='2x' />Auctions</div>} id="basic-nav-dropdown">
-                                        <NavDropdown.Item href="/user">Users searching</NavDropdown.Item>
-                                        <NavDropdown.Item href="/createoffer">Users offering</NavDropdown.Item>
-                                    </NavDropdown>)
-                                }
+                                {!authenticated ? ("") : (<Nav.Item>
+                                    <Nav.Link className="d-flex align-items-center" href="/allauctions"><FontAwesomeIcon icon={faBalanceScale} size='2x' />Auctions</Nav.Link>
+                                </Nav.Item>)}
                                 {!authenticated ? (<Nav.Item >
                                     <Nav.Link className="d-flex align-items-center" href="/register"><FontAwesomeIcon icon={faStickyNote} size='2x' />Register</Nav.Link>
                                 </Nav.Item>) : (

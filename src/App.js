@@ -30,6 +30,7 @@ import messeges from './pages/messeges';
 import offerauction from './pages/createoffer';
 import lookforauction from './pages/createsearch';
 import userauctions from './pages/userauctions';
+import allauctions from './pages/allauctions';
 import { SET_AUTHENTICATED } from './redux/types';
 import { logoutUser } from './redux/actions/userActions';
 
@@ -64,19 +65,29 @@ class App extends Component {
             <Container fluid>
               <Switch>
                 <Route exact path="/" component={home} />
+                {/* Home page */}
                 <Route exact path="/home" component={home} />
+                {/* Show  info about user with id = userId */}
                 <Route exact path='/users/:userId' component={anotherUser} />
+                {/* Main routes */}
                 <AuthRoute exact path="/login" component={login} />
                 <AuthRoute exact path="/register" component={register} />
+                {/* Show logged user info */}
                 <UserRoute exact path="/user" component={user} />
+                {/* Marketplace */}
                 <UserRoute exact path="/facebook" component={facebook} />
                 <UserRoute exact path="/instagram" component={instagram} />
                 <UserRoute exact path="/tiktok" component={tiktok} />
                 <UserRoute exact path="/telegram" component={telegram} />
+                {/* Messages */}
                 <UserRoute exact path="/messages" component={messeges} />
+                {/* Creating offers */}
                 <UserRoute exact path="/createoffer" component={offerauction} />
                 <UserRoute exact path="/createsearch" component={lookforauction} />
+                {/* Auctions created by user */}
                 <UserRoute exact path="/myauctions" component={userauctions} />
+                {/* Auctions */}
+                <UserRoute exact path='/allauctions' component={allauctions} />
               </Switch>
             </Container>
           </PersistGate>
