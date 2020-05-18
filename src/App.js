@@ -31,6 +31,7 @@ import offerauction from './pages/createoffer';
 import lookforauction from './pages/createsearch';
 import userauctions from './pages/userauctions';
 import allauctions from './pages/allauctions';
+import auction from './pages/auction';
 import { SET_AUTHENTICATED } from './redux/types';
 import { logoutUser } from './redux/actions/userActions';
 
@@ -87,7 +88,8 @@ class App extends Component {
                 {/* Auctions created by user */}
                 <UserRoute exact path="/myauctions" component={userauctions} />
                 {/* Auctions */}
-                <UserRoute exact path='/allauctions' component={allauctions} />
+                <Route exact path='/allauctions' component={allauctions} />
+                <Route exact path='/auctions/:app/:auctionId/:type' component={auction} />
               </Switch>
             </Container>
           </PersistGate>

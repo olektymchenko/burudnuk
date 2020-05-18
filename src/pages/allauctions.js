@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
+import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -67,7 +68,7 @@ class AllAuctions extends Component {
     render() {
         const { loadingauctions } = this.props.auctions
         return (
-            <Fragment>
+            <Container>
                 <Row>
                     <Col className="d-flex align-items-center justify-content-center">
                         <Form.Group controlId="exampleForm.ControlSelect1" style={{ marginLeft: "5%", marginRight: "5%", width: "15%" }}>
@@ -90,11 +91,11 @@ class AllAuctions extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className="d-flex justify-content-around">
+                    <Col xs={8} md={8} lg={7} xl={6}>
                         <AllActiveAuctions auctions={this.props.auctions} app={this.state.app} />
                     </Col>
                 </Row>
-            </Fragment>
+            </Container>
         )
     }
 }

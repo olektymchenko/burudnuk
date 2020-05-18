@@ -78,9 +78,10 @@ class Navigationbar extends Component {
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="ml-auto">
-                                {!authenticated ? ("") : (<Nav.Item>
+                                <Nav.Item>
                                     <Nav.Link className="d-flex align-items-center" href="/allauctions"><FontAwesomeIcon icon={faBalanceScale} size='2x' />Auctions</Nav.Link>
-                                </Nav.Item>)}
+                                </Nav.Item>
+
                                 {!authenticated ? (<Nav.Item >
                                     <Nav.Link className="d-flex align-items-center" href="/register"><FontAwesomeIcon icon={faStickyNote} size='2x' />Register</Nav.Link>
                                 </Nav.Item>) : (

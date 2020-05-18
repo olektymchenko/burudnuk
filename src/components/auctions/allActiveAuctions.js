@@ -5,12 +5,14 @@ import dayjs from 'dayjs';
 import Button from 'react-bootstrap/Button'
 import relativeTime from 'dayjs/plugin/relativeTime';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
+import { connect } from 'react-redux'
 
 const AllActiveAuctions = (props) => {
     let auctions;
     let timeNow = dayjs()
     dayjs.extend(relativeTime)
     dayjs.extend(localizedFormat)
+    const authenticated = props.authenticated;
     if (props.auctions.userSearchActive !== null && props.auctions.userSearchActive.length > 0) {
         auctions = props.auctions.userSearchActive.map((element, index) => {
             return <Card style={{ marginTop: "1%", marginBottom: "1%", flexBasis: "25%" }} key={index}>
@@ -24,7 +26,12 @@ const AllActiveAuctions = (props) => {
                         <div>Finish {timeNow.to(element.dateEnd)}</div>
                         <div>({dayjs(element.dateEnd).format('LL LT')})</div>
                     </div>
-                        <Nav.Link href={`/auctions/${props.app}/${element.id}`}>Show more</Nav.Link></Card.Footer>
+                        {authenticated === true ? (
+                            <Nav.Link href={`/auctions/${props.app}/${element.id}/search`}>Show more</Nav.Link>
+                        ) : (
+                                <Nav.Link href={`/login`}>Show more</Nav.Link>
+                            )}
+                    </Card.Footer>
                 </Card.Body>
             </Card >
 
@@ -42,7 +49,12 @@ const AllActiveAuctions = (props) => {
                         <div>Finish {timeNow.to(element.dateEnd)}</div>
                         <div>({dayjs(element.dateEnd).format('LL LT')})</div>
                     </div>
-                        <Nav.Link href={`/auctions/${props.app}/${element.id}`}>Show more</Nav.Link></Card.Footer>
+                        {authenticated === true ? (
+                            <Nav.Link href={`/auctions/${props.app}/${element.id}/search`}>Show more</Nav.Link>
+                        ) : (
+                                <Nav.Link href={`/login`}>Show more</Nav.Link>
+                            )}
+                    </Card.Footer>
                 </Card.Body>
             </Card >
         })
@@ -58,29 +70,8 @@ const AllActiveAuctions = (props) => {
     )
 }
 
-export default AllActiveAuctions;
+const mapStateToProps = state => ({
+    authenticated: state.user.authenticated
+})
 
-
-{/* For individual action info
- <Card.Title style={{ padding: "1%" }}>{element.title}</Card.Title>
-                <Card.Text style={{ padding: "1%" }}>{element.description}</Card.Text>
-                <Card.Text style={{ padding: "1%" }}><div className="d-flex justify-content-between">
-                    <div>
-                        <div>Finish {timeNow.to(element.dateEnd)}</div>
-                        <div>({dayjs(element.dateEnd).format('LL LT')})</div></div>
-                    <div>
-                        <h2>{element.lastPrice}</h2>
-                        <div>{element.amountOfParticipant} participants</div>
-                    </div>
-                </div></Card.Text>
-                <Card.Text>
-                    <div>Your offer:
-                         <Button variant="info">+1</Button>
-                        <Button variant="info">+5</Button>
-                        <Button variant="info">+10</Button>
-                    </div>
-                </Card.Text>
-                <Card.Footer className="text-muted text-left d-flex justify-content-between align-items-center">
-
-                    <div><Nav.Link href={`/auctions/${props.app}/${element.id}`}>Show more</Nav.Link></div></Card.Footer>
-            */}
+export default connect(mapStateToProps, null)(AllActiveAuctions);

@@ -4,6 +4,8 @@ import {
     START_LOADING_ACTIVE_SEARCH_USER_AUCTIONS, STOP_LOADING_ACTIVE_SEARCH_USER_AUCTIONS, SET_USER_ACTIVE_SEARCH_AUCTIONS,
     START_LOADING_ALL_OFFER_USER_AUCTIONS, STOP_LOADING_ALL_OFFER_USER_AUCTIONS, SET_USER_ALL_OFFER_AUCTIONS,
     START_LOADING_ACTIVE_OFFER_USER_AUCTIONS, STOP_LOADING_ACTIVE_OFFER_USER_AUCTIONS, SET_USER_ACTIVE_OFFER_AUCTIONS,
+    START_LOADING_UNIQUE_AUCTION, STOP_LOADING_UNIQUE_AUCTION, SET_UNIQUE_AUCTION,
+    START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE
 } from '../types';
 import axios from 'axios';
 
@@ -172,7 +174,7 @@ export const startLookingTelegramAuction = (data) => (dispatch) => {
 //////////////////////////////////////////
 export const loadUserAllSearch = (type) => (dispatch) => {
     dispatch({ type: START_LOADING_ALL_SEARCH_USER_AUCTIONS });
-    axios.get(`/auction/${type}/user`).then(res => {
+    axios.get(`/sellerauction/${type}/user`).then(res => {
         dispatch({
             type: SET_USER_ALL_SEARCH_AUCTIONS,
             payload: res.data
@@ -190,7 +192,7 @@ export const loadUserAllSearch = (type) => (dispatch) => {
 
 export const loadUserActiveSearch = (type) => (dispatch) => {
     dispatch({ type: START_LOADING_ACTIVE_SEARCH_USER_AUCTIONS });
-    axios.get(`/auction/${type}/getactive`).then(res => {
+    axios.get(`/sellerauction/${type}/getactive`).then(res => {
         dispatch({
             type: SET_USER_ACTIVE_SEARCH_AUCTIONS,
             payload: res.data
@@ -208,7 +210,7 @@ export const loadUserActiveSearch = (type) => (dispatch) => {
 
 export const loadUserAllOffer = (type) => (dispatch) => {
     dispatch({ type: START_LOADING_ALL_OFFER_USER_AUCTIONS });
-    axios.get(`/sellerauction/${type}/user`).then(res => {
+    axios.get(`/auction/${type}/user`).then(res => {
         dispatch({
             type: SET_USER_ALL_OFFER_AUCTIONS,
             payload: res.data
@@ -226,7 +228,7 @@ export const loadUserAllOffer = (type) => (dispatch) => {
 
 export const loadUserActiveOffer = (type) => (dispatch) => {
     dispatch({ type: START_LOADING_ACTIVE_OFFER_USER_AUCTIONS });
-    axios.get(`/sellerauction/${type}/getactive`).then(res => {
+    axios.get(`/auction/${type}/getactive`).then(res => {
         dispatch({
             type: SET_USER_ACTIVE_OFFER_AUCTIONS,
             payload: res.data
@@ -239,5 +241,68 @@ export const loadUserActiveOffer = (type) => (dispatch) => {
             payload: err.response.data
         })
         dispatch({ type: STOP_LOADING_ACTIVE_OFFER_USER_AUCTIONS });
+    })
+}
+
+export const getAuctionSearchData = (app, auctionId) => (dispatch) => {
+    dispatch({ type: START_LOADING_UNIQUE_AUCTION });
+    axios.get(`/sellerauction/${app}/${auctionId}`).then(res => {
+        dispatch({
+            type: SET_UNIQUE_AUCTION,
+            payload: res.data
+        })
+    }).then(() => {
+        dispatch({ type: CLEAR_ERRORS })
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_UNIQUE_AUCTION });
+    })
+}
+
+export const getAuctionOfferData = (app, auctionId) => (dispatch) => {
+    dispatch({ type: START_LOADING_UNIQUE_AUCTION });
+    axios.get(`/auction/${app}/${auctionId}`).then(res => {
+        dispatch({
+            type: SET_UNIQUE_AUCTION,
+            payload: res.data
+        })
+    }).then(() => {
+        dispatch({ type: CLEAR_ERRORS })
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_UNIQUE_AUCTION });
+    })
+}
+
+
+export const addNewOfferPrice = (newPrice, auctionId, app) => (dispatch) => {
+    dispatch({ type: START_LOADING_NEW_AUCTION_PRICE });
+    axios.post(`/auction/${app}/newprice/${auctionId}`, newPrice).then(() => {
+        dispatch({ type: STOP_LOADING_NEW_AUCTION_PRICE })
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_NEW_AUCTION_PRICE });
+    })
+}
+
+export const addNewSearchPrice = (newPrice, auctionId, app) => (dispatch) => {
+    dispatch({ type: START_LOADING_NEW_AUCTION_PRICE });
+    axios.post(`/sellerauction/${app}/newprice/${auctionId}`, newPrice).then(() => {
+        dispatch({ type: STOP_LOADING_NEW_AUCTION_PRICE })
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_NEW_AUCTION_PRICE });
     })
 }

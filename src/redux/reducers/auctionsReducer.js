@@ -2,7 +2,9 @@ import {
     START_LOADING_ALL_SEARCH_USER_AUCTIONS, STOP_LOADING_ALL_SEARCH_USER_AUCTIONS, SET_USER_ALL_SEARCH_AUCTIONS,
     START_LOADING_ACTIVE_SEARCH_USER_AUCTIONS, STOP_LOADING_ACTIVE_SEARCH_USER_AUCTIONS, SET_USER_ACTIVE_SEARCH_AUCTIONS,
     START_LOADING_ALL_OFFER_USER_AUCTIONS, STOP_LOADING_ALL_OFFER_USER_AUCTIONS, SET_USER_ALL_OFFER_AUCTIONS,
-    START_LOADING_ACTIVE_OFFER_USER_AUCTIONS, STOP_LOADING_ACTIVE_OFFER_USER_AUCTIONS, SET_USER_ACTIVE_OFFER_AUCTIONS
+    START_LOADING_ACTIVE_OFFER_USER_AUCTIONS, STOP_LOADING_ACTIVE_OFFER_USER_AUCTIONS, SET_USER_ACTIVE_OFFER_AUCTIONS,
+    START_LOADING_UNIQUE_AUCTION, STOP_LOADING_UNIQUE_AUCTION, SET_UNIQUE_AUCTION,
+    START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE
 } from '../types';
 
 const initialState = {
@@ -10,7 +12,10 @@ const initialState = {
     userSearchActive: null,
     userOfferAll: null,
     userOfferActive: null,
+    uniqueAuction: null,
     loadingauctions: false,
+    loadingnewprice: false,
+
 }
 
 export default function (state = initialState, action) {
@@ -98,6 +103,32 @@ export default function (state = initialState, action) {
                 ...state,
                 userOfferActive: action.payload,
                 loadingauctions: false
+            }
+        case START_LOADING_UNIQUE_AUCTION:
+            return {
+                ...state,
+                loadingauctions: true
+            }
+        case STOP_LOADING_UNIQUE_AUCTION:
+            return {
+                ...state,
+                loadingauctions: false
+            }
+        case SET_UNIQUE_AUCTION:
+            return {
+                ...state,
+                uniqueAuction: action.payload,
+                loadingauctions: false
+            }
+        case START_LOADING_NEW_AUCTION_PRICE:
+            return {
+                ...state,
+                loadingnewprice: true
+            }
+        case STOP_LOADING_NEW_AUCTION_PRICE:
+            return {
+                ...state,
+                loadingnewprice: false
             }
         default:
             return state;
