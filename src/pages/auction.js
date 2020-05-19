@@ -4,8 +4,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Spinner from 'react-bootstrap/Spinner'
 import { connect } from 'react-redux';
-import { getAuctionSearchData, getAuctionOfferData } from '../redux/actions/Auctions';
+import { getAuctionSearchData, getAuctionOfferData, updateAuctionData } from '../redux/actions/Auctions';
 import UniqueAuction from '../components/auctions/uniqueAuction';
+import AuctionParticipants from '../components/auctions/auctionParticipants'
+import firebase from '../fireconfig';
 
 class auction extends Component {
 
@@ -17,6 +19,19 @@ class auction extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        let collectionname;
+        if (this.props.match.params.type === "search") {
+            collectionname = this.props.match.params.app + "selleractions"
+        } else if (this.props.match.params.type === "offer") {
+            collectionname = this.props.match.params.app + "actions"
+        }
+        if (this.props.auctions.uniqueAuction.lastPrice !== nextProps.auctions.uniqueAuction.lastPrice)
+            firebase.firestore().collection(collectionname).doc(this.props.match.params.auctionId).onSnapshot(querySnapshot => {
+                this.props.updateAuctionData(querySnapshot.data())
+            })
+
+    }
 
     render() {
         const loading = this.props.auctions.loadingauctions;
@@ -26,7 +41,9 @@ class auction extends Component {
                     <Col xs={8}>
                         {loading === false && this.props.auctions.uniqueAuction !== null ? <UniqueAuction data={this.props.auctions.uniqueAuction} app={this.props.match.params.app} type={this.props.match.params.type} auctionId={this.props.match.params.auctionId} /> : <Spinner animation="border" />}
                     </Col>
-                    <Col></Col>
+                    <Col xs={4} style={{ marginTop: "2%", maxHeight: '80vh', overflow: 'auto' }}>
+                        {loading === false && this.props.auctions.uniqueAuction !== null ? <AuctionParticipants data={this.props.auctions.uniqueAuction} app={this.props.match.params.app} type={this.props.match.params.type} auctionId={this.props.match.params.auctionId} /> : <Spinner animation="border" />}
+                    </Col>
                 </Row>
             </Container>
         )
@@ -35,6 +52,7 @@ class auction extends Component {
 
 const mapStateToProps = state => ({
     auctions: state.auctions,
-    UI: state.UI
+    UI: state.UI,
+    user: state.user
 })
-export default connect(mapStateToProps, { getAuctionSearchData, getAuctionOfferData })(auction)
+export default connect(mapStateToProps, { getAuctionSearchData, getAuctionOfferData, updateAuctionData })(auction)

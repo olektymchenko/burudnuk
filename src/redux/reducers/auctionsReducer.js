@@ -4,7 +4,8 @@ import {
     START_LOADING_ALL_OFFER_USER_AUCTIONS, STOP_LOADING_ALL_OFFER_USER_AUCTIONS, SET_USER_ALL_OFFER_AUCTIONS,
     START_LOADING_ACTIVE_OFFER_USER_AUCTIONS, STOP_LOADING_ACTIVE_OFFER_USER_AUCTIONS, SET_USER_ACTIVE_OFFER_AUCTIONS,
     START_LOADING_UNIQUE_AUCTION, STOP_LOADING_UNIQUE_AUCTION, SET_UNIQUE_AUCTION,
-    START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE
+    START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE,
+    START_LOADING_SNAPSHOT_AUCTION, STOP_LOADING_SNAPSHOT_AUCTION, SET_LOADING_SNAPSHOT_AUCTION
 } from '../types';
 
 const initialState = {
@@ -129,6 +130,22 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 loadingnewprice: false
+            }
+        case START_LOADING_SNAPSHOT_AUCTION:
+            return {
+                ...state,
+                loadingauctions: true
+            }
+        case STOP_LOADING_SNAPSHOT_AUCTION:
+            return {
+                ...state,
+                loadingauctions: false
+            }
+        case SET_LOADING_SNAPSHOT_AUCTION:
+            return {
+                ...state,
+                uniqueAuction: action.payload,
+                loadingauctions: false
             }
         default:
             return state;

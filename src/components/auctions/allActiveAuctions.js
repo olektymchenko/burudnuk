@@ -22,17 +22,17 @@ const AllActiveAuctions = (props) => {
                     <Card.Title>{element.title}</Card.Title>
                     <Card.Text>{element.description}</Card.Text>
                     <Card.Text><div className="d-flex justify-content-between"><div>Initial price: <h5>{element.firstPrice} <span>USD</span></h5></div><div>Actual price: <h5>{element.lastPrice} <span>USD</span></h5></div></div></Card.Text>
-                    <Card.Footer className="text-muted text-left d-flex justify-content-between align-items-center"><div>
-                        <div>Finish {timeNow.to(element.dateEnd)}</div>
-                        <div>({dayjs(element.dateEnd).format('LL LT')})</div>
-                    </div>
-                        {authenticated === true ? (
-                            <Nav.Link href={`/auctions/${props.app}/${element.id}/search`}>Show more</Nav.Link>
-                        ) : (
-                                <Nav.Link href={`/login`}>Show more</Nav.Link>
-                            )}
-                    </Card.Footer>
                 </Card.Body>
+                <Card.Footer className="text-muted text-left d-flex justify-content-between align-items-center"><div>
+                    <div>Finish {timeNow.to(element.dateEnd)}</div>
+                    <div>({dayjs(element.dateEnd).format('LL LT')})</div>
+                </div>
+                    {authenticated === true ? (
+                        <Nav.Link href={`/auctions/${props.app}/${element.id}/search`}>Show more</Nav.Link>
+                    ) : (
+                            <Nav.Link href={`/login`}>Show more</Nav.Link>
+                        )}
+                </Card.Footer>
             </Card >
 
         })
@@ -45,17 +45,17 @@ const AllActiveAuctions = (props) => {
                     <Card.Title>{element.title}</Card.Title>
                     <Card.Text>{element.description}</Card.Text>
                     <Card.Text><div className="d-flex justify-content-between"><div>Initial price: <h5>{element.firstPrice} <span>USD</span></h5></div><div>Actual price: <h5>{element.lastPrice} <span>USD</span></h5></div></div></Card.Text>
-                    <Card.Footer className="text-muted text-left d-flex justify-content-between align-items-center"><div>
-                        <div>Finish {timeNow.to(element.dateEnd)}</div>
-                        <div>({dayjs(element.dateEnd).format('LL LT')})</div>
-                    </div>
-                        {authenticated === true ? (
-                            <Nav.Link href={`/auctions/${props.app}/${element.id}/search`}>Show more</Nav.Link>
-                        ) : (
-                                <Nav.Link href={`/login`}>Show more</Nav.Link>
-                            )}
-                    </Card.Footer>
                 </Card.Body>
+                <Card.Footer className="text-muted text-left d-flex justify-content-between align-items-center"><div>
+                    <div>Finish {timeNow.to(element.dateEnd)}</div>
+                    <div>({dayjs(element.dateEnd).format('LL LT')})</div>
+                </div>
+                    {authenticated === true ? (
+                        <Nav.Link href={`/auctions/${props.app}/${element.id}/search`}>Show more</Nav.Link>
+                    ) : (
+                            <Nav.Link href={`/login`}>Show more</Nav.Link>
+                        )}
+                </Card.Footer>
             </Card >
         })
 

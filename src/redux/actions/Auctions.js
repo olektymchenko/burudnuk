@@ -5,7 +5,8 @@ import {
     START_LOADING_ALL_OFFER_USER_AUCTIONS, STOP_LOADING_ALL_OFFER_USER_AUCTIONS, SET_USER_ALL_OFFER_AUCTIONS,
     START_LOADING_ACTIVE_OFFER_USER_AUCTIONS, STOP_LOADING_ACTIVE_OFFER_USER_AUCTIONS, SET_USER_ACTIVE_OFFER_AUCTIONS,
     START_LOADING_UNIQUE_AUCTION, STOP_LOADING_UNIQUE_AUCTION, SET_UNIQUE_AUCTION,
-    START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE
+    START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE,
+    START_LOADING_SNAPSHOT_AUCTION, STOP_LOADING_SNAPSHOT_AUCTION, SET_LOADING_SNAPSHOT_AUCTION
 } from '../types';
 import axios from 'axios';
 
@@ -171,7 +172,7 @@ export const startLookingTelegramAuction = (data) => (dispatch) => {
     })
 }
 
-//////////////////////////////////////////
+////////////////////////////////////////// load user own search auctions
 export const loadUserAllSearch = (type) => (dispatch) => {
     dispatch({ type: START_LOADING_ALL_SEARCH_USER_AUCTIONS });
     axios.get(`/sellerauction/${type}/user`).then(res => {
@@ -189,7 +190,7 @@ export const loadUserAllSearch = (type) => (dispatch) => {
         dispatch({ type: STOP_LOADING_ALL_SEARCH_USER_AUCTIONS });
     })
 }
-
+// load all active search auctions
 export const loadUserActiveSearch = (type) => (dispatch) => {
     dispatch({ type: START_LOADING_ACTIVE_SEARCH_USER_AUCTIONS });
     axios.get(`/sellerauction/${type}/getactive`).then(res => {
@@ -208,6 +209,7 @@ export const loadUserActiveSearch = (type) => (dispatch) => {
     })
 }
 
+// load own user offer auctions
 export const loadUserAllOffer = (type) => (dispatch) => {
     dispatch({ type: START_LOADING_ALL_OFFER_USER_AUCTIONS });
     axios.get(`/auction/${type}/user`).then(res => {
@@ -225,7 +227,7 @@ export const loadUserAllOffer = (type) => (dispatch) => {
         dispatch({ type: STOP_LOADING_ALL_OFFER_USER_AUCTIONS });
     })
 }
-
+// load all active search auctions
 export const loadUserActiveOffer = (type) => (dispatch) => {
     dispatch({ type: START_LOADING_ACTIVE_OFFER_USER_AUCTIONS });
     axios.get(`/auction/${type}/getactive`).then(res => {
@@ -243,7 +245,7 @@ export const loadUserActiveOffer = (type) => (dispatch) => {
         dispatch({ type: STOP_LOADING_ACTIVE_OFFER_USER_AUCTIONS });
     })
 }
-
+// get info about search auction using ID
 export const getAuctionSearchData = (app, auctionId) => (dispatch) => {
     dispatch({ type: START_LOADING_UNIQUE_AUCTION });
     axios.get(`/sellerauction/${app}/${auctionId}`).then(res => {
@@ -261,7 +263,7 @@ export const getAuctionSearchData = (app, auctionId) => (dispatch) => {
         dispatch({ type: STOP_LOADING_UNIQUE_AUCTION });
     })
 }
-
+// get info about search auction using ID
 export const getAuctionOfferData = (app, auctionId) => (dispatch) => {
     dispatch({ type: START_LOADING_UNIQUE_AUCTION });
     axios.get(`/auction/${app}/${auctionId}`).then(res => {
@@ -280,7 +282,7 @@ export const getAuctionOfferData = (app, auctionId) => (dispatch) => {
     })
 }
 
-
+// Adding new price to auctions
 export const addNewOfferPrice = (newPrice, auctionId, app) => (dispatch) => {
     dispatch({ type: START_LOADING_NEW_AUCTION_PRICE });
     axios.post(`/auction/${app}/newprice/${auctionId}`, newPrice).then(() => {
@@ -305,4 +307,13 @@ export const addNewSearchPrice = (newPrice, auctionId, app) => (dispatch) => {
         })
         dispatch({ type: STOP_LOADING_NEW_AUCTION_PRICE });
     })
+}
+
+export const updateAuctionData = (newData) => (dispatch) => {
+    dispatch({ type: START_LOADING_SNAPSHOT_AUCTION });
+    dispatch({
+        type: SET_LOADING_SNAPSHOT_AUCTION,
+        payload: newData
+    });
+    dispatch({ type: STOP_LOADING_SNAPSHOT_AUCTION })
 }

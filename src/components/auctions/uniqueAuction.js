@@ -5,11 +5,11 @@ import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl'
+import Nav from 'react-bootstrap/Nav';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { connect } from 'react-redux';
 import { addNewOfferPrice, addNewSearchPrice } from '../../redux/actions/Auctions';
-import firebase from '../../fireconfig';
 
 
 const UniqueAuction = (props) => {
@@ -55,22 +55,17 @@ const UniqueAuction = (props) => {
 
     }
 
-    let title = props.data.title;
-    let description = props.data.description;
-    let dateEnd = props.data.dateEnd;
-    let lastPrice = props.data.lastPrice;
-    let amountOfParticipant = props.data.amountOfParticipant;
     return (
         <Card style={{ marginTop: '3%' }}>
-            <Card.Title style={{ padding: "1%" }}>{title}</Card.Title>
-            <Card.Text style={{ padding: "1%" }}>{description}</Card.Text>
+            <Card.Title style={{ padding: "1%" }} className="d-flex justify-content-between align-items-center"><div>{props.data.title}</div><div className="d-flex align-items-center">Created by <Nav.Link href={`/users/${props.data.creatorId}`}>{props.data.creatorNickname}</Nav.Link></div></Card.Title>
+            <Card.Text style={{ padding: "1%" }}>{props.data.description}</Card.Text>
             <Card.Text style={{ padding: "1%" }}><div className="d-flex justify-content-between">
                 <div>
-                    <div>Finish {timeNow.to(dateEnd)}</div>
-                    <div>({dayjs(dateEnd).format('LL LT')})</div></div>
+                    <div>Finish {timeNow.to(props.data.dateEnd)}</div>
+                    <div>({dayjs(props.data.dateEnd).format('LL LT')})</div></div>
                 <div>
-                    <h2 style={{ color: "blue" }}>{lastPrice} USD</h2>
-                    <div>{amountOfParticipant} participants</div>
+                    <h2 style={{ color: "blue" }}>{props.data.lastPrice} USD</h2>
+                    <div>{props.data.amountOfParticipant} participants</div>
                 </div>
             </div></Card.Text>
             <Card.Text className="d-flex justify-content-around">
@@ -124,9 +119,9 @@ const UniqueAuction = (props) => {
 
             </Card.Text>
             <Card.Footer className="d-flex justify-content-center">
-                {props.auctions.loadingnewprice === false ? (<Button variant="info" size="lg" onClick={handleAuction}>Add {price} USD</Button>) : (
-                    <Spinner animation="border" />
-                )}
+                {props.user.userdata.userId !== props.auctions.uniqueAuction.creatorId ? ( // logger user id !== auction creator id
+                    props.auctions.loadingnewprice === false ? (<Button variant="info" size="lg" onClick={handleAuction}>Give {price} USD</Button>) : (
+                        <Spinner animation="border" />)) : ("You can't take part in auction created by you!")}
             </Card.Footer>
         </Card>
     )
@@ -134,7 +129,8 @@ const UniqueAuction = (props) => {
 
 const mapStateToProps = state => ({
     auctions: state.auctions,
-    UI: state.UI
+    UI: state.UI,
+    user: state.user
 })
 
 export default connect(mapStateToProps, { addNewOfferPrice, addNewSearchPrice })(UniqueAuction)

@@ -70,9 +70,9 @@ class AllAuctions extends Component {
         return (
             <Container>
                 <Row>
-                    <Col className="d-flex align-items-center justify-content-center">
+                    <Col className="d-flex align-items-center justify-content-center" xs={12} md={12} lg={12} xl={12}>
                         <Form.Group controlId="exampleForm.ControlSelect1" style={{ marginLeft: "5%", marginRight: "5%", width: "15%" }}>
-                            <Form.Label>Choose marketplace:</Form.Label>
+                            <Form.Label>Marketplace:</Form.Label>
                             <Form.Control as="select" onChange={this.handleApp}>
                                 <option value="facebook">Facebook</option>
                                 <option value="instagram">Instagram</option>
@@ -81,7 +81,7 @@ class AllAuctions extends Component {
                             </Form.Control>
                         </Form.Group>
                         <Form.Group controlId="exampleForm.ControlSelect2" style={{ marginRight: "5%", width: "15%" }}>
-                            <Form.Label>Choose kind of auctions:</Form.Label>
+                            <Form.Label>Kind of auctions:</Form.Label>
                             <Form.Control as="select" onChange={this.handleKind}>
                                 <option value="offer">Offer</option>
                                 <option value="search">Search</option>
@@ -91,7 +91,7 @@ class AllAuctions extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col xs={8} md={8} lg={7} xl={6}>
+                    <Col xs={12} md={12} lg={7} xl={6}>
                         <AllActiveAuctions auctions={this.props.auctions} app={this.state.app} />
                     </Col>
                 </Row>
