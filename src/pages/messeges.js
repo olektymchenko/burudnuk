@@ -57,10 +57,15 @@ class messeges extends React.PureComponent {
         if (clientdeals != null && notEmpty(clientdeals))
             clientvalue = true;
 
+        const navbar = document.getElementById('navigation-menu-width');
+        let navbarWidth;
+        if (navbar !== null) {
+            navbarWidth = navbar.offsetHeight;
+        }
         return (
             <Container>
-                <Row>
-                    <Col xs={12} md={12} lg={4} xl={4}>
+                <Row style={{ backgroundColor: 'white', marginTop: "4vh", marginBottom: "4vh" }}>
+                    <Col xs={12} md={12} lg={4} xl={4} style={{ height: `calc(92vh - ${navbarWidth}px)`, overflow: 'auto' }}>
                         <Tabs defaultActiveKey="seller" id="uncontrolled-tab-example">
                             <Tab eventKey="seller" title="For me">
                                 {loadingsellerdeals === false ? (sellervalue === true ? (<MessageSeller data={this.props.listofsellerdeals} click={this.getMessagesWithId} />) : ("No messages")) : (<Spinner animation="border" />)}
@@ -72,7 +77,7 @@ class messeges extends React.PureComponent {
 
                     </Col>
                     <Col xs={12} md={12} lg={8} xl={8}>
-                        {this.state.messageId !== '0' ? (<MessageList id={this.state.messageId} nickname={this.props.nickname} />) : (<Card border="primary" style={{ marginTop: '5%', height: '50vh' }} className="d-flex align-items-center justify-content-center">
+                        {this.state.messageId !== '0' ? (<MessageList id={this.state.messageId} nickname={this.props.nickname} />) : (<Card style={{ marginTop: '3%', marginBottom: '3%', height: `calc(80vh - ${navbarWidth}px)` }} className="d-flex align-items-center justify-content-center">
                             <Card.Text>Hello, please choose a deal to start!</Card.Text>
                         </Card>)}
                     </Col>

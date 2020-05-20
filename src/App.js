@@ -62,7 +62,7 @@ class App extends Component {
       <Provider store={store}>
         <Router>
           <PersistGate persistor={persistor}>
-            <Container fluid className="navigation"><Navbar /></Container>
+            <Container fluid className="navigation" id='navigation-menu-width'><Navbar /></Container>
             <Container fluid>
               <Switch>
                 <Route exact path="/" component={home} />

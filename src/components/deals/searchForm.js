@@ -14,7 +14,7 @@ import { startLookingFacebookAuction, startLookingInstagramAuction, startLooking
 const SearchForm = (props) => {
     const dateFrom = new Date();
 
-    const [dateTo, setDateTo] = useState(new Date());
+    const [dateTo, setDateTo] = useState(null);
 
     const [titleData, setTitle] = useState('');
     const handleUpdateTitle = (event) => setTitle(event.target.value)
@@ -30,14 +30,15 @@ const SearchForm = (props) => {
             title: titleData,
             description: descrData,
             initPrice: priceData,
-            dateEnd: dateTo
+            dateEnd: dateTo.getTime()
+
         }
         if (props.app === "Facebook") {
             props.startLookingFacebookAuction(data);
             setTitle('');
             setDescr('');
             setPrice('');
-            setDateTo(new Date());
+            setDateTo(null);
         }
 
         if (props.app === "Instagram") {
@@ -45,7 +46,7 @@ const SearchForm = (props) => {
             setTitle('');
             setDescr('');
             setPrice('');
-            setDateTo(new Date());
+            setDateTo(null);
         }
 
         if (props.app === "TikTok") {
@@ -53,7 +54,7 @@ const SearchForm = (props) => {
             setTitle('');
             setDescr('');
             setPrice('');
-            setDateTo(new Date());
+            setDateTo(null);
         }
 
         if (props.app === "Telegram") {
@@ -61,7 +62,7 @@ const SearchForm = (props) => {
             setTitle('');
             setDescr('');
             setPrice('');
-            setDateTo(new Date());
+            setDateTo(null);
         }
 
     }
@@ -100,7 +101,7 @@ const SearchForm = (props) => {
                 </InputGroup.Append>
                 {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.firstPrice}</Form.Text>) : ""}
             </InputGroup>
-            <div className="d-flex justify-content-between"><span style={{ fontWeight: 'bold' }}>End date:</span><DatePicker selectsEnd startDate={dateFrom} endDate={dateTo} minDate={dateFrom} selected={dateTo} onChange={date => setDateTo(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div>
+            <div className="d-flex justify-content-between"><span style={{ fontWeight: 'bold' }}>End date:</span><DatePicker selectsEnd startDate={dateFrom} endDate={dateTo} minDate={dateFrom} selected={dateTo} placeholderText="Select end date" onChange={date => setDateTo(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div>
 
             {generals.current !== null ? (<Form.Text className="text-muted">{generals.current.general}</Form.Text>) : ""}
             {props.UI.loadingauction === true ? (<Spinner animation="border" />) : (<div className="d-flex justify-content-end" style={{ marginTop: '3%' }}><Button variant="primary" onClick={handleSendOfferAuction}>Start!</Button>{' '}</div>)}

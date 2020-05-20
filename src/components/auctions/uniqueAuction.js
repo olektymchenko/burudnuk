@@ -119,9 +119,12 @@ const UniqueAuction = (props) => {
 
             </Card.Text>
             <Card.Footer className="d-flex justify-content-center">
-                {props.user.userdata.userId !== props.auctions.uniqueAuction.creatorId ? ( // logger user id !== auction creator id
-                    props.auctions.loadingnewprice === false ? (<Button variant="info" size="lg" onClick={handleAuction}>Give {price} USD</Button>) : (
-                        <Spinner animation="border" />)) : ("You can't take part in auction created by you!")}
+                {props.auctions.uniqueAuction.active === true ? ( // Check if auction active
+                    props.user.userdata.userId !== props.auctions.uniqueAuction.creatorId ? ( // logger user id !== auction creator id
+                        props.auctions.loadingnewprice === false ? ( // If user click, start spinner
+                            <Button variant="info" size="lg" onClick={handleAuction}>Give {price} USD</Button>) : (
+                                <Spinner animation="border" />)) : ("You can't take part in auction created by you!")
+                ) : ("Auction was finished")}
             </Card.Footer>
         </Card>
     )

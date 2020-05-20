@@ -107,18 +107,26 @@ const Messages = (props) => {
             handleAddMessages(lastElement);
             const timer = setTimeout(() => { // wait 1sek, for new messages
                 scrollToBottom();
-            }, 500);
+            }, 1000);
             return () => clearTimeout(timer);
         })
     }, [props])
 
+    const navbar = document.getElementById('navigation-menu-width');
+    const inputElement = document.getElementById('input-message-element');
+    let inputElementWidth;
+    let navbarWidth;
+    if (navbar !== null && inputElement !== null) {
+        navbarWidth = navbar.offsetHeight;
+        inputElementWidth = inputElement.offsetHeight;
+    }
 
     return (
-        < Fragment >
-            <div style={{ maxHeight: '70vh', overflow: 'auto' }} >
+        < Fragment>
+            <div style={{ height: `calc(92vh - ${navbarWidth}px - ${inputElementWidth}px)`, overflow: 'auto' }}>
                 {doingdata === true ? messages : ''}
             </div>
-            <div className="d-flex align-items-center justify-content-around" style={{ backgroundColor: 'gainsboro', padding: '15px' }}>
+            <div className="d-flex align-items-center justify-content-around" id="input-message-element" style={{ backgroundColor: 'gainsboro', padding: '15px' }}>
                 {props.loading === false ? (<Nav.Item >
                     <Nav.Link href="#" onClick={handleAddImage}><FontAwesomeIcon icon={faImage} size='2x' /></Nav.Link>
                 </Nav.Item>) : ''}

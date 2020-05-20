@@ -12,7 +12,7 @@ const ShowUserAuctions = (props) => {
     dayjs.extend(localizedFormat)
     if (props.auctions.userSearchAll !== null && props.auctions.userSearchAll.length > 0) {
         auctions = props.auctions.userSearchAll.map((element, index) => {
-            return <Card style={{ marginTop: "1%", marginBottom: "1%" }}>
+            return <Card style={{ marginTop: "1%", marginBottom: "1%" }} key={index}>
                 <Card.Body>
                     <Card.Title className="d-flex justify-content-between"><div>{element.title}</div><div>{element.amountOfParticipant} <span>participants</span></div></Card.Title>
                     <Card.Text>{element.description}</Card.Text>
@@ -24,7 +24,7 @@ const ShowUserAuctions = (props) => {
         })
     } else if (props.auctions.userOfferAll !== null && props.auctions.userOfferAll.length > 0) {
         auctions = props.auctions.userOfferAll.map((element, index) => {
-            return <Card style={{ marginTop: "1%", marginBottom: "1%" }}>
+            return <Card style={{ marginTop: "1%", marginBottom: "1%" }} key={index}>
                 <Card.Body>
                     <Card.Title className="d-flex justify-content-between"><div>{element.title}</div><div>{element.amountOfParticipant} <span>participants</span></div></Card.Title>
                     <Card.Text>{element.description}</Card.Text>

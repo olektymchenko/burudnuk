@@ -12,7 +12,7 @@ const MessageOffer = (props) => {
         dayjs.extend(localizedFormat)
         listOfSellers = props.data.map((element, index) => {
             return (
-                <Card style={{ width: '100%', marginTop: '3%', marginBottom: '3%' }} key={index} bg="light" border="primary">
+                <Card style={{ width: '100%', marginTop: '3%', marginBottom: '3%' }} key={index}>
                     <Card.Body>
                         <Card.Title> <Nav.Link href={`/users/${element.dealsender}`}>{element.dealsendernickname}</Nav.Link></Card.Title>
                         <Card.Subtitle className="mb-2 text-muted"><div>From: {dayjs(element.dateFrom).format('LL LT')}</div></Card.Subtitle>

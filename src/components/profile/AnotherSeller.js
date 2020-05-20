@@ -64,9 +64,9 @@ const AnotherSeller = (props) => {
 
     /* State for date */
 
-    const [dateFrom, setDateFrom] = useState(new Date());
+    const [dateFrom, setDateFrom] = useState(null);
 
-    const [dateTo, setDateTo] = useState(new Date());
+    const [dateTo, setDateTo] = useState(null);
 
 
     let handleAddLike;
@@ -187,8 +187,8 @@ const AnotherSeller = (props) => {
             props.sentTelegramDeal(props.data.mainInfo.userId, newDeal);
             setPrice('');
             setMessage('');
-            setDateFrom('');
-            setDateTo('');
+            setDateFrom(null);
+            setDateTo(null);
 
         }
     }
@@ -327,8 +327,8 @@ const AnotherSeller = (props) => {
                     <Form.Group controlId="exampleForm.ControlTextarea1" style={{ padding: '2%' }}>
                         <Form.Control as="textarea" rows="3" name="message" value={messageData} onChange={handleUpdateMessage} placeholder="Enter your message..." />
                         {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.message}</Form.Text>) : ""}
-                        <div className="d-flex justify-content-around" style={{ marginTop: '3%' }}><div><p>From:</p><DatePicker selected={dateFrom} selectsStart startDate={dateFrom} endDate={dateTo} onChange={date => setDateFrom(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div>
-                            <div><p>To:</p><DatePicker selectsEnd startDate={dateFrom} endDate={dateTo} minDate={dateFrom} selected={dateTo} onChange={date => setDateTo(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div></div>
+                        <div className="d-flex justify-content-around" style={{ marginTop: '3%' }}><div><p>From:</p><DatePicker selected={dateFrom} placeholderText="Select start date" selectsStart startDate={dateFrom} endDate={dateTo} onChange={date => setDateFrom(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div>
+                            <div><p>To:</p><DatePicker selectsEnd startDate={dateFrom} endDate={dateTo} minDate={new Date()} selected={dateTo} placeholderText="Select end date" onChange={date => setDateTo(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div></div>
                     </Form.Group>
                     {generals.current !== null ? (<Form.Text className="text-muted">{generals.current.general}</Form.Text>) : ""}
                 </Form>

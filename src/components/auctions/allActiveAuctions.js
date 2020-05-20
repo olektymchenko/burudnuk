@@ -51,7 +51,7 @@ const AllActiveAuctions = (props) => {
                     <div>({dayjs(element.dateEnd).format('LL LT')})</div>
                 </div>
                     {authenticated === true ? (
-                        <Nav.Link href={`/auctions/${props.app}/${element.id}/search`}>Show more</Nav.Link>
+                        <Nav.Link href={`/auctions/${props.app}/${element.id}/offer`}>Show more</Nav.Link>
                     ) : (
                             <Nav.Link href={`/login`}>Show more</Nav.Link>
                         )}

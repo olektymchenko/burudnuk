@@ -14,7 +14,12 @@ class userauctions extends Component {
         this.state = {
             app: 'facebook',
             kind: 'offer',
+
         }
+    }
+
+    componentDidMount() {
+
     }
 
     handleApp = (event) => {
@@ -62,8 +67,10 @@ class userauctions extends Component {
         }
     }
 
+
+
     render() {
-        const { loadingauctions } = this.props.auctions
+        const { loadingauctions } = this.props.auctions;
         return (
             <Row className="justify-content-center">
                 <Col xs={8} md={6} lg={4} xl={4}>
@@ -88,7 +95,7 @@ class userauctions extends Component {
                         <div className="d-flex justify-content-center">{loadingauctions === false ? (<Button variant="primary" onClick={this.handleCheckData} style={{ marginBottom: '50px' }}>Check</Button>) : (<Spinner animation="border" />)}</div>
                     </Form>
                 </Col>
-                <Col xs={8} md={6} lg={4} xl={4}>
+                <Col xs={8} md={6} lg={4} xl={4} style={{ height: `calc(96vh - 68px)`, overflow: 'auto' }}>
                     <ShowUserAuctions auctions={this.props.auctions} app={this.state.app} />
                 </Col>
             </Row >

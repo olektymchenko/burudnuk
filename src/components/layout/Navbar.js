@@ -41,7 +41,7 @@ class Navigationbar extends Component {
                     return (
                         <div>
                             <div className="d-flex justify-content-between align-items-center"><div><h5>Offer from {element.dealsendernickname}</h5></div><div style={{ marginRight: '5%' }}><h5>{element.price} USD</h5></div></div>
-                            <p>In {element.app}</p>
+                            <p>{element.app} marketplace</p>
                             <div className="d-flex justify-content-end"><small>{dayjs(element.createdAt).fromNow()}</small></div>
                         </div>
                     )

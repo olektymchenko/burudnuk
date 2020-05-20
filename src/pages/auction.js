@@ -10,7 +10,6 @@ import AuctionParticipants from '../components/auctions/auctionParticipants'
 import firebase from '../fireconfig';
 
 class auction extends Component {
-
     componentDidMount() {
         if (this.props.match.params.type === 'offer') {
             this.props.getAuctionOfferData(this.props.match.params.app, this.props.match.params.auctionId);
@@ -26,7 +25,7 @@ class auction extends Component {
         } else if (this.props.match.params.type === "offer") {
             collectionname = this.props.match.params.app + "actions"
         }
-        if (this.props.auctions.uniqueAuction.lastPrice !== nextProps.auctions.uniqueAuction.lastPrice)
+        if (this.props.auctions.uniqueAuction !== null && nextProps.auctions.uniqueAuction !== null && this.props.auctions.uniqueAuction.lastPrice !== nextProps.auctions.uniqueAuction.lastPrice)
             firebase.firestore().collection(collectionname).doc(this.props.match.params.auctionId).onSnapshot(querySnapshot => {
                 this.props.updateAuctionData(querySnapshot.data())
             })
