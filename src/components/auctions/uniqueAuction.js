@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import Card from 'react-bootstrap/Card';
 import dayjs from 'dayjs';
 import Button from 'react-bootstrap/Button'
@@ -55,8 +55,26 @@ const UniqueAuction = (props) => {
 
     }
 
+
+    const validdata = () => {
+        if (props.type === 'offer') {
+            if (price > initPtice) { // user offer own ads, price rise, actual must be > init price
+                return true
+            } else {
+                return false
+            }
+        } else if (props.type === 'search') {
+            if (price < initPtice) { // offer search for ads, price down
+                return true
+            } else {
+                return false
+            }
+        }
+
+    }
     return (
-        <Card style={{ marginTop: '3%' }}>
+        < Card style={{ marginTop: '3%' }
+        }>
             <Card.Title style={{ padding: "1%" }} className="d-flex justify-content-between align-items-center"><div>{props.data.title}</div><div className="d-flex align-items-center">Created by <Nav.Link href={`/users/${props.data.creatorId}`}>{props.data.creatorNickname}</Nav.Link></div></Card.Title>
             <Card.Text style={{ padding: "1%" }}>{props.data.description}</Card.Text>
             <Card.Text style={{ padding: "1%" }}><div className="d-flex justify-content-between">
@@ -119,14 +137,15 @@ const UniqueAuction = (props) => {
 
             </Card.Text>
             <Card.Footer className="d-flex justify-content-center">
-                {props.auctions.uniqueAuction.active === true ? ( // Check if auction active
-                    props.user.userdata.userId !== props.auctions.uniqueAuction.creatorId ? ( // logger user id !== auction creator id
-                        props.auctions.loadingnewprice === false ? ( // If user click, start spinner
-                            <Button variant="info" size="lg" onClick={handleAuction}>Give {price} USD</Button>) : (
-                                <Spinner animation="border" />)) : ("You can't take part in auction created by you!")
-                ) : ("Auction was finished")}
+                {validdata() === true ? // if all comporisons are active
+                    props.auctions.uniqueAuction.active === true ? ( // Check if auction active
+                        props.user.userdata.userId !== props.auctions.uniqueAuction.creatorId ? ( // logger user id !== auction creator id
+                            props.auctions.loadingnewprice === false ? ( // If user click, start spinner
+                                <Button variant="info" size="lg" onClick={handleAuction}>Give {price} USD</Button>) : (
+                                    <Spinner animation="border" />)) : ("You can't take part in auction created by you!")
+                    ) : ("Auction was finished") : <Button variant="info" size="lg" onClick={handleAuction} disabled={true}>Wrong price</Button>}
             </Card.Footer>
-        </Card>
+        </Card >
     )
 }
 

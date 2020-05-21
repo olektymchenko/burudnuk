@@ -45,6 +45,7 @@ class facebook extends Component {
     render() {
         const loadingdata = this.props.userloading.loading;
         const sellerdata = this.props.sellerdata.mainInfo;
+        const facebookactive = this.props.userdata.facebook;
         let facebookvalue = false;
         if (sellerdata !== null && notEmpty(sellerdata)) // Checking if data for user has been loaded
             facebookvalue = true;
@@ -67,10 +68,10 @@ class facebook extends Component {
             <Container>
                 <Row className="d-flex justify-content-center">
                     <Col xs={12} md={10} lg={4} xl={4}>
-                        {facebookvalue === false ? (<Card>
+                        {facebookactive === false ? (<Card>
                             <Card.Header>Facebook</Card.Header>
                             <Card.Body>
-                                <Card.Title>Do you want to start selling your facebook advertisment?</Card.Title>
+                                <Card.Title>Do you want to start selling your Facebook advertisment?</Card.Title>
                                 <Card.Text>
                                     Click the button below and start increase your popularity!
                                      </Card.Text>

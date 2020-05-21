@@ -1,6 +1,6 @@
 import {
     SET_AUTHENTICATED, SET_UNAUTHENTICATED,
-    SET_USER, LOADING_USER, SET_SELLER, BECOME_FACEBOOK_SELLER,
+    SET_USER, LOADING_USER, SET_SELLER, BECOME_FACEBOOK_SELLER, BECOME_INSTAGRAM_SELLER, BECOME_TIKTOK_SELLER, BECOME_TELEGRAM_SELLER,
     STOP_LOADING_USER, SET_ANOTHER_USER, SET_ANOTHER_FACEBOOK,
     SET_ANOTHER_INSTAGRAM, SET_ANOTHER_TIKTOK, SET_ANOTHER_TELEGRAM,
     SET_LOADING_FACEBOOK, SET_LOADING_INSTAGRAM, SET_LOADING_TIKOK, SET_LOADING_TELEGRAM,
@@ -381,6 +381,30 @@ export default function (state = initialState, action) {
                 userdata: {
                     ...state.userdata,
                     facebook: true
+                }
+            }
+        case BECOME_INSTAGRAM_SELLER:
+            return {
+                ...state,
+                userdata: {
+                    ...state.userdata,
+                    instagram: true
+                }
+            }
+        case BECOME_TIKTOK_SELLER:
+            return {
+                ...state,
+                userdata: {
+                    ...state.userdata,
+                    tiktok: true
+                }
+            }
+        case BECOME_TELEGRAM_SELLER:
+            return {
+                ...state,
+                userdata: {
+                    ...state.userdata,
+                    telegram: true
                 }
             }
         default:

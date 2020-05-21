@@ -2,6 +2,7 @@ import {
     SET_USER, SET_SELLER, LOADING_USER, STOP_LOADING_USER,
     CLEAR_ERRORS, SET_ERRORS, SET_UNAUTHENTICATED, SET_AUTHENTICATED,
     LOADING_UI, STOP_LOADING_UI, SET_ANOTHER_USER,
+    BECOME_FACEBOOK_SELLER, BECOME_INSTAGRAM_SELLER, BECOME_TIKTOK_SELLER, BECOME_TELEGRAM_SELLER,
     SET_ANOTHER_FACEBOOK, SET_ANOTHER_INSTAGRAM, SET_ANOTHER_TIKTOK, SET_ANOTHER_TELEGRAM,
     SET_LOADING_FACEBOOK, SET_LOADING_INSTAGRAM, SET_LOADING_TIKOK, SET_LOADING_TELEGRAM,
     STOP_LOADING_FACEBOOK, STOP_LOADING_INSTAGRAM, STOP_LOADING_TIKOK, STOP_LOADING_TELEGRAM,
@@ -274,12 +275,14 @@ export const getAnotherTelegramData = (userId) => (dispatch) => {
     })
 }
 
-
 /* Start selling Facebook ads ///////////////////////////////////////////////////////////// */
 export const becomeFacebokSeller = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/users/facebook').then(res => {
+        dispatch({ type: BECOME_FACEBOOK_SELLER }) // change facebook to true
         dispatch({ type: CLEAR_ERRORS });
+    }).then(() => {
+        dispatch({ type: STOP_LOADING_USER });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -292,7 +295,10 @@ export const becomeFacebokSeller = () => (dispatch) => {
 export const becomeInstagramSeller = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/users/instagram').then(res => {
+        dispatch({ type: BECOME_INSTAGRAM_SELLER })
         dispatch({ type: CLEAR_ERRORS });
+    }).then(() => {
+        dispatch({ type: STOP_LOADING_USER });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -305,7 +311,10 @@ export const becomeInstagramSeller = () => (dispatch) => {
 export const becomeTikTokSeller = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/users/tiktok').then(res => {
+        dispatch({ type: BECOME_TIKTOK_SELLER })
         dispatch({ type: CLEAR_ERRORS });
+    }).then(() => {
+        dispatch({ type: STOP_LOADING_USER });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
@@ -318,7 +327,10 @@ export const becomeTikTokSeller = () => (dispatch) => {
 export const becomeTelegramSeller = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/users/telegram').then(res => {
+        dispatch({ type: BECOME_TELEGRAM_SELLER })
         dispatch({ type: CLEAR_ERRORS });
+    }).then(() => {
+        dispatch({ type: STOP_LOADING_USER });
     }).catch(err => {
         dispatch({
             type: SET_ERRORS,
