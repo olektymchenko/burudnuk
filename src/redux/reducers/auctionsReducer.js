@@ -5,7 +5,9 @@ import {
     START_LOADING_ACTIVE_OFFER_USER_AUCTIONS, STOP_LOADING_ACTIVE_OFFER_USER_AUCTIONS, SET_USER_ACTIVE_OFFER_AUCTIONS,
     START_LOADING_UNIQUE_AUCTION, STOP_LOADING_UNIQUE_AUCTION, SET_UNIQUE_AUCTION,
     START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE,
-    START_LOADING_SNAPSHOT_AUCTION, STOP_LOADING_SNAPSHOT_AUCTION, SET_LOADING_SNAPSHOT_AUCTION
+    START_LOADING_SNAPSHOT_AUCTION, STOP_LOADING_SNAPSHOT_AUCTION, SET_LOADING_SNAPSHOT_AUCTION,
+    START_LOADING_ALL_AUCTIONS, STOP_LOADING_ALL_AUCTIONS,
+    SET_ALL_FACEBOOK_AUCTIONS, SET_ALL_INSTAGRAM_AUCTIONS, SET_ALL_TIKTOK_AUCTIONS, SET_ALL_TELEGRAM_AUCTIONS
 } from '../types';
 
 const initialState = {
@@ -16,6 +18,10 @@ const initialState = {
     uniqueAuction: null,
     loadingauctions: false,
     loadingnewprice: false,
+    facebookactiveauctions: null,
+    instagramactiveauctions: null,
+    tiktokactiveauctions: null,
+    telegramactiveauctions: null
 
 }
 
@@ -146,6 +152,37 @@ export default function (state = initialState, action) {
                 ...state,
                 uniqueAuction: action.payload,
                 loadingauctions: false
+            }
+
+        case START_LOADING_ALL_AUCTIONS:
+            return {
+                ...state,
+                loadingauctions: true
+            }
+        case STOP_LOADING_ALL_AUCTIONS:
+            return {
+                ...state,
+                loadingauctions: false
+            }
+        case SET_ALL_FACEBOOK_AUCTIONS:
+            return {
+                ...state,
+                facebookactiveauctions: action.payload
+            }
+        case SET_ALL_INSTAGRAM_AUCTIONS:
+            return {
+                ...state,
+                instagramactiveauctions: action.payload
+            }
+        case SET_ALL_TIKTOK_AUCTIONS:
+            return {
+                ...state,
+                tiktokactiveauctions: action.payload
+            }
+        case SET_ALL_TELEGRAM_AUCTIONS:
+            return {
+                ...state,
+                telegramactiveauctions: action.payload
             }
         default:
             return state;

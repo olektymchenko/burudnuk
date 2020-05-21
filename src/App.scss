@@ -1,5 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 body{
-    background-color: rgb(242, 244, 245)!important
+    background-color: rgb(242, 244, 245)!important;
+    font-family: 'Roboto', sans-serif!important;
 }

@@ -6,7 +6,9 @@ import {
     START_LOADING_ACTIVE_OFFER_USER_AUCTIONS, STOP_LOADING_ACTIVE_OFFER_USER_AUCTIONS, SET_USER_ACTIVE_OFFER_AUCTIONS,
     START_LOADING_UNIQUE_AUCTION, STOP_LOADING_UNIQUE_AUCTION, SET_UNIQUE_AUCTION,
     START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE,
-    START_LOADING_SNAPSHOT_AUCTION, STOP_LOADING_SNAPSHOT_AUCTION, SET_LOADING_SNAPSHOT_AUCTION
+    START_LOADING_SNAPSHOT_AUCTION, STOP_LOADING_SNAPSHOT_AUCTION, SET_LOADING_SNAPSHOT_AUCTION,
+    START_LOADING_ALL_AUCTIONS, STOP_LOADING_ALL_AUCTIONS,
+    SET_ALL_FACEBOOK_AUCTIONS, SET_ALL_INSTAGRAM_AUCTIONS, SET_ALL_TIKTOK_AUCTIONS, SET_ALL_TELEGRAM_AUCTIONS
 } from '../types';
 import axios from 'axios';
 
@@ -316,4 +318,49 @@ export const updateAuctionData = (newData) => (dispatch) => {
         payload: newData
     });
     dispatch({ type: STOP_LOADING_SNAPSHOT_AUCTION })
+}
+
+export const getDataForMainPage = () => (dispatch) => {
+    dispatch({ type: START_LOADING_ALL_AUCTIONS });
+    axios.get(`/auction/facebook/getactive`).then(res => {
+        dispatch({
+            type: SET_ALL_FACEBOOK_AUCTIONS,
+            payload: res.data
+        })
+    }).then(() => {
+        axios.get(`/auction/instagram/getactive`).then(res => {
+            dispatch({
+                type: SET_ALL_INSTAGRAM_AUCTIONS,
+                payload: res.data
+            })
+        }).then(() => {
+            axios.get(`/auction/tiktok/getactive`).then(res => {
+                dispatch({
+                    type: SET_ALL_TIKTOK_AUCTIONS,
+                    payload: res.data
+                })
+            }).then(() => {
+                axios.get(`/auction/telegram/getactive`).then(res => {
+                    dispatch({
+                        type: SET_ALL_TELEGRAM_AUCTIONS,
+                        payload: res.data
+                    })
+                }).then(() => {
+                    dispatch({ type: STOP_LOADING_ALL_AUCTIONS })
+                }).catch(err => {
+                    dispatch({
+                        type: SET_ERRORS,
+                        payload: err.response.data
+                    })
+                    dispatch({ type: STOP_LOADING_ALL_AUCTIONS });
+                })
+            })
+        })
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_ALL_AUCTIONS });
+    })
 }

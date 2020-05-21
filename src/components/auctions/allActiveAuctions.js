@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import Card from 'react-bootstrap/Card';
 import Nav from 'react-bootstrap/Nav'
 import dayjs from 'dayjs';
-import Button from 'react-bootstrap/Button'
 import relativeTime from 'dayjs/plugin/relativeTime';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { connect } from 'react-redux'

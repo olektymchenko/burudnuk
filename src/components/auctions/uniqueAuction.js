@@ -137,13 +137,16 @@ const UniqueAuction = (props) => {
 
             </Card.Text>
             <Card.Footer className="d-flex justify-content-center">
-                {validdata() === true ? // if all comporisons are active
-                    props.auctions.uniqueAuction.active === true ? ( // Check if auction active
-                        props.user.userdata.userId !== props.auctions.uniqueAuction.creatorId ? ( // logger user id !== auction creator id
-                            props.auctions.loadingnewprice === false ? ( // If user click, start spinner
-                                <Button variant="info" size="lg" onClick={handleAuction}>Give {price} USD</Button>) : (
-                                    <Spinner animation="border" />)) : ("You can't take part in auction created by you!")
-                    ) : ("Auction was finished") : <Button variant="info" size="lg" onClick={handleAuction} disabled={true}>Wrong price</Button>}
+                {props.user.authenticated === true ? // if user authenticated
+                    (validdata() === true ? // if all comporisons are active
+                        props.auctions.uniqueAuction.active === true ? ( // Check if auction active
+                            props.user.userdata.userId !== props.auctions.uniqueAuction.creatorId ? ( // logger user id !== auction creator id
+                                props.auctions.loadingnewprice === false ? ( // If user click, start spinner
+                                    <Button variant="info" size="lg" onClick={handleAuction}>Give {price} USD</Button>) : (
+                                        <Spinner animation="border" />)) : ("You can't take part in auction created by you!")
+                        ) : ("Auction was finished") : <Button variant="info" size="lg" onClick={handleAuction} disabled={true}>Wrong price</Button>) : (
+                        <Button variant="info" size="lg" disabled>Please Login</Button>
+                    )}
             </Card.Footer>
         </Card >
     )

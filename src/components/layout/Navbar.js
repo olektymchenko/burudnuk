@@ -32,7 +32,7 @@ class Navigationbar extends Component {
 
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.usernotifications) {
+        if (this.props.data.notifications !== nextProps.usernotifications) {
             let notifyarray = [];
             var markarray = [];
             nextProps.usernotifications.forEach(element => {
@@ -117,6 +117,7 @@ class Navigationbar extends Component {
 }
 
 const mapStateToProps = state => ({
+    data: state.data,
     authenticated: state.user.authenticated,
     userrdata: state.user.userdata,
     usernotifications: state.data.notifications
