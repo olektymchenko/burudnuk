@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -59,30 +59,38 @@ class messeges extends React.PureComponent {
 
         const navbar = document.getElementById('navigation-menu-width');
         let navbarWidth;
+        let navbarHeight;
         if (navbar !== null) {
-            navbarWidth = navbar.offsetHeight;
+            navbarWidth = navbar.offsetWidth;
+            navbarHeight = navbar.offsetHeight;
         }
         return (
-            <Container>
-                <Row style={{ backgroundColor: 'white', marginTop: "4vh", marginBottom: "4vh" }}>
-                    <Col xs={12} md={12} lg={4} xl={4} style={{ height: `calc(92vh - ${navbarWidth}px)`, overflow: 'auto' }}>
-                        <Tabs defaultActiveKey="seller" id="uncontrolled-tab-example">
-                            <Tab eventKey="seller" title="For me">
-                                {loadingsellerdeals === false ? (sellervalue === true ? (<MessageSeller data={this.props.listofsellerdeals} click={this.getMessagesWithId} />) : (<div style={{ height: `calc(80vh - 68px)`, textAlign: 'center' }}>No messages</div>)) : (<Spinner animation="border" />)}
-                            </Tab>
-                            <Tab eventKey="client" title="From me">
-                                {loadingclientdeals === false ? (clientvalue === true ? (<MessageClient data={this.props.listofclientdeals} click={this.getMessagesWithId} />) : (<div style={{ height: `calc(80vh - 68px)`, textAlign: 'center' }}>No messages</div>)) : (<Spinner animation="border" />)}
-                            </Tab>
-                        </Tabs>
+            <Fragment>
+                {loadingsellerdeals === false ? (
+                    <Container>
+                        <Row style={{ backgroundColor: 'white', marginTop: "4vh", marginBottom: "4vh" }}>
+                            <Col xs={12} md={12} lg={4} xl={4} style={{ height: `calc(92vh - ${navbarHeight}px)`, overflow: 'auto' }}>
+                                <Tabs defaultActiveKey="seller" id="uncontrolled-tab-example">
+                                    <Tab eventKey="seller" title="For me">
+                                        {sellervalue === true ? (<MessageSeller data={this.props.listofsellerdeals} click={this.getMessagesWithId} />) : (<div style={{ height: `calc(80vh - 68px)`, textAlign: 'center' }}>No messages</div>)}
+                                    </Tab>
+                                    <Tab eventKey="client" title="From me">
+                                        {clientvalue === true ? (<MessageClient data={this.props.listofclientdeals} click={this.getMessagesWithId} />) : (<div style={{ height: `calc(80vh - 68px)`, textAlign: 'center' }}>No messages</div>)}
+                                    </Tab>
+                                </Tabs>
 
-                    </Col>
-                    <Col xs={12} md={12} lg={8} xl={8}>
-                        {this.state.messageId !== '0' ? (<MessageList id={this.state.messageId} nickname={this.props.nickname} />) : (<Card style={{ height: '100%' }} className="d-flex align-items-center justify-content-center">
-                            <Card.Text><div>Hello, please choose a deal to start!</div></Card.Text>
-                        </Card>)}
-                    </Col>
-                </Row>
-            </Container >
+                            </Col>
+                            <Col xs={12} md={12} lg={8} xl={8}>
+                                {this.state.messageId !== '0' ? (<MessageList id={this.state.messageId} nickname={this.props.nickname} />) : (<Card style={{ height: '100%' }} className="d-flex align-items-center justify-content-center">
+                                    <Card.Text><div>Hello, please choose a deal to start!</div></Card.Text>
+                                </Card>)}
+                            </Col>
+                        </Row>
+                    </Container >
+                ) : (
+                        <div style={{ height: `calc(98vh - 68px)`, width: `calc(${navbarWidth}px -50px)` }} className="d-flex justify-content-center align-items-center"><Spinner animation="grow" /></div>
+                    )}
+            </Fragment>
         )
     }
 }

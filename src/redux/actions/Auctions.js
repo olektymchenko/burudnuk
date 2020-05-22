@@ -193,9 +193,9 @@ export const loadUserAllSearch = (type) => (dispatch) => {
     })
 }
 // load all active search auctions
-export const loadUserActiveSearch = (type) => (dispatch) => {
+export const loadUserActiveSearch = (type, data) => (dispatch) => {
     dispatch({ type: START_LOADING_ACTIVE_SEARCH_USER_AUCTIONS });
-    axios.get(`/sellerauction/${type}/getactive`).then(res => {
+    axios.post(`/sellerauction/${type}/getactive`, data).then(res => {
         dispatch({
             type: SET_USER_ACTIVE_SEARCH_AUCTIONS,
             payload: res.data
@@ -230,9 +230,9 @@ export const loadUserAllOffer = (type) => (dispatch) => {
     })
 }
 // load all active search auctions
-export const loadUserActiveOffer = (type) => (dispatch) => {
+export const loadUserActiveOffer = (type, data) => (dispatch) => {
     dispatch({ type: START_LOADING_ACTIVE_OFFER_USER_AUCTIONS });
-    axios.get(`/auction/${type}/getactive`).then(res => {
+    axios.post(`/auction/${type}/getactive`, data).then(res => {
         dispatch({
             type: SET_USER_ACTIVE_OFFER_AUCTIONS,
             payload: res.data

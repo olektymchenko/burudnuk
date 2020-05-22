@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -32,24 +32,35 @@ class auction extends Component {
                 })
             }
         }
-
-
-
     }
 
     render() {
         const loading = this.props.auctions.loadingauctions;
+        const navbar = document.getElementById('navigation-menu-width');
+        let navbarWidth;
+        let navbarHeight;
+        if (navbar !== null) {
+            navbarWidth = navbar.offsetWidth;
+            navbarHeight = navbar.offsetHeight;
+        }
         return (
-            <Container>
-                <Row>
-                    <Col xs={8}>
-                        {loading === false && this.props.auctions.uniqueAuction !== null ? <UniqueAuction data={this.props.auctions.uniqueAuction} app={this.props.match.params.app} type={this.props.match.params.type} auctionId={this.props.match.params.auctionId} /> : <Spinner animation="border" />}
-                    </Col>
-                    <Col xs={4} style={{ marginTop: "2%", maxHeight: '80vh', overflow: 'auto' }}>
-                        {loading === false && this.props.auctions.uniqueAuction !== null ? <AuctionParticipants data={this.props.auctions.uniqueAuction} app={this.props.match.params.app} type={this.props.match.params.type} auctionId={this.props.match.params.auctionId} /> : <Spinner animation="border" />}
-                    </Col>
-                </Row>
-            </Container>
+            <Fragment>
+                {loading === false && this.props.auctions.uniqueAuction !== null ? (
+                    <Container>
+                        <Row>
+                            <Col xs={8}>
+                                <UniqueAuction data={this.props.auctions.uniqueAuction} app={this.props.match.params.app} type={this.props.match.params.type} auctionId={this.props.match.params.auctionId} />
+                            </Col>
+                            <Col xs={4} style={{ marginTop: "2%", maxHeight: '80vh', overflow: 'auto' }}>
+                                <AuctionParticipants data={this.props.auctions.uniqueAuction} app={this.props.match.params.app} type={this.props.match.params.type} auctionId={this.props.match.params.auctionId} />
+                            </Col>
+                        </Row>
+                    </Container>
+                ) : (
+                        <div style={{ height: `calc(98vh - 68px)`, width: `calc(${navbarWidth}px -50px)` }} className="d-flex justify-content-center align-items-center"><Spinner animation="grow" /></div>
+                    )}
+            </Fragment>
+
         )
     }
 }

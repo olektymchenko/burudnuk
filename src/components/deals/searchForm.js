@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button'
 import DatePicker from 'react-datepicker';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl'
+import { CountryDropdown, CountryRegionData } from 'react-country-region-selector';
 import "react-datepicker/dist/react-datepicker.css"
 import { connect } from 'react-redux';
 import { startLookingFacebookAuction, startLookingInstagramAuction, startLookingTikTokAuction, startLookingTelegramAuction } from '../../redux/actions/Auctions'
@@ -15,6 +16,13 @@ const SearchForm = (props) => {
     const dateFrom = new Date();
 
     const [dateTo, setDateTo] = useState(null);
+
+    const [topicData, setTopic] = useState('travel');
+    const [countryData, setCountry] = useState('Afganistan');
+
+    const handleUpdateTopic = (event) => setTopic(event.target.value);
+    const handleUpdateCountry = (value) => setCountry(value);
+
 
     const [titleData, setTitle] = useState('');
     const handleUpdateTitle = (event) => setTitle(event.target.value)
@@ -30,7 +38,9 @@ const SearchForm = (props) => {
             title: titleData,
             description: descrData,
             initPrice: priceData,
-            dateEnd: dateTo.getTime()
+            dateEnd: dateTo.getTime(),
+            topic: topicData,
+            country: countryData
 
         }
         if (props.app === "Facebook") {
@@ -38,6 +48,8 @@ const SearchForm = (props) => {
             setTitle('');
             setDescr('');
             setPrice('');
+            setTopic('travel');
+            setCountry('Afganistan');
             setDateTo(null);
         }
 
@@ -46,6 +58,8 @@ const SearchForm = (props) => {
             setTitle('');
             setDescr('');
             setPrice('');
+            setTopic('travel');
+            setCountry('Afganistan');
             setDateTo(null);
         }
 
@@ -54,6 +68,8 @@ const SearchForm = (props) => {
             setTitle('');
             setDescr('');
             setPrice('');
+            setTopic('travel');
+            setCountry('Afganistan');
             setDateTo(null);
         }
 
@@ -62,6 +78,8 @@ const SearchForm = (props) => {
             setTitle('');
             setDescr('');
             setPrice('');
+            setTopic('travel');
+            setCountry('Afganistan');
             setDateTo(null);
         }
 
@@ -101,8 +119,32 @@ const SearchForm = (props) => {
                 </InputGroup.Append>
                 {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.firstPrice}</Form.Text>) : ""}
             </InputGroup>
+            <Form.Group controlId="exampleForm.ControlSelect2">
+                <Form.Control as="select" onChange={handleUpdateTopic}>
+                    <option value="fashion">Fashion</option>
+                    <option value="food">Food</option>
+                    <option value="design">Design</option>
+                    <option value="travel">Travel</option>
+                    <option value="fitness">Fitness</option>
+                    <option value="nature">Nature</option>
+                    <option value="inspirations">Inspiration</option>
+                    <option value="health">Health</option>
+                    <option value="party">Party</option>
+                    <option value="art">Art</option>
+                </Form.Control>
+                {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.topic}</Form.Text>) : ""}
+            </Form.Group>
+            <Form.Group controlId="exampleForm.ControlSelect2">
+                <CountryDropdown
+                    value={countryData}
+                    onChange={(value) => handleUpdateCountry(value)}
+                    style={{ width: "100%" }}
+                    className="form-control"
+                    defaultOptionLabel="Afganistan"
+                />
+                {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.country}</Form.Text>) : ""}
+            </Form.Group>
             <div className="d-flex justify-content-between"><span style={{ fontWeight: 'bold' }}>End date:</span><DatePicker selectsEnd startDate={dateFrom} endDate={dateTo} minDate={dateFrom} selected={dateTo} placeholderText="Select end date" onChange={date => setDateTo(date)} showTimeSelect timeFormat="HH:mm" timeIntervals={60} timeCaption="time" dateFormat="MMMM d, yyyy h:mm aa" /></div>
-
             {generals.current !== null ? (<Form.Text className="text-muted">{generals.current.general}</Form.Text>) : ""}
             {props.UI.loadingauction === true ? (<Spinner animation="border" />) : (<div className="d-flex justify-content-end" style={{ marginTop: '3%' }}><Button variant="primary" onClick={handleSendOfferAuction}>Start!</Button>{' '}</div>)}
         </Form>
