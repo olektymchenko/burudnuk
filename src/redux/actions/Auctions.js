@@ -75,7 +75,7 @@ export const startOfferingTikTokAuction = (data) => (dispatch) => {
 
 export const startOfferingTelegramAuction = (data) => (dispatch) => {
     dispatch({ type: START_LOADING_AUCTION });
-    axios.post('/auction/facebook/create', data).then(res => {
+    axios.post('/auction/telegram/create', data).then(res => {
         dispatch({
             type: START_USER_OFFER_AUCTION,
             payload: res.data
@@ -322,25 +322,25 @@ export const updateAuctionData = (newData) => (dispatch) => {
 
 export const getDataForMainPage = () => (dispatch) => {
     dispatch({ type: START_LOADING_ALL_AUCTIONS });
-    axios.get(`/auction/facebook/getactive`).then(res => {
+    axios.get(`/auction/home/facebook/getactive`).then(res => {
         dispatch({
             type: SET_ALL_FACEBOOK_AUCTIONS,
             payload: res.data
         })
     }).then(() => {
-        axios.get(`/auction/instagram/getactive`).then(res => {
+        axios.get(`/auction/home/instagram/getactive`).then(res => {
             dispatch({
                 type: SET_ALL_INSTAGRAM_AUCTIONS,
                 payload: res.data
             })
         }).then(() => {
-            axios.get(`/auction/tiktok/getactive`).then(res => {
+            axios.get(`/auction/home/tiktok/getactive`).then(res => {
                 dispatch({
                     type: SET_ALL_TIKTOK_AUCTIONS,
                     payload: res.data
                 })
             }).then(() => {
-                axios.get(`/auction/telegram/getactive`).then(res => {
+                axios.get(`/auction/home/telegram/getactive`).then(res => {
                     dispatch({
                         type: SET_ALL_TELEGRAM_AUCTIONS,
                         payload: res.data

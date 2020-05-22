@@ -20,8 +20,10 @@ class home extends Component {
     render() {
         const navbar = document.getElementById('navigation-menu-width');
         let navbarWidth;
+        let navbarHeight;
         if (navbar !== null) {
-            navbarWidth = navbar.offsetWidth - 50;
+            navbarWidth = navbar.offsetWidth;
+            navbarHeight = navbar.offsetHeight;
         }
         return (
             <Fragment>
@@ -34,11 +36,11 @@ class home extends Component {
                             </Col>
                             <Col>
                                 <div className="header-images"><img src={imageWriteMessage} alt="Write messages"></img>
-                                    <h5>Message with your clients</h5></div>
+                                    <h5>Communicate with your clients</h5></div>
                             </Col>
                             <Col>
                                 <div className="header-images"><img src={imageLookAds} alt="Look for ads"></img>
-                                    <h5>Increase your own popularity</h5></div>
+                                    <h5>Increase your popularity</h5></div>
                             </Col>
                             <Col>
                                 <div className="header-images"><img src={imageOrganizeTime} alt="Organize time"></img>
@@ -52,23 +54,23 @@ class home extends Component {
                         </Row>
                         <Row>
                             <Col xs={12} md={6} lg={3} xl={3} >
-                                <h4>Facebook</h4>
+                                <h4 className="text-center">Facebook</h4>
                                 <HomePageAuctions data={this.props.auctions.facebookactiveauctions} app="facebook" />
                             </Col>
                             <Col xs={12} md={6} lg={3} xl={3}>
-                                <h4>Instagram</h4>
+                                <h4 className="text-center">Instagram</h4>
                                 <HomePageAuctions data={this.props.auctions.instagramactiveauctions} app="instagram" />
                             </Col>
                             <Col xs={12} md={6} lg={3} xl={3}>
-                                <h4>TikTok</h4>
+                                <h4 className="text-center">TikTok</h4>
                                 <HomePageAuctions data={this.props.auctions.tiktokactiveauctions} app="tiktok" />
                             </Col>
                             <Col xs={12} md={6} lg={3} xl={3}>
-                                <h4>Telegram</h4>
+                                <h4 className="text-center">Telegram</h4>
                                 <HomePageAuctions data={this.props.auctions.telegramactiveauctions} app="telegram" />
                             </Col>
                         </Row>
-                    </Container>) : (<div style={{ height: "80vh", width: `${navbarWidth}px` }} className="d-flex justify-content-center align-items-center"><Spinner animation="grow" /></div>)
+                    </Container>) : (<div style={{ height: `calc(98vh - 68px)`, width: `calc(${navbarWidth}px -50px)` }} className="d-flex justify-content-center align-items-center"><Spinner animation="grow" /></div>)
                 }
             </Fragment>
         )

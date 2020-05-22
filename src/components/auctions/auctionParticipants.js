@@ -6,7 +6,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 const AuctionParticipants = (props) => {
     let participants = "";
-    if (props.data !== null) {
+    if (props.data.participants !== undefined) {
         let timeNow = dayjs()
         dayjs.extend(relativeTime)
         dayjs.extend(localizedFormat)

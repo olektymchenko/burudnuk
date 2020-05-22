@@ -211,7 +211,7 @@ const AnotherSeller = (props) => {
         )
     } else {
         return (< Fragment >
-            <Card style={{ marginTop: '3%', marginBottom: '5%', width: '100%', padding: '1%' }} bg="light" border="primary">
+            <Card style={{ marginTop: '3%', marginBottom: '5%', width: '100%' }}>
                 <Card.Body>
                     <Card.Title>
                         <div className="d-flex justify-content-between align-items-center">

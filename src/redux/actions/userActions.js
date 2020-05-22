@@ -280,6 +280,7 @@ export const becomeFacebokSeller = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/users/facebook').then(res => {
         dispatch({ type: BECOME_FACEBOOK_SELLER }) // change facebook to true
+        dispatch(getFacebookData())
         dispatch({ type: CLEAR_ERRORS });
     }).then(() => {
         dispatch({ type: STOP_LOADING_USER });
@@ -296,6 +297,7 @@ export const becomeInstagramSeller = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/users/instagram').then(res => {
         dispatch({ type: BECOME_INSTAGRAM_SELLER })
+        dispatch(getInstagramData())
         dispatch({ type: CLEAR_ERRORS });
     }).then(() => {
         dispatch({ type: STOP_LOADING_USER });
@@ -312,6 +314,7 @@ export const becomeTikTokSeller = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/users/tiktok').then(res => {
         dispatch({ type: BECOME_TIKTOK_SELLER })
+        dispatch(getTikTokData())
         dispatch({ type: CLEAR_ERRORS });
     }).then(() => {
         dispatch({ type: STOP_LOADING_USER });
@@ -328,6 +331,7 @@ export const becomeTelegramSeller = () => (dispatch) => {
     dispatch({ type: LOADING_USER });
     axios.get('/users/telegram').then(res => {
         dispatch({ type: BECOME_TELEGRAM_SELLER })
+        dispatch(getTelegramData())
         dispatch({ type: CLEAR_ERRORS });
     }).then(() => {
         dispatch({ type: STOP_LOADING_USER });

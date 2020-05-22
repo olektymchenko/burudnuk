@@ -69,9 +69,9 @@ class AllAuctions extends Component {
         const { loadingauctions } = this.props.auctions
         return (
             <Container>
-                <Row>
-                    <Col className="d-flex align-items-center justify-content-center" xs={12} md={12} lg={12} xl={12}>
-                        <Form.Group controlId="exampleForm.ControlSelect1" style={{ marginLeft: "5%", marginRight: "5%", width: "15%" }}>
+                <Row className="d-flex align-items-center">
+                    <Col>
+                        <Form.Group controlId="exampleForm.ControlSelect1" style={{ width: "80%" }}>
                             <Form.Label>Marketplace:</Form.Label>
                             <Form.Control as="select" onChange={this.handleApp}>
                                 <option value="facebook">Facebook</option>
@@ -80,18 +80,20 @@ class AllAuctions extends Component {
                                 <option value="telegram">Telegram</option>
                             </Form.Control>
                         </Form.Group>
-                        <Form.Group controlId="exampleForm.ControlSelect2" style={{ marginRight: "5%", width: "15%" }}>
+                    </Col>
+                    <Col>
+                        <Form.Group controlId="exampleForm.ControlSelect2" style={{ width: "80%" }}>
                             <Form.Label>Kind of auctions:</Form.Label>
                             <Form.Control as="select" onChange={this.handleKind}>
                                 <option value="offer">Offer</option>
                                 <option value="search">Search</option>
                             </Form.Control>
                         </Form.Group>
-                        {loadingauctions === false ? (<Button variant="primary" style={{ height: "50%" }} onClick={this.handleCheckData}>Search</Button>) : (<Spinner animation="border" />)}
                     </Col>
+                    <Col> {loadingauctions === false ? (<Button variant="primary" style={{ height: "50%" }} onClick={this.handleCheckData}>Search</Button>) : (<Spinner animation="border" />)}</Col>
                 </Row>
                 <Row>
-                    <Col xs={12} md={12} lg={7} xl={6}>
+                    <Col>
                         <AllActiveAuctions auctions={this.props.auctions} app={this.state.app} />
                     </Col>
                 </Row>

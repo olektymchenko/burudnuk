@@ -130,7 +130,11 @@ export default function (state = initialState, action) {
         case START_LOADING_NEW_AUCTION_PRICE:
             return {
                 ...state,
-                loadingnewprice: true
+                loadingnewprice: true,
+                uniqueAuction: {
+                    ...state.uniqueAuction,
+                    amountOfParticipant: state.uniqueAuction.amountOfParticipant + 1
+                }
             }
         case STOP_LOADING_NEW_AUCTION_PRICE:
             return {

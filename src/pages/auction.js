@@ -25,11 +25,15 @@ class auction extends Component {
         } else if (this.props.match.params.type === "offer") {
             collectionname = this.props.match.params.app + "actions"
         }
-        if (this.props.auctions.uniqueAuction !== null && nextProps.auctions.uniqueAuction !== null && this.props.auctions.uniqueAuction.amountOfParticipant !== nextProps.auctions.uniqueAuction.amountOfParticipant)
-            firebase.firestore().collection(collectionname).doc(this.props.match.params.auctionId).onSnapshot(querySnapshot => {
-                console.log(querySnapshot);
-                this.props.updateAuctionData(querySnapshot.data())
-            })
+        if (this.props.auctions.uniqueAuction !== null) {
+            if (this.props.auctions.uniqueAuction.amountOfParticipant !== nextProps.auctions.uniqueAuction.amountOfParticipant) {
+                firebase.firestore().collection(collectionname).doc(this.props.match.params.auctionId).onSnapshot(querySnapshot => {
+                    this.props.updateAuctionData(querySnapshot.data())
+                })
+            }
+        }
+
+
 
     }
 

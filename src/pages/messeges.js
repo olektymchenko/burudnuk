@@ -68,17 +68,17 @@ class messeges extends React.PureComponent {
                     <Col xs={12} md={12} lg={4} xl={4} style={{ height: `calc(92vh - ${navbarWidth}px)`, overflow: 'auto' }}>
                         <Tabs defaultActiveKey="seller" id="uncontrolled-tab-example">
                             <Tab eventKey="seller" title="For me">
-                                {loadingsellerdeals === false ? (sellervalue === true ? (<MessageSeller data={this.props.listofsellerdeals} click={this.getMessagesWithId} />) : ("No messages")) : (<Spinner animation="border" />)}
+                                {loadingsellerdeals === false ? (sellervalue === true ? (<MessageSeller data={this.props.listofsellerdeals} click={this.getMessagesWithId} />) : (<div style={{ height: `calc(80vh - 68px)`, textAlign: 'center' }}>No messages</div>)) : (<Spinner animation="border" />)}
                             </Tab>
                             <Tab eventKey="client" title="From me">
-                                {loadingclientdeals === false ? (clientvalue === true ? (<MessageClient data={this.props.listofclientdeals} click={this.getMessagesWithId} />) : ("No messages")) : (<Spinner animation="border" />)}
+                                {loadingclientdeals === false ? (clientvalue === true ? (<MessageClient data={this.props.listofclientdeals} click={this.getMessagesWithId} />) : (<div style={{ height: `calc(80vh - 68px)`, textAlign: 'center' }}>No messages</div>)) : (<Spinner animation="border" />)}
                             </Tab>
                         </Tabs>
 
                     </Col>
                     <Col xs={12} md={12} lg={8} xl={8}>
-                        {this.state.messageId !== '0' ? (<MessageList id={this.state.messageId} nickname={this.props.nickname} />) : (<Card style={{ marginTop: '3%', marginBottom: '3%', height: `calc(80vh - ${navbarWidth}px)` }} className="d-flex align-items-center justify-content-center">
-                            <Card.Text>Hello, please choose a deal to start!</Card.Text>
+                        {this.state.messageId !== '0' ? (<MessageList id={this.state.messageId} nickname={this.props.nickname} />) : (<Card style={{ height: '100%' }} className="d-flex align-items-center justify-content-center">
+                            <Card.Text><div>Hello, please choose a deal to start!</div></Card.Text>
                         </Card>)}
                     </Col>
                 </Row>
