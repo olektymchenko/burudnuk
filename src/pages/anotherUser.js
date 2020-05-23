@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -78,49 +78,60 @@ class anotherUser extends Component {
         if (anotherTelegramcheck.mainInfo !== null && notEmpty(anotherTelegramcheck))
             telegramdata = true;
 
+        const navbar = document.getElementById('navigation-menu-width');
+        let navbarWidth;
+        if (navbar !== null) {
+            navbarWidth = navbar.offsetWidth;
+        }
 
         const { nickname, facebook, instagram, tiktok, telegram, createdAt, userImage, confirmed } = this.props.user.anotheruser;
         return (
-            <Container>
-                <Row className="d-flex justify-content-center">
-                    <Col xs={12} md={12} lg={5} xl={5} >
-                        {loading === false ? (mainuserdata === true ? (
-                            <Card style={{ marginTop: '15%', width: '100%', marginBottom: '50px', padding: '1%' }} bg="light" border="primary">
-                                <img src={userImage} alt="Seller" style={{ width: '150px', height: '150px', borderRadius: '50%', margin: '0 auto', marginTop: '5%' }} />
-                                <Card.Body>
-                                    {confirmed ? <Card.Title className="d-flex justify-content-between align-items-center">{nickname} user profile<FontAwesomeIcon icon={faCheckCircle} style={{ color: 'blue' }} /></Card.Title> : <Card.Title className="d-flex justify-content-center align-items-center">{nickname} user profile</Card.Title>}
-                                </Card.Body>
-                                <ListGroup className="list-group-flush">
-                                    {instagram ? (<ListGroupItem className="d-flex justify-content-between align-items-center">Instagram : <FontAwesomeIcon icon={faSmile} size="2x" style={{ color: 'green' }} /></ListGroupItem>) : (<ListGroupItem className="d-flex justify-content-between align-items-center">Instagram : <FontAwesomeIcon icon={faFrown} size="2x" style={{ color: 'red' }} /></ListGroupItem>)}
-                                    {facebook ? (<ListGroupItem className="d-flex justify-content-between align-items-center">Facebook : <FontAwesomeIcon icon={faSmile} size="2x" style={{ color: 'green' }} /></ListGroupItem>) : (<ListGroupItem className="d-flex justify-content-between align-items-center">Facebook :<FontAwesomeIcon icon={faFrown} size="2x" style={{ color: 'red' }} /></ListGroupItem>)}
-                                    {tiktok ? (<ListGroupItem className="d-flex justify-content-between align-items-center">TikTok : <FontAwesomeIcon icon={faSmile} size="2x" style={{ color: 'green' }} /></ListGroupItem>) : (<ListGroupItem className="d-flex justify-content-between align-items-center">TikTok :<FontAwesomeIcon icon={faFrown} size="2x" style={{ color: 'red' }} /></ListGroupItem>)}
-                                    {telegram ? (<ListGroupItem className="d-flex justify-content-between align-items-center">Telegram :<FontAwesomeIcon icon={faSmile} size="2x" style={{ color: 'green' }} /></ListGroupItem>) : (<ListGroupItem className="d-flex justify-content-between align-items-center">Telegram :<FontAwesomeIcon icon={faFrown} size="2x" style={{ color: 'red' }} /></ListGroupItem>)}
-                                </ListGroup>
-                                <Card.Footer className="d-flex text-right">
-                                    <small className="text-muted">Joined  {dayjs(createdAt).format('MMM YYYY')}</small>
-                                </Card.Footer>
-                            </Card>
-                        ) : (<Spinner animation="border" />)) : <Spinner animation="border" />}
-                    </Col>
-                    <Col xs={12} md={12} lg={5} xl={5}>
-                        <Tabs defaultActiveKey="facebook" id="uncontrolled-tab-example" style={{ marginTop: '1%' }}>
-                            <Tab eventKey="facebook" title="Facebook">
-                                {loadingfacebook === false ? (facebookdata === true ? < AnotherSeller data={this.props.user.anotherfacebook} seller="Facebook" /> : <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have an Facebook seller account</p></div><div><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>) : <Spinner animation="border" />}
-                            </Tab>
-                            <Tab eventKey="instagram" title="Instagram">
-                                {loadinginstagram === false ? (instagramdata === true ? < AnotherSeller data={this.props.user.anotherinstagram} seller="Instagram" /> : <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have an Instagram seller account</p></div><div className="text-center"><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>) : <Spinner animation="border" />}
-                            </Tab>
-                            <Tab eventKey="tiktok" title="TikTok">
-                                {loadingtiktok === false ? (tiktokdata === true ? < AnotherSeller data={this.props.user.anothertiktok} seller="TikTok" /> : <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have an Tik Tok seller account</p></div><div className="text-center"><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>) : <Spinner animation="border" />}
-                            </Tab>
-                            <Tab eventKey="telegram" title="Telegram">
-                                {loadingtelegram === false ? (telegramdata === true ? < AnotherSeller data={this.props.user.anothertelegram} seller="Telegram" /> : <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have an Telegram seller account</p></div><div className="text-center"><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>) : <Spinner animation="border" />}
-                            </Tab>
+            <Fragment>
+                {loading === false && loadingfacebook === false && loadinginstagram === false && loadingtiktok === false && loadingtelegram === false ? (
+                    <Container>
+                        <Row className="d-flex justify-content-center">
+                            <Col xs={12} md={12} lg={5} xl={5} >
+                                {mainuserdata === true ? (
+                                    <Card style={{ marginTop: '15%', width: '100%', marginBottom: '50px' }}>
+                                        <img src={userImage} alt="Seller" style={{ width: '150px', height: '150px', borderRadius: '50%', margin: '0 auto', marginTop: '5%' }} />
+                                        <Card.Body>
+                                            {confirmed ? <Card.Title className="d-flex justify-content-between align-items-center">{nickname} user profile<FontAwesomeIcon icon={faCheckCircle} style={{ color: 'blue' }} /></Card.Title> : <Card.Title className="d-flex justify-content-center align-items-center">{nickname} user profile</Card.Title>}
+                                        </Card.Body>
+                                        <ListGroup className="list-group-flush">
+                                            {instagram ? (<ListGroupItem className="d-flex justify-content-between align-items-center">Instagram : <FontAwesomeIcon icon={faSmile} size="2x" style={{ color: 'green' }} /></ListGroupItem>) : (<ListGroupItem className="d-flex justify-content-between align-items-center">Instagram : <FontAwesomeIcon icon={faFrown} size="2x" style={{ color: 'red' }} /></ListGroupItem>)}
+                                            {facebook ? (<ListGroupItem className="d-flex justify-content-between align-items-center">Facebook : <FontAwesomeIcon icon={faSmile} size="2x" style={{ color: 'green' }} /></ListGroupItem>) : (<ListGroupItem className="d-flex justify-content-between align-items-center">Facebook :<FontAwesomeIcon icon={faFrown} size="2x" style={{ color: 'red' }} /></ListGroupItem>)}
+                                            {tiktok ? (<ListGroupItem className="d-flex justify-content-between align-items-center">TikTok : <FontAwesomeIcon icon={faSmile} size="2x" style={{ color: 'green' }} /></ListGroupItem>) : (<ListGroupItem className="d-flex justify-content-between align-items-center">TikTok :<FontAwesomeIcon icon={faFrown} size="2x" style={{ color: 'red' }} /></ListGroupItem>)}
+                                            {telegram ? (<ListGroupItem className="d-flex justify-content-between align-items-center">Telegram :<FontAwesomeIcon icon={faSmile} size="2x" style={{ color: 'green' }} /></ListGroupItem>) : (<ListGroupItem className="d-flex justify-content-between align-items-center">Telegram :<FontAwesomeIcon icon={faFrown} size="2x" style={{ color: 'red' }} /></ListGroupItem>)}
+                                        </ListGroup>
+                                        <Card.Footer className="d-flex text-right">
+                                            <small className="text-muted">Joined  {dayjs(createdAt).format('MMM YYYY')}</small>
+                                        </Card.Footer>
+                                    </Card>
+                                ) : (<Spinner animation="border" />)}
+                            </Col>
+                            <Col xs={12} md={12} lg={5} xl={5}>
+                                <Tabs defaultActiveKey="facebook" id="uncontrolled-tab-example" style={{ marginTop: '1%' }}>
+                                    <Tab eventKey="facebook" title="Facebook">
+                                        {facebookdata === true ? < AnotherSeller data={this.props.user.anotherfacebook} seller="Facebook" /> : <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have an Facebook seller account</p></div><div><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>}
+                                    </Tab>
+                                    <Tab eventKey="instagram" title="Instagram">
+                                        {instagramdata === true ? < AnotherSeller data={this.props.user.anotherinstagram} seller="Instagram" /> : <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have an Instagram seller account</p></div><div className="text-center"><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>}
+                                    </Tab>
+                                    <Tab eventKey="tiktok" title="TikTok">
+                                        {tiktokdata === true ? < AnotherSeller data={this.props.user.anothertiktok} seller="TikTok" /> : <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have an Tik Tok seller account</p></div><div className="text-center"><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>}
+                                    </Tab>
+                                    <Tab eventKey="telegram" title="Telegram">
+                                        {telegramdata === true ? < AnotherSeller data={this.props.user.anothertelegram} seller="Telegram" /> : <div style={{ marginTop: '30px' }}><div><p className="text-center">User dont have an Telegram seller account</p></div><div className="text-center"><FontAwesomeIcon icon={faFrown} size="3x" style={{ color: 'blue', marginBottom: '50px' }} /></div></div>}
+                                    </Tab>
 
-                        </Tabs>
-                    </Col>
-                </Row>
-            </Container>
+                                </Tabs>
+                            </Col>
+                        </Row>
+                    </Container>
+                ) : (
+                        <div style={{ height: `calc(98vh - 68px)`, width: `calc(${navbarWidth}px -50px)` }} className="d-flex justify-content-center align-items-center"><Spinner animation="grow" /></div>
+                    )}
+            </Fragment>
         )
     }
 }

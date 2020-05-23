@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
 import Nav from 'react-bootstrap/Nav'
+import { CountryDropdown } from 'react-country-region-selector';
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -50,6 +51,12 @@ const FacebookProfile = (props) => {
     const [barterData, setBarter] = useState(false);
     const handleBarter = (event) => setBarter(event.target.value)
 
+    const [countryData, setCountry] = useState('Afganistan');
+    const handleUpdateCountry = (value) => setCountry(value);
+
+    const [topicData, setTopic] = useState('Fashion');
+    const handleUpdateTopic = (event) => setTopic(event.target.value);
+
     const submitUserData = () => {
         let barterUser;
         if (barterData === 'true')
@@ -63,13 +70,15 @@ const FacebookProfile = (props) => {
             accountLink: `https://${accountLinkData}`,
             dayVisitors: dayVisitorsData,
             followers: followersData,
-            barter: barterUser
+            barter: barterUser,
+            country: countryData,
+            topic: topicData
         }
         props.updateFacebookData(user, props.data.userdata.userId);
     }
 
 
-    const { mainInfo: { commentCount, accountLink, barter, dealsCount, dayVisitors, dislikeCount, likeCount, body, followers } } = props.data.sellerdata;
+    const { mainInfo: { commentCount, accountLink, barter, dealsCount, dayVisitors, dislikeCount, likeCount, body, followers, country, topic, ranking } } = props.data.sellerdata;
     const errors = useRef(false);
 
     useEffect(() => {
@@ -80,13 +89,16 @@ const FacebookProfile = (props) => {
         <Fragment>
             <Card style={{ marginTop: '3%', marginBottom: '50px', width: '100%' }}>
                 <Card.Body>
-                    <Card.Title>Your {props.seller} seller account</Card.Title>
+                    <Card.Title className='d-flex justify-content-between align-items-center'>Your {props.seller} account</Card.Title>
                     <Card.Text>
                         {body}
+                        <div style={{ fontWeight: 'bold', textAlign: 'right' }}>Ranking - {ranking} points.</div>
                     </Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                     <ListGroupItem><Nav.Link target="_blank" href={accountLink}>{accountLink}</Nav.Link></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Location:</div><div><h6>{country}</h6></div></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Main topic:</div><div><h6>{topic}</h6></div></ListGroupItem>
                     <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Followers:</div><div><h6>{followers}</h6></div></ListGroupItem>
                     <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Visitors per day:</div><div><h6>{dayVisitors}</h6></div></ListGroupItem>
                     <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Deals Done:</div><div><h6>{dealsCount}</h6></div></ListGroupItem>
@@ -175,6 +187,32 @@ const FacebookProfile = (props) => {
                             <Form.Control as="select" onChange={handleBarter}>
                                 <option value={false} name="barter">No</option>
                                 <option value={true} name="barter">Yes</option>
+                            </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect2">
+                            <Form.Label>Location</Form.Label>
+                            <CountryDropdown
+                                value={countryData}
+                                onChange={(value) => handleUpdateCountry(value)}
+                                style={{ width: "100%" }}
+                                className="form-control"
+                                defaultOptionLabel="Afganistan"
+                            />
+                            {errors.current !== null ? (<Form.Text className="text-muted">{errors.current.country}</Form.Text>) : ""}
+                        </Form.Group>
+                        <Form.Group controlId="exampleForm.ControlSelect3">
+                            <Form.Label>Topic</Form.Label>
+                            <Form.Control as="select" onChange={handleUpdateTopic}>
+                                <option value="Fashion">Fashion</option>
+                                <option value="Food">Food</option>
+                                <option value="Design">Design</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="Nature">Nature</option>
+                                <option value="Inspirations">Inspiration</option>
+                                <option value="Health">Health</option>
+                                <option value="Party">Party</option>
+                                <option value="Art">Art</option>
                             </Form.Control>
                         </Form.Group>
                     </Form>

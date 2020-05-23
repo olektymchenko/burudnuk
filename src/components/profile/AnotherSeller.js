@@ -193,7 +193,7 @@ const AnotherSeller = (props) => {
         }
     }
 
-    const { mainInfo: { commentCount, accountLink, barter, dealsCount, dayVisitors, dislikeCount, likeCount, body, followers } } = props.data;
+    const { mainInfo: { commentCount, accountLink, barter, dealsCount, dayVisitors, dislikeCount, likeCount, body, followers, country, topic, ranking } } = props.data;
     const authenticated = props.user.authenticated;
     const errors = useRef(false);
     const generals = useRef(false);
@@ -221,10 +221,13 @@ const AnotherSeller = (props) => {
                     </Card.Title>
                     <Card.Text>
                         {body}
+                        <div style={{ fontWeight: 'bold', textAlign: 'right' }}>Ranking - {ranking} points.</div>
                     </Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
                     <ListGroupItem><Nav.Link target="_blank" href={accountLink}>{accountLink}</Nav.Link></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Location:</div><div><h6>{country}</h6></div></ListGroupItem>
+                    <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Main topic:</div><div><h6>{topic}</h6></div></ListGroupItem>
                     <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Followers:</div><div><h6>{followers}</h6></div></ListGroupItem>
                     <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Visitors per day:</div><div><h6>{dayVisitors}</h6></div></ListGroupItem>
                     <ListGroupItem className="d-flex justify-content-between align-items-center"><div>Deals Done:</div><div><h6>{dealsCount}</h6></div></ListGroupItem>

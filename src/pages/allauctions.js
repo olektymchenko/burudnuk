@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
-import { CountryDropdown, CountryRegionData } from 'react-country-region-selector';
+import { CountryDropdown } from 'react-country-region-selector';
 import AllActiveAuctions from '../components/auctions/allActiveAuctions'
 import { connect } from 'react-redux';
 import { loadUserActiveSearch, loadUserActiveOffer } from '../redux/actions/Auctions';
@@ -18,7 +18,7 @@ class AllAuctions extends Component {
             app: 'facebook',
             kind: 'offer',
             country: 'Afganistan',
-            topic: 'travel'
+            topic: 'Fashion'
         }
     }
 
@@ -109,16 +109,16 @@ class AllAuctions extends Component {
                         <Form.Group controlId="exampleForm.ControlSelect2" style={{ width: "80%" }}>
                             <Form.Label>Topic:</Form.Label>
                             <Form.Control as="select" onChange={this.handleTopic}>
-                                <option value="fashion">Fashion</option>
-                                <option value="food">Food</option>
-                                <option value="design">Design</option>
-                                <option value="travel">Travel</option>
-                                <option value="fitness">Fitness</option>
-                                <option value="nature">Nature</option>
-                                <option value="inspirations">Inspiration</option>
-                                <option value="health">Health</option>
-                                <option value="party">Party</option>
-                                <option value="art">Art</option>
+                                <option value="Fashion">Fashion</option>
+                                <option value="Food">Food</option>
+                                <option value="Design">Design</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="Nature">Nature</option>
+                                <option value="Inspirations">Inspiration</option>
+                                <option value="Health">Health</option>
+                                <option value="Party">Party</option>
+                                <option value="Art">Art</option>
                             </Form.Control>
                         </Form.Group></Col>
                     <Col xs={6} md={4} lg={2} xl={2} className="d-flex justify-content-center text-center">

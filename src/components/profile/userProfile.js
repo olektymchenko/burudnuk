@@ -37,7 +37,7 @@ const userProfile = (props) => {
         const fileInput = document.getElementById('imageInput');
         fileInput.click();
     }
-    const { userdata: { nickname, facebook, instagram, tiktok, telegram, createdAt, userImage, confirmed }, loading } = props.userdata;
+    const { userdata: { nickname, facebook, instagram, tiktok, telegram, createdAt, userImage, confirmed } } = props.userdata;
 
 
     return (

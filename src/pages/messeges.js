@@ -66,7 +66,7 @@ class messeges extends React.PureComponent {
         }
         return (
             <Fragment>
-                {loadingsellerdeals === false ? (
+                {loadingsellerdeals === false && loadingclientdeals === false ? (
                     <Container>
                         <Row style={{ backgroundColor: 'white', marginTop: "4vh", marginBottom: "4vh" }}>
                             <Col xs={12} md={12} lg={4} xl={4} style={{ height: `calc(92vh - ${navbarHeight}px)`, overflow: 'auto' }}>

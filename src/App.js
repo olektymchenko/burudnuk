@@ -12,7 +12,7 @@ import { store, persistor } from './redux/store';
 
 
 //Components
-import Navbar from './components/layout/Navbar'
+import Navbar from './components/layout/Navbar';
 import AuthRoute from './utill/AuthRoute'
 import UserRoute from './utill/UserRoute'
 
@@ -92,6 +92,7 @@ class App extends Component {
                 <Route exact path='/auctions/:app/:auctionId/:type' component={auction} />
               </Switch>
             </Container>
+
           </PersistGate>
         </Router>
       </Provider>

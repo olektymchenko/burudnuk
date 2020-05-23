@@ -38,10 +38,8 @@ class auction extends Component {
         const loading = this.props.auctions.loadingauctions;
         const navbar = document.getElementById('navigation-menu-width');
         let navbarWidth;
-        let navbarHeight;
         if (navbar !== null) {
             navbarWidth = navbar.offsetWidth;
-            navbarHeight = navbar.offsetHeight;
         }
         return (
             <Fragment>
