@@ -29,7 +29,13 @@ class user extends Component {
                         <Col className="d-flex justify-content-center" xs={12} md={6} lg={4} xl={4}>
                             <UserProfile userdata={this.props} />
                         </Col>
-                        <Col className="d-flex justify-content-center" xs={10} md={10} lg={4} xl={4}>
+                        <Col className="d-flex justify-content-center" xs={10} md={10} lg={8} xl={8}>
+                            <div className="d-flex justify-content-center" style={{ flexDirection: 'column' }}>
+                                <h2 className='text-center'>Hello</h2>
+                                <p>Welcome to Burunduk, here you can sell your advertisment or found someone
+                                who will help you to become popular!</p>
+                                <p>Send private deals, create auctions,organize your time and comminucate. Try us fo free!</p>
+                            </div>
                         </Col>
                     </Row>
                 </Container >)
