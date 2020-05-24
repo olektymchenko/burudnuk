@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,17 +6,16 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import { CountryDropdown } from 'react-country-region-selector';
-import AllActiveAuctions from '../components/auctions/allActiveAuctions'
 import { connect } from 'react-redux';
-import { loadUserActiveSearch, loadUserActiveOffer } from '../redux/actions/Auctions';
+import { getUsersRanking } from '../redux/actions/Auctions';
+import Ranking from '../components/auctions/usersranking';
 
 
-class AllAuctions extends Component {
+class ranking extends Component {
     constructor() {
         super();
         this.state = {
             app: 'facebook',
-            kind: 'offer',
             country: 'Afganistan',
             topic: 'Fashion'
         }
@@ -24,9 +23,6 @@ class AllAuctions extends Component {
 
     handleApp = (event) => {
         this.setState({ app: event.target.value });
-    }
-    handleKind = (event) => {
-        this.setState({ kind: event.target.value });
     }
     handleTopic = (event) => {
         this.setState({ topic: event.target.value });
@@ -40,48 +36,13 @@ class AllAuctions extends Component {
             topic: this.state.topic,
             country: this.state.country
         }
-        if (this.state.app === "facebook") { // if selected facebook
-            if (this.state.kind === "offer") {
-                this.props.loadUserActiveOffer('facebook', data);
-            }
-            else if (this.state.kind === 'search') {
-                this.props.loadUserActiveSearch('facebook', data);
-            }
-        }
 
-        if (this.state.app === "instagram") {
-            if (this.state.kind === "offer") {
-                this.props.loadUserActiveOffer('instagram', data);
-            }
-            else if (this.state.kind === 'search') {
-                this.props.loadUserActiveSearch('instagram', data);
-            }
-        }
-
-        if (this.state.app === "tiktok") {
-            if (this.state.kind === "offer") {
-                this.props.loadUserActiveOffer('tiktok', data);
-            }
-            else if (this.state.kind === 'search') {
-                this.props.loadUserActiveSearch('tiktok', data);
-            }
-        }
-
-        if (this.state.app === "telegram") {
-            if (this.state.kind === "offer") {
-                this.props.loadUserActiveOffer('telegram', data);
-            }
-            else if (this.state.kind === 'search') {
-                this.props.loadUserActiveSearch('telegram', data);
-            }
-        }
+        this.props.getUsersRanking(this.state.app, data);
     }
 
-
     render() {
+        const loadingauctions = this.props.loading
         const { country } = this.state;
-        const { loadingauctions } = this.props.auctions
-
         return (
             <Container>
                 <Row className="d-flex align-items-center justify-content-between" style={{ marginTop: "1%" }}>
@@ -93,15 +54,6 @@ class AllAuctions extends Component {
                                 <option value="instagram">Instagram</option>
                                 <option value="tiktok">TikTok</option>
                                 <option value="telegram">Telegram</option>
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Col xs={6} md={4} lg={2} xl={2} className="d-flex justify-content-center text-center">
-                        <Form.Group controlId="exampleForm.ControlSelect2" style={{ width: "80%" }}>
-                            <Form.Label>Kind:</Form.Label>
-                            <Form.Control as="select" onChange={this.handleKind}>
-                                <option value="offer">Offer</option>
-                                <option value="search">Search</option>
                             </Form.Control>
                         </Form.Group>
                     </Col>
@@ -137,7 +89,7 @@ class AllAuctions extends Component {
                 </Row>
                 <Row>
                     <Col>
-                        <AllActiveAuctions auctions={this.props.auctions} app={this.state.app} kind={this.state.kind} topic={this.state.topic} country={this.state.country} />
+                        <Ranking users={this.props.ranking} app={this.state.app} />
                     </Col>
                 </Row>
             </Container>
@@ -146,9 +98,7 @@ class AllAuctions extends Component {
 }
 
 const mapStateToProps = state => ({
-    user: state.user,
-    UI: state.UI,
-    auctions: state.auctions
+    loading: state.auctions.userrankingloading,
+    ranking: state.auctions.userranking
 })
-
-export default connect(mapStateToProps, { loadUserActiveSearch, loadUserActiveOffer })(AllAuctions)
+export default connect(mapStateToProps, { getUsersRanking })(ranking)

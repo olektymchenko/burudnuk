@@ -27,6 +27,7 @@ import instagram from './pages/instagram';
 import tiktok from './pages/tiktok';
 import telegram from './pages/telegram';
 import messeges from './pages/messeges';
+import ranking from './pages/ranking';
 import offerauction from './pages/createoffer';
 import lookforauction from './pages/createsearch';
 import userauctions from './pages/userauctions';
@@ -90,9 +91,10 @@ class App extends Component {
                 {/* Auctions */}
                 <Route exact path='/allauctions' component={allauctions} />
                 <Route exact path='/auctions/:app/:auctionId/:type' component={auction} />
+                {/* User Ranking */}
+                <Route exact path='/ranking' component={ranking} />
               </Switch>
             </Container>
-
           </PersistGate>
         </Router>
       </Provider>

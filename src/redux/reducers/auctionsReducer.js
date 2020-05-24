@@ -7,7 +7,8 @@ import {
     START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE,
     START_LOADING_SNAPSHOT_AUCTION, STOP_LOADING_SNAPSHOT_AUCTION, SET_LOADING_SNAPSHOT_AUCTION,
     START_LOADING_ALL_AUCTIONS, STOP_LOADING_ALL_AUCTIONS,
-    SET_ALL_FACEBOOK_AUCTIONS, SET_ALL_INSTAGRAM_AUCTIONS, SET_ALL_TIKTOK_AUCTIONS, SET_ALL_TELEGRAM_AUCTIONS
+    SET_ALL_FACEBOOK_AUCTIONS, SET_ALL_INSTAGRAM_AUCTIONS, SET_ALL_TIKTOK_AUCTIONS, SET_ALL_TELEGRAM_AUCTIONS,
+    START_LOADING_USER_RANKING, STOP_LOADING_USER_RANKING, SET_USER_RANKING
 } from '../types';
 
 const initialState = {
@@ -18,6 +19,8 @@ const initialState = {
     uniqueAuction: null,
     loadingauctions: false,
     loadingnewprice: false,
+    userrankingloading: false,
+    userranking: null,
     facebookactiveauctions: null,
     instagramactiveauctions: null,
     tiktokactiveauctions: null,
@@ -187,6 +190,23 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 telegramactiveauctions: action.payload
+            }
+
+        case START_LOADING_USER_RANKING:
+            return {
+                ...state,
+                userrankingloading: true
+            }
+        case STOP_LOADING_USER_RANKING:
+            return {
+                ...state,
+                userrankingloading: false
+            }
+        case SET_USER_RANKING:
+            return {
+                ...state,
+                userrankingloading: false,
+                userranking: action.payload
             }
         default:
             return state;

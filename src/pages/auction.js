@@ -46,10 +46,10 @@ class auction extends Component {
                 {loading === false && this.props.auctions.uniqueAuction !== null ? (
                     <Container>
                         <Row>
-                            <Col xs={8}>
+                            <Col xs={12} md={8} lg={8} xl={8}>
                                 <UniqueAuction data={this.props.auctions.uniqueAuction} app={this.props.match.params.app} type={this.props.match.params.type} auctionId={this.props.match.params.auctionId} />
                             </Col>
-                            <Col xs={4} style={{ marginTop: "2%", maxHeight: '80vh', overflow: 'auto' }}>
+                            <Col xs={12} md={4} lg={4} xl={4} style={{ marginTop: "2%", maxHeight: '80vh', overflow: 'auto' }}>
                                 <AuctionParticipants data={this.props.auctions.uniqueAuction} app={this.props.match.params.app} type={this.props.match.params.type} auctionId={this.props.match.params.auctionId} />
                             </Col>
                         </Row>

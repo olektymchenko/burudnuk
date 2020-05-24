@@ -8,7 +8,8 @@ import {
     START_LOADING_NEW_AUCTION_PRICE, STOP_LOADING_NEW_AUCTION_PRICE,
     START_LOADING_SNAPSHOT_AUCTION, STOP_LOADING_SNAPSHOT_AUCTION, SET_LOADING_SNAPSHOT_AUCTION,
     START_LOADING_ALL_AUCTIONS, STOP_LOADING_ALL_AUCTIONS,
-    SET_ALL_FACEBOOK_AUCTIONS, SET_ALL_INSTAGRAM_AUCTIONS, SET_ALL_TIKTOK_AUCTIONS, SET_ALL_TELEGRAM_AUCTIONS
+    SET_ALL_FACEBOOK_AUCTIONS, SET_ALL_INSTAGRAM_AUCTIONS, SET_ALL_TIKTOK_AUCTIONS, SET_ALL_TELEGRAM_AUCTIONS,
+    START_LOADING_USER_RANKING, STOP_LOADING_USER_RANKING, SET_USER_RANKING
 } from '../types';
 import axios from 'axios';
 
@@ -318,6 +319,24 @@ export const updateAuctionData = (newData) => (dispatch) => {
         payload: newData
     });
     dispatch({ type: STOP_LOADING_SNAPSHOT_AUCTION })
+}
+
+export const getUsersRanking = (app, data) => (dispatch) => {
+    dispatch({ type: START_LOADING_USER_RANKING })
+    axios.post(`/ranking/${app}`, data).then(res => {
+        dispatch({
+            type: SET_USER_RANKING,
+            payload: res.data
+        })
+    }).then(() => {
+        dispatch({ type: CLEAR_ERRORS })
+    }).catch(err => {
+        dispatch({
+            type: SET_ERRORS,
+            payload: err.response.data
+        })
+        dispatch({ type: STOP_LOADING_USER_RANKING });
+    })
 }
 
 export const getDataForMainPage = () => (dispatch) => {
