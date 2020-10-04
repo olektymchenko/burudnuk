@@ -112,7 +112,7 @@ const UniqueAuction = (props) => {
                             aria-label="User Price"
                             aria-describedby="basic-addon2"
                             style={{ textAlign: "center", fontSize: "30px", fontWeight: 600 }}
-                            onChange={handlePrice}
+                            onChange={handlePrice} maxLength={6}
                         />
                         <InputGroup.Append>
                             <InputGroup.Text id="basic-addon2">USD</InputGroup.Text>
@@ -127,7 +127,7 @@ const UniqueAuction = (props) => {
                                 aria-label="User Price"
                                 aria-describedby="basic-addon2"
                                 style={{ textAlign: "center", fontSize: "30px", fontWeight: 600 }}
-                                onChange={handlePrice}
+                                onChange={handlePrice} maxLength={6}
                             />
                             <InputGroup.Append>
                                 <InputGroup.Text id="basic-addon2">USD</InputGroup.Text>
